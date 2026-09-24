@@ -29,3 +29,24 @@ const progress=document.createElement('div');progress.id='scrollProgress';docume
 window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?(scrollY/max)*100:0)+'%'},{passive:true});
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -40px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+/* Hero area navigation: each numbered capability jumps to the relevant section and highlights it. */
+document.querySelectorAll('.hero-meta-link').forEach(link=>{
+  link.addEventListener('click',()=>{
+    document.querySelectorAll('.hero-meta-link').forEach(x=>x.classList.remove('active'));
+    link.classList.add('active');
+    const target=document.querySelector(link.getAttribute('href'));
+    if(target){
+      target.classList.remove('hero-focus');
+      requestAnimationFrame(()=>target.classList.add('hero-focus'));
+      setTimeout(()=>target.classList.remove('hero-focus'),900);
+    }
+  });
+});
+
+/* Keep remote editorial images from leaving broken cards: fall back to the matching local artwork. */
+document.querySelectorAll('img[src*="images.unsplash.com"]').forEach(img=>{
+  const fallback=img.closest('.job-card')?.querySelector('.job-index')?.textContent?.trim();
+  const map={'01':'images/multybyte.svg','02':'images/crafts.svg','03':'images/paraxion.svg','04':'images/unique-threads.svg'};
+  img.addEventListener('error',()=>{if(map[fallback] && img.src.indexOf(map[fallback])===-1) img.src=map[fallback]}, {once:true});
+});

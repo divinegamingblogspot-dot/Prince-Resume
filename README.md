@@ -1,6 +1,6 @@
 # Prince Dixit — Portfolio
 
-Premium static portfolio focused on e-commerce operations, digital marketing and business automation.
+Premium static portfolio focused on e-commerce operations, digital marketing, SEO, spreadsheet automation, AI workflows, GitHub projects and business systems.
 
 Includes responsive dark UI, animated loader/reveals, recruiter mode, interactive terminal, project case-study section, detailed experience timeline, training section, skills toolkit, spotlight cursor, reduced-motion support, SEO metadata, canonical URL, Person JSON-LD, Open Graph/Twitter metadata, favicon, robots.txt, sitemap.xml, printable resume and custom 404 page.
 
@@ -24,3 +24,13 @@ Training:
 Earlier experience:
 - Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive — November 2024–February 2025; client communication, lead conversion and sales targets.
 - Unique Threads Sarees — Orders & Inventory Manager — May–October 2024; order fulfillment, inventory monitoring, stock availability and accurate/on-time dispatch.
+
+
+## Expanded systems portfolio
+- **Multybyte China Purchase / Image Automation** — Google Sheets + Apps Script workflow for SKU/product data, vendor purchasing, URL extraction, image discovery, retries, caching, locks and backup sync.
+- **Operational spreadsheet systems** — product, SKU, inventory, purchasing and vendor data workflows.
+- **AI & software experiments** — EyeNav / Doc Android accessibility and voice-command work, APIs and JavaScript workflows.
+- **ME N U** — private AI-assisted Google Sheets companion system with memory, tasks, coins/shop logic and voice interaction.
+- **Portfolio / Resume engineering** — responsive static site, recruiter mode, terminal interaction, structured metadata, sitemap, robots rules and printable resume.
+
+The portfolio uses local SVG artwork plus relevant remote editorial/technology imagery in experience and systems sections. Images use descriptive alt text and lazy loading where appropriate. Structured data and crawlable metadata are included to help search engines understand the site; they do not guarantee rankings.

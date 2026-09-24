@@ -44,9 +44,33 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   });
 });
 
-/* Keep remote editorial images from leaving broken cards: fall back to the matching local artwork. */
-document.querySelectorAll('img[src*="images.unsplash.com"]').forEach(img=>{
-  const fallback=img.closest('.job-card')?.querySelector('.job-index')?.textContent?.trim();
-  const map={'01':'images/multybyte.svg','02':'images/crafts.svg','03':'images/paraxion.svg','04':'images/unique-threads.svg'};
-  img.addEventListener('error',()=>{if(map[fallback] && img.src.indexOf(map[fallback])===-1) img.src=map[fallback]}, {once:true});
+/* Guarantee local portfolio artwork for reliable GitHub Pages loading. */
+const localExperienceImages=['images/multybyte.svg','images/crafts.svg','images/paraxion.svg','images/unique-threads.svg'];
+document.querySelectorAll('.job-card img').forEach((img,i)=>{
+  if(localExperienceImages[i]) img.src=localExperienceImages[i];
+});
+
+/* Hero area navigation + live data panel. */
+const heroData={
+  operations:{index:'01',title:'OPERATIONS',text:'4 roles across e-commerce operations, fulfillment, inventory, warehouse coordination and customer-facing work.',meta:'Experience · Orders · Inventory · Warehouse'},
+  digital:{index:'02',title:'DIGITAL',text:'SEO, website management, social media marketing and digital promotion across practical business workflows.',meta:'SEO · Websites · Social · Marketing'},
+  automation:{index:'03',title:'AUTOMATION',text:'Google Sheets, Apps Script, JavaScript and API-driven workflows used to reduce repetitive operational work.',meta:'Sheets · Apps Script · JavaScript · APIs'},
+  ai:{index:'04',title:'AI / SOFTWARE',text:'AI workflows, Android experiments, voice interaction and GitHub-based software projects built around practical use cases.',meta:'AI · Android · Voice · GitHub'}
+};
+const detail=document.getElementById('heroDetailPanel');
+document.querySelectorAll('.hero-meta-link').forEach(link=>{
+  link.addEventListener('click',()=>{
+    document.querySelectorAll('.hero-meta-link').forEach(x=>x.classList.remove('active'));
+    link.classList.add('active');
+    const data=heroData[link.dataset.focus];
+    if(detail&&data){
+      detail.querySelector('.hero-detail-index').textContent=data.index;
+      detail.querySelector('strong').textContent=data.title;
+      detail.querySelector('p').textContent=data.text;
+      detail.querySelector('small').textContent=data.meta;
+      detail.classList.add('visible');
+    }
+    const target=document.querySelector(link.getAttribute('href'));
+    if(target){target.classList.remove('hero-focus');requestAnimationFrame(()=>target.classList.add('hero-focus'));setTimeout(()=>target.classList.remove('hero-focus'),900);}
+  });
 });

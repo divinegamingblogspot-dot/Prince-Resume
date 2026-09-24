@@ -61,3 +61,9 @@
 @media(max-width:850px){.job-card{grid-template-columns:1fr}.job-visual{height:260px;min-height:260px}.job-visual:after{background:linear-gradient(0deg,#0e1015 0%,transparent 75%)}.job-content{padding:34px 28px}.systems-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.project-image{height:150px}}
 @media(prefers-reduced-motion:reduce){.job-card:hover,.system-card:hover,.process-card:hover,.build-grid>div:hover,.edu-grid>div:hover,.training-card:hover{transform:none}.job-card:hover .job-visual img,.system-card:hover>img,.project:hover .project-image img{transform:none}.system-card:nth-child(2n) img,.section-label:after{animation:none}}
+
+body{background-image:radial-gradient(circle at 85% 12%,rgba(183,255,82,.055),transparent 22%),radial-gradient(circle at 5% 55%,rgba(80,120,255,.035),transparent 24%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.12;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(to bottom,black,transparent 90%);animation:gridDrift 30s linear infinite}
+main,header,footer{position:relative;z-index:2}
+#scrollProgress{position:fixed;left:0;top:0;width:0;height:2px;background:#b7ff52;z-index:250;box-shadow:0 0 14px rgba(183,255,82,.55)}
+@keyframes gridDrift{to{background-position:70px 70px}}

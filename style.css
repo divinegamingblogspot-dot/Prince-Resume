@@ -98,7 +98,7 @@ main,header,footer{position:relative;z-index:2}
 .console-line{padding:15px;color:#8c919d;font:11px ui-monospace,monospace}
 .console-line span{color:var(--acid);margin-right:7px}
 .capability-strip{border-top:1px solid #1c2028;border-bottom:1px solid #1c2028;overflow:hidden;background:#0a0c10;transform:rotate(-1deg);margin:0 -2vw;position:relative;z-index:4}
-.capability-track{display:flex;width:max-content;gap:25px;align-items:center;padding:18px 0;animation:marquee 34s linear infinite}
+.capability-track{display:flex;width:max-content;align-items:center;animation:marquee 34s linear infinite;will-change:transform}
 .capability-track span{font:700 12px "Space Grotesk";letter-spacing:.13em;color:#747984}
 .capability-track b{color:var(--acid);font-size:12px}
 .capability-strip:hover .capability-track{animation-play-state:running}
@@ -149,3 +149,11 @@ main,header,footer{position:relative;z-index:2}
 @keyframes focusFlash{0%{box-shadow:0 0 0 0 rgba(183,255,82,.25)}45%{box-shadow:0 0 0 7px rgba(183,255,82,.05)}100%{box-shadow:none}}
 @media(max-width:700px){.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero-meta-link{min-width:0;padding:10px}.hero-meta-link small{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.hero-meta-link{transition:none}.hero-focus{animation:none}}
+
+.capability-group{display:flex;flex:none;align-items:center;gap:25px;padding-right:25px}
+.capability-track span{flex:none}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hero-detail-panel{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center;max-width:760px;margin:26px 0 0;padding:16px 18px;border:1px solid #252a34;border-radius:12px;background:linear-gradient(135deg,rgba(16,18,24,.94),rgba(9,11,15,.9));box-shadow:0 18px 55px rgba(0,0,0,.18)}
+.hero-detail-panel>div{grid-row:span 2;display:flex;flex-direction:column;gap:3px}.hero-detail-index{font:700 10px ui-monospace,monospace;color:var(--acid);letter-spacing:.16em}.hero-detail-panel strong{font:700 13px "Space Grotesk";letter-spacing:.08em}.hero-detail-panel p{margin:0;color:#a2a6b0;font-size:12px;line-height:1.55}.hero-detail-panel small{color:#626875;font:600 9px "Space Grotesk";letter-spacing:.12em}.hero-meta-link{cursor:pointer}.hero-meta-link.active{border-color:var(--acid)!important;box-shadow:0 0 0 1px rgba(183,255,82,.18),0 16px 45px rgba(0,0,0,.2)}
+@media(max-width:700px){.hero-detail-panel{grid-template-columns:1fr}.hero-detail-panel>div{grid-row:auto}.capability-track{animation-duration:28s}}

@@ -20,3 +20,7 @@ Experience included:
 
 Training:
 - Digital Marketing course — SEO, website building and social media marketing.
+
+Earlier experience:
+- Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive — November 2024–February 2025; client communication, lead conversion and sales targets.
+- Unique Threads Sarees — Orders & Inventory Manager — May–October 2024; order fulfillment, inventory monitoring, stock availability and accurate/on-time dispatch.

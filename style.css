@@ -101,7 +101,7 @@ main,header,footer{position:relative;z-index:2}
 .capability-track{display:flex;width:max-content;gap:25px;align-items:center;padding:18px 0;animation:marquee 34s linear infinite}
 .capability-track span{font:700 12px "Space Grotesk";letter-spacing:.13em;color:#747984}
 .capability-track b{color:var(--acid);font-size:12px}
-.capability-strip:hover .capability-track{animation-play-state:paused}
+.capability-strip:hover .capability-track{animation-play-state:running}
 .capability-section{background:linear-gradient(180deg,#08090d,#0b0d12)}
 .range-head{display:grid;grid-template-columns:1.25fr 1fr;gap:8vw;align-items:end;margin-bottom:45px}
 .range-head h2{font:700 clamp(45px,6vw,85px)/.92 "Space Grotesk";letter-spacing:-.06em;margin:15px 0 0}

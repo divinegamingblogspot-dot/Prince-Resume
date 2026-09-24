@@ -24,3 +24,8 @@ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     card.addEventListener('pointerleave',()=>card.style.transform='');
   });
 }
+
+const progress=document.createElement('div');progress.id='scrollProgress';document.body.appendChild(progress);
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?(scrollY/max)*100:0)+'%'},{passive:true});
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -40px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));

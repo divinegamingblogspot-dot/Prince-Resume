@@ -640,8 +640,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
  /* Active navigation indicator, including inner pages. */
  const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
  document.querySelectorAll('nav a').forEach(a=>{const href=(a.getAttribute('href')||'').split('#')[0].toLowerCase();if(href===file||((file==='index.html'||!file)&&href==='#home'))a.classList.add('active')});
- /* Smooth page transition without blocking navigation. */
- if(!reduce){document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const href=a.getAttribute('href');if(!href||href.startsWith('#')||href.startsWith('mailto:')||href.startsWith('tel:')||href.startsWith('javascript:')||a.target==='_blank'||href.startsWith('http'))return;const u=new URL(href,location.href);if(u.origin!==location.origin)return;e.preventDefault();document.body.classList.add('page-exit');setTimeout(()=>{location.href=u.href},150)})}
+ /* Native navigation: never intercept page links. This keeps every page, Nova, and external link reliable. */
  /* Mobile sticky high-value actions: Contact, Resume and Nova. */
  if(matchMedia('(max-width:700px)').matches && !document.querySelector('.mobile-action-bar')){
    const bar=document.createElement('div');bar.className='mobile-action-bar';bar.setAttribute('aria-label','Quick actions');

@@ -645,3 +645,101 @@ body[data-visual="violet"] .motion-energy:before{background:rgba(168,85,247,.13)
 .home-cube .cube-face:hover{filter:brightness(1.18);transform:translateZ(3px)}
 @keyframes coreAura{to{transform:scale(1.08);opacity:.72}}
 @media(prefers-reduced-motion:reduce){.home-3d-stage:before{animation:none}}
+
+
+/* ===== UI UPGRADE PACK — ADDITIVE ONLY ===== */
+:root{--ui-lime:#b7ff52;--ui-violet:#a855f7;--ui-red:#ff3b5c;--ui-panel:rgba(12,15,21,.82);--ui-border:rgba(255,255,255,.085)}
+html{scroll-padding-top:92px}
+body{min-width:320px}
+/* 1 — cinematic hero enhancement */
+.hero{isolation:isolate}
+.hero:before{animation:heroPulse 8s ease-in-out infinite alternate}
+.hero:after{animation:heroWatermark 16s ease-in-out infinite alternate}
+.hero h1{text-wrap:balance;text-shadow:0 0 60px rgba(183,255,82,.025)}
+.hero-copy{letter-spacing:-.01em}
+.hero-actions .btn{position:relative;overflow:hidden;isolation:isolate}
+.hero-actions .btn:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.18) 50%,transparent 75%);transform:translateX(-130%);transition:transform .7s ease;z-index:-1}
+.hero-actions .btn:hover:before{transform:translateX(130%)}
+.hero-kicker span:first-child{box-shadow:0 0 25px rgba(183,255,82,.045)}
+@keyframes heroPulse{to{transform:scale(1.08) translate(-2%,2%);opacity:.82}}@keyframes heroWatermark{to{transform:translate3d(-2%,-2%,0) rotate(-2deg)}}
+/* 2 — premium navigation */
+header{height:74px;transition:background .35s,border-color .35s,box-shadow .35s}
+header.scrolled{background:rgba(7,9,13,.88);border-bottom-color:rgba(183,255,82,.12);box-shadow:0 10px 50px rgba(0,0,0,.22)}
+nav a,.inner-nav a{position:relative;padding:8px 0}
+nav a:after,.inner-nav a:after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:linear-gradient(90deg,var(--ui-lime),var(--ui-violet));transition:right .3s ease}
+nav a:hover:after,nav a.active:after,.inner-nav a:hover:after,.inner-nav a.active:after{right:0}
+nav a.active,.inner-nav a.active{color:#fff}
+.menu{width:46px;height:42px;display:none;place-items:center;padding:7px;border:1px solid #292c35;border-radius:9px;cursor:pointer}
+.menu span{transition:transform .3s,opacity .2s}
+.menu.open span:first-child{transform:translateY(4px) rotate(45deg)}.menu.open span:last-child{transform:translateY(-3px) rotate(-45deg)}
+/* 3 — interactive depth / magnetic surfaces */
+.project,.process-card,.build-grid>div,.edu-grid>div,.training-card,.system-card,.job-card,.timeline-item{transform-style:preserve-3d}
+.project,.process-card,.build-grid>div,.edu-grid>div,.training-card,.system-card,.job-card,.timeline-item{backface-visibility:hidden}
+/* 4 — experience timeline upgrade */
+.timeline{position:relative}
+.timeline:before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:linear-gradient(#b7ff52,rgba(168,85,247,.55),rgba(255,59,92,.35));opacity:.55}
+.timeline-item{position:relative;margin-left:34px;padding:32px 32px 34px;border:1px solid #252a34;border-radius:12px;background:linear-gradient(145deg,rgba(13,16,22,.9),rgba(8,10,14,.9));transition:transform .45s,border-color .35s,box-shadow .45s}
+.timeline-item:before{content:"";position:absolute;left:-29px;top:38px;width:9px;height:9px;border:2px solid var(--ui-lime);border-radius:50%;background:#08090d;box-shadow:0 0 0 5px rgba(183,255,82,.045),0 0 18px rgba(183,255,82,.25)}
+.timeline-item+.timeline-item{margin-top:18px}
+.timeline-item:hover{transform:translateX(5px) translateY(-3px);border-color:#414650;box-shadow:0 22px 65px rgba(0,0,0,.26)}
+.timeline-item .period{display:inline-block;margin-bottom:10px;color:#7d818d;font:700 9px "Space Grotesk";letter-spacing:.14em}
+.timeline-item h3{font:700 clamp(24px,3vw,40px)/1.05 "Space Grotesk";margin:5px 0}
+.timeline-item p{color:#858995}.timeline-item .chips span{transition:.25s}.timeline-item:hover .chips span{border-color:#3b404a}
+/* 6 — skill constellation polish */
+.skills-constellation{isolation:isolate}
+.skill-node{cursor:pointer;transition:transform .35s,border-color .3s,box-shadow .35s,background .3s}
+.skill-node:hover,.skill-node.active{transform:translateY(-5px) scale(1.025);border-color:rgba(183,255,82,.65);box-shadow:0 0 35px rgba(183,255,82,.08),0 20px 55px rgba(0,0,0,.2)}
+.skill-node.active:after{content:"";position:absolute;inset:-1px;border:1px solid rgba(168,85,247,.35);border-radius:inherit;pointer-events:none;animation:skillRing 1.5s ease-in-out infinite}
+@keyframes skillRing{50%{inset:-5px;opacity:0}}
+/* 7 — Nova premium interface */
+.bot-chat{box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 55px rgba(168,85,247,.08);border-color:rgba(168,85,247,.28)!important}
+.bot-chat-head{background:linear-gradient(90deg,rgba(168,85,247,.08),transparent 60%)}
+.bot-chat-head i{box-shadow:0 0 14px var(--ui-lime)}
+.bot-msg{animation:novaMessageIn .35s cubic-bezier(.16,1,.3,1) both}
+.bot-msg.bot{border-left:1px solid rgba(183,255,82,.28)}
+.bot-msg.user{border-right:1px solid rgba(168,85,247,.25)}
+.bot-suggestions button,.nova-modebar button{min-height:38px;transition:transform .2s,border-color .2s,background .2s}
+.bot-suggestions button:hover,.nova-modebar button:hover{transform:translateY(-2px);border-color:rgba(183,255,82,.5)}
+.bot-chat-input{min-height:54px}
+.bot-chat-input input{font-size:16px}
+@keyframes novaMessageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* 10 — micro interactions / UI energy */
+.btn,.home-link-grid a,.hero-meta-link,.text-link,.inner-cta{will-change:transform}
+.btn:active,.inner-cta:active,.demo-run:active{transform:translateY(1px) scale(.98)!important}
+.ui-energy{pointer-events:none;position:fixed;inset:0;z-index:3;overflow:hidden}
+.ui-energy:before,.ui-energy:after{content:"";position:absolute;width:1px;height:28vh;background:linear-gradient(transparent,rgba(168,85,247,.25),transparent);animation:energyFall 9s linear infinite;opacity:.4}
+.ui-energy:before{left:8%;top:-30vh}.ui-energy:after{right:13%;top:-45vh;animation-delay:-4s;background:linear-gradient(transparent,rgba(255,59,92,.2),transparent)}
+@keyframes energyFall{to{transform:translateY(160vh)}}
+/* mobile — all requested mobile bullets */
+@media(max-width:700px){
+  header{height:68px;padding:0 5vw}
+  nav{top:68px;padding:18px 5vw 22px;gap:8px;border-radius:0 0 14px 14px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  nav a{min-height:46px;display:flex;align-items:center;font-size:14px;padding:10px 4px}
+  .menu{display:grid}
+  .hero{min-height:calc(100svh - 68px);padding:125px 6vw 55px}
+  .hero h1{font-size:clamp(50px,15vw,72px);line-height:.91}
+  .hero-copy{font-size:16px;max-width:100%}
+  .hero-actions{flex-wrap:wrap;gap:9px}.hero-actions .btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:13px 16px}
+  .hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:32px}
+  .hero-meta-link{min-height:58px;padding:10px;border:1px solid #22262f;border-radius:8px;background:rgba(10,12,16,.7);display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .hero-meta-link small{font-size:9px}
+  .home-3d-stage{touch-action:none;overflow:visible}.home-3d-stage,.home-3d-wrap{max-width:100vw}
+  .home-3d-stage{transform:scale(.72);transform-origin:center center;margin:-25px 0}
+  .home-3d-hint{margin-top:-35px}
+  .timeline:before{left:8px}.timeline-item{margin-left:25px;padding:25px 20px}.timeline-item:before{left:-24px;top:31px}
+  .timeline-item:hover{transform:translateY(-2px)}
+  .system-card,.project,.job-card,.process-card,.build-grid>div,.edu-grid>div,.training-card{transform:none!important}
+  .system-card:active,.project:active,.job-card:active{transform:scale(.995)!important}
+  .skill-node{min-width:0}
+  .bot-chat{left:10px!important;right:10px!important;bottom:76px!important;width:auto!important;max-width:none!important;border-radius:14px}
+  .bot-orb{transform:scale(.88);transform-origin:bottom right}
+  .bot-chat-input input{font-size:16px}
+  .nova-modebar{display:grid!important;grid-template-columns:1fr 1fr;gap:6px;padding:8px}.nova-modebar button{min-height:42px}
+  .site-command-hint{display:none}
+  body{padding-bottom:68px}
+}
+@media(max-width:380px){.hero h1{font-size:48px}.hero-meta{grid-template-columns:1fr}.home-3d-stage{transform:scale(.64)}.hero-actions .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.hero:before,.hero:after,.ui-energy:before,.ui-energy:after,.skill-node.active:after,.bot-msg{animation:none}.timeline-item{transition:none}.hero-actions .btn:before{display:none}}
+/* mobile sticky action bar */
+.mobile-action-bar{display:none}
+@media(max-width:700px){.mobile-action-bar{position:fixed;left:10px;right:10px;bottom:10px;z-index:95;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(8,10,14,.88);backdrop-filter:blur(16px);box-shadow:0 18px 60px rgba(0,0,0,.45)}.mobile-action-bar a,.mobile-action-bar button{min-height:44px;border:1px solid #292d36;border-radius:8px;background:#0e1117;color:#bfc3cc;font:700 9px "Space Grotesk";letter-spacing:.08em;text-align:center;display:grid;place-items:center}.mobile-action-bar a:first-child,.mobile-action-bar button:last-child{color:#b7ff52;border-color:rgba(183,255,82,.3)}}

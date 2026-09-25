@@ -1272,3 +1272,45 @@ body.page-exit{
     filter:none!important;
   }
 }
+
+/* ===== ULTRA-SMOOTH PRINCE MORPH + INSTANT PAGE FEEL ===== */
+#loader .loader-name-morph .morph-letter{animation-name:princeMorphUltraSmooth!important;animation-duration:5.2s!important;animation-timing-function:cubic-bezier(.42,0,.58,1)!important;animation-iteration-count:infinite!important;will-change:opacity,transform,filter;backface-visibility:hidden;transform:translateZ(0)}
+@keyframes princeMorphUltraSmooth{
+0%,10%{font-family:"Space Grotesk",sans-serif;font-weight:800;opacity:1;filter:blur(0);transform:translate3d(0,0,0) scale(1)}
+12%{opacity:.72;filter:blur(1.2px);transform:translate3d(0,.5px,0) scale(.995)}
+14%{opacity:.18;filter:blur(3px);transform:scale(.985)}
+16%{font-family:Georgia,serif;font-weight:700;opacity:.08;filter:blur(3.8px);transform:scale(.985)}
+19%{opacity:.65;filter:blur(1.4px);transform:scale(1)}
+22%,27%{opacity:1;filter:blur(0);transform:scale(1)}
+29%{opacity:.72;filter:blur(1.2px);transform:scale(.997)}
+31%{opacity:.15;filter:blur(3px);transform:scale(.985)}
+33%{font-family:"Times New Roman",serif;font-weight:700;opacity:.08;filter:blur(3.8px);transform:scale(.985)}
+36%{opacity:.65;filter:blur(1.4px);transform:scale(1)}
+39%,44%{opacity:1;filter:blur(0);transform:scale(1)}
+46%{opacity:.7;filter:blur(1.1px);transform:scale(.997)}
+48%{opacity:.12;filter:blur(3px);transform:scale(.985)}
+50%{font-family:"Arial Black",Impact,sans-serif;font-weight:800;opacity:.07;filter:blur(3.8px);transform:scale(.985)}
+53%{opacity:.65;filter:blur(1.4px);transform:scale(1)}
+56%,61%{opacity:1;filter:blur(0);transform:scale(1)}
+63%{opacity:.7;filter:blur(1.1px);transform:scale(.997)}
+65%{opacity:.12;filter:blur(3px);transform:scale(.985)}
+67%{font-family:"Courier New",monospace;font-weight:700;opacity:.07;filter:blur(3.8px);transform:scale(.985)}
+70%{opacity:.65;filter:blur(1.4px);transform:scale(1)}
+73%,77%{opacity:1;filter:blur(0);transform:scale(1)}
+79%{opacity:.68;filter:blur(1.1px);transform:scale(.997)}
+81%{opacity:.1;filter:blur(3px);transform:scale(.985)}
+83%{font-family:"Segoe Script","Brush Script MT",cursive;font-weight:600;opacity:.07;filter:blur(3.8px);transform:scale(.985)}
+86%{opacity:.65;filter:blur(1.4px);transform:scale(1)}
+89%,92%{opacity:1;filter:blur(0);transform:scale(1)}
+94%{font-family:"Space Grotesk",sans-serif;font-weight:800;opacity:.8;filter:blur(.8px);transform:scale(.998)}
+97%{opacity:.94;filter:blur(.2px);transform:scale(1)}
+100%{opacity:1;filter:drop-shadow(0 0 16px rgba(183,255,82,.18));transform:scale(1)}
+}
+#loader .loader-name-morph .morph-p{animation-delay:-.02s!important}
+#loader .loader-name-morph .morph-r{animation-delay:-.76s!important}
+#loader .loader-name-morph .morph-i{animation-delay:-1.52s!important}
+#loader .loader-name-morph .morph-n{animation-delay:-2.28s!important}
+#loader .loader-name-morph .morph-c{animation-delay:-3.04s!important}
+#loader .loader-name-morph .morph-e{animation-delay:-3.80s!important}
+body.page-exit{opacity:0!important;transition:opacity .04s linear!important}
+@media(prefers-reduced-motion:reduce){#loader .loader-name-morph .morph-letter{animation:none!important;font-family:"Space Grotesk",sans-serif!important;opacity:1!important;filter:none!important;transform:none!important}body.page-exit{transition:none!important}}

@@ -166,3 +166,38 @@ main,header,footer{position:relative;z-index:2}
 .section:hover .section-heading-visual img{transform:scale(1.04);opacity:.86}
 @media(max-width:700px){.section-heading-visual{height:70px;margin:14px 0 25px}.section-heading-visual img{object-position:center}}
 @media(prefers-reduced-motion:reduce){.section-heading-visual img{transition:none}}
+
+/* ===== NOVA — WALKING FEMALE ROBOT AI ===== */
+.nova-bot{position:fixed;right:clamp(18px,4vw,58px);bottom:18px;width:210px;height:330px;z-index:180;pointer-events:none;font-family:Inter,sans-serif}
+.nova-character{position:absolute;right:15px;bottom:0;width:145px;height:285px;border:0;background:none;padding:0;cursor:pointer;pointer-events:auto;filter:drop-shadow(0 18px 28px rgba(0,0,0,.42));transform-origin:50% 100%;animation:novaIdle 3.8s ease-in-out infinite}
+.nova-character *{box-sizing:border-box}
+.nova-aura{position:absolute;width:130px;height:130px;left:7px;top:40px;border-radius:50%;background:radial-gradient(circle,rgba(183,255,82,.18),transparent 68%);filter:blur(7px);animation:novaAura 2.8s ease-in-out infinite}
+.nova-hair{position:absolute;left:25px;top:5px;width:96px;height:110px;border-radius:52% 48% 44% 48%;background:linear-gradient(135deg,#303743,#11151c 65%,#090b10);box-shadow:inset -8px -4px rgba(183,255,82,.08);z-index:1}
+.nova-hair:after{content:"";position:absolute;right:-13px;top:33px;width:30px;height:92px;border-radius:0 70% 65% 50%;background:#171c24;transform:rotate(-9deg)}
+.nova-head{position:absolute;left:35px;top:22px;width:76px;height:82px;border-radius:46% 46% 43% 43%;background:linear-gradient(145deg,#e8edf0,#9da8b1);border:2px solid #55616d;z-index:3;box-shadow:inset 0 -10px 16px rgba(20,25,31,.16)}
+.nova-ear{position:absolute;top:34px;width:10px;height:20px;border-radius:50%;background:#9aa5ae;border:2px solid #55616d}.nova-ear.left{left:-9px}.nova-ear.right{right:-9px}
+.nova-face{position:absolute;inset:12px 8px}
+.nova-eye{position:absolute;top:25px;width:16px;height:8px;border-radius:50%;background:#b7ff52;box-shadow:0 0 10px rgba(183,255,82,.9);transition:.18s}.nova-eye.left{left:7px}.nova-eye.right{right:7px}
+.nova-mouth{position:absolute;left:27px;top:45px;width:20px;height:9px;border-bottom:2px solid #3d4650;border-radius:0 0 60% 60%;transition:.18s}
+.nova-blush{position:absolute;top:40px;width:10px;height:5px;border-radius:50%;background:rgba(255,120,150,.25)}.nova-blush.left{left:1px}.nova-blush.right{right:1px}
+.nova-neck{position:absolute;left:62px;top:100px;width:21px;height:20px;background:#68737d;border:2px solid #3d4750;z-index:2}
+.nova-torso{position:absolute;left:32px;top:113px;width:82px;height:79px;border-radius:24px 24px 17px 17px;background:linear-gradient(145deg,#dbe1e4,#59646e 58%,#242b33);border:2px solid #46515c;z-index:3;box-shadow:inset 0 0 20px rgba(183,255,82,.08)}
+.nova-torso:before{content:"";position:absolute;left:13px;right:13px;top:12px;height:37px;border-radius:14px;background:#10151b;border:1px solid #68737d}
+.nova-torso i{position:absolute;left:30px;top:24px;width:20px;height:20px;border-radius:50%;background:#b7ff52;box-shadow:0 0 18px rgba(183,255,82,.65);z-index:2}
+.nova-torso b{position:absolute;top:54px;left:0;right:0;text-align:center;color:#303941;font:800 11px "Space Grotesk";letter-spacing:.2em}
+.nova-arm{position:absolute;top:119px;width:20px;height:72px;border-radius:14px;background:linear-gradient(#8e99a2,#3c4650);border:2px solid #46515c;z-index:2;transition:transform .25s}.nova-arm.left{left:15px;transform:rotate(8deg)}.nova-arm.right{right:15px;transform:rotate(-8deg)}
+.nova-skirt{position:absolute;left:28px;top:181px;width:90px;height:33px;background:linear-gradient(#4e5964,#20262e);clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);border:2px solid #46515c;z-index:3}
+.nova-leg{position:absolute;top:207px;width:23px;height:54px;border-radius:12px;background:linear-gradient(#5c6872,#20262d);border:2px solid #46515c;z-index:2}.nova-leg.left{left:40px}.nova-leg.right{right:40px}
+.nova-foot{position:absolute;top:255px;width:35px;height:15px;border-radius:50% 45% 35% 35%;background:#20272f;border:2px solid #4d5964;z-index:2}.nova-foot.left{left:30px}.nova-foot.right{right:30px}
+.nova-reaction{position:absolute;right:0;top:0;max-width:190px;padding:9px 12px;border:1px solid rgba(183,255,82,.3);border-radius:13px 13px 3px 13px;background:rgba(10,13,18,.94);color:#dce2d7;font:600 11px/1.35 Inter;box-shadow:0 10px 35px rgba(0,0,0,.3);opacity:0;transform:translateY(8px) scale(.94);transition:.28s;white-space:normal}
+.nova-reaction.show{opacity:1;transform:none}.nova-reaction span:before{content:"NOVA · ";color:#b7ff52;font:700 8px "Space Grotesk";letter-spacing:.12em}
+.nova-chat{position:absolute;right:0;bottom:305px;width:min(360px,calc(100vw - 28px));border:1px solid #2d3540;border-radius:17px;background:rgba(9,12,17,.97);box-shadow:0 25px 90px rgba(0,0,0,.5);backdrop-filter:blur(18px);overflow:hidden;opacity:0;visibility:hidden;transform:translateY(14px) scale(.97);transform-origin:bottom right;transition:.25s;pointer-events:none}
+.nova-chat.open{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+.nova-chat-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #252b34}.nova-chat-head strong{display:block;color:#e9eee9;font:800 12px "Space Grotesk";letter-spacing:.16em}.nova-chat-head small{color:#707783;font-size:9px}.nova-chat-head button{border:0;background:none;color:#8d949f;font-size:22px;cursor:pointer}
+.nova-messages{max-height:235px;overflow:auto;padding:14px}.nova-msg{max-width:90%;padding:9px 11px;margin:0 0 9px;border-radius:11px;font-size:11px;line-height:1.5}.nova-msg.bot{background:#151a20;color:#cbd1d8;border:1px solid #252c35}.nova-msg.user{margin-left:auto;background:rgba(183,255,82,.1);color:#e4efd9;border:1px solid rgba(183,255,82,.2)}
+.nova-suggestions{display:flex;gap:6px;overflow:auto;padding:0 12px 10px}.nova-suggestions button{flex:none;border:1px solid #2a313b;background:#10151b;color:#8e96a2;border-radius:20px;padding:6px 9px;font-size:9px;cursor:pointer}.nova-suggestions button:hover{color:#b7ff52;border-color:#52613e}
+#novaForm{display:flex;gap:7px;padding:11px;border-top:1px solid #252b34}#novaInput{min-width:0;flex:1;border:1px solid #29313b;border-radius:10px;background:#0b0f14;color:#e5e9e5;padding:10px;font-size:11px;outline:none}#novaForm button{width:38px;border:0;border-radius:10px;background:#b7ff52;color:#08090d;font-weight:800;cursor:pointer}
+.nova-bot.moving .nova-character{animation:novaWalk .55s ease-in-out infinite}.nova-bot.excited .nova-character{animation:novaBounce .55s ease-in-out 2}.nova-bot.excited .nova-eye{height:11px}.nova-bot.excited .nova-mouth{width:24px;height:14px;left:25px;border:2px solid #3d4650;border-top:0;border-radius:0 0 50% 50%}.nova-bot.wink .nova-eye.right{height:2px;top:28px}.nova-bot.surprised .nova-eye{width:13px;height:13px}.nova-bot.surprised .nova-mouth{width:13px;height:15px;border:2px solid #3d4650;border-radius:50%;left:30px;top:42px}
+@keyframes novaIdle{50%{transform:translateY(-5px) rotate(.7deg)}}@keyframes novaWalk{25%{transform:translateY(-3px) rotate(-3deg)}75%{transform:translateY(-1px) rotate(3deg)}}@keyframes novaBounce{50%{transform:translateY(-16px) rotate(-2deg)}}@keyframes novaAura{50%{transform:scale(1.12);opacity:.7}}
+@media(max-width:700px){.nova-bot{right:7px;bottom:8px;transform:scale(.82);transform-origin:bottom right}.nova-chat{bottom:300px}.nova-reaction{right:3px;max-width:165px}}
+@media(prefers-reduced-motion:reduce){.nova-character,.nova-aura{animation:none}.nova-bot.moving .nova-character,.nova-bot.excited .nova-character{animation:none}}

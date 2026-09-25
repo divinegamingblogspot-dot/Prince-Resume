@@ -774,12 +774,12 @@ body.page-exit{opacity:0;transform:translateY(5px);transition:opacity .15s ease,
 /* MOBILE — real navigation, no tiny desktop nav */
 @media(max-width:700px){
  header{height:68px}.menu{display:grid}.hero{padding-top:112px}.hero:after{top:14%;right:-18vw;font-size:92px;transform:rotate(-90deg)}.hero-console{margin-top:26px}.console-grid{grid-template-columns:1fr 1fr!important}.console-grid>div{min-height:72px}
- .home-3d-wrap{margin-top:20px}.home-3d-stage{height:330px!important;transform:none!important;margin:0!important}.home-3d-stage:before{width:190px;height:190px}.home-cube{transform:scale(.78)}
+ .home-3d-wrap{margin-top:20px}.home-3d-stage{height:330px!important;transform:none!important;margin:0!important}.home-3d-stage:before{width:190px;height:190px}.home-3d-scene{transform:scale(.78)}
  .home-link-grid{grid-template-columns:1fr!important}.home-path a{grid-template-columns:42px 1fr!important;padding:20px 0!important}
  .inner-top{position:sticky}.inner-top .inner-nav{position:absolute;left:0;right:0;top:100%;display:none!important;flex-direction:column;align-items:stretch;gap:0;padding:10px 4vw 16px;background:rgba(7,9,13,.97);border-bottom:1px solid rgba(183,255,82,.16);box-shadow:0 20px 55px rgba(0,0,0,.5);backdrop-filter:blur(18px);z-index:60}.inner-top .inner-nav.open{display:flex!important}.inner-top .inner-nav a{display:flex!important;min-height:48px;align-items:center;padding:10px 4px;font-size:11px;border-bottom:1px solid #171c23}.inner-menu{display:grid}.inner-page{padding-top:35px}
  .mobile-action-bar{bottom:max(10px,env(safe-area-inset-bottom));padding-bottom:6px}
 }
-@media(max-width:380px){.console-grid{grid-template-columns:1fr!important}.home-cube{transform:scale(.66)}}
+@media(max-width:380px){.console-grid{grid-template-columns:1fr!important}.home-3d-scene{transform:scale(.66)}}
 @keyframes heroAmbient{to{transform:scale(1.08) translate3d(1%,-1%,0)}}@keyframes coreAura{50%{transform:translate(-50%,-50%) scale(1.14);opacity:.72}}
 @media(prefers-reduced-motion:reduce){.hero:before,.home-3d-stage:before{animation:none}.btn:hover,.hero-meta-link:hover,.home-path a:hover{transform:none}}
 /* Performance-safe image rendering */

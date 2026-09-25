@@ -784,3 +784,17 @@ body.page-exit{opacity:0;transform:translateY(5px);transition:opacity .15s ease,
 @media(prefers-reduced-motion:reduce){.hero:before,.home-3d-stage:before{animation:none}.btn:hover,.hero-meta-link:hover,.home-path a:hover{transform:none}}
 /* Performance-safe image rendering */
 img{content-visibility:auto}img[loading="lazy"]{contain-intrinsic-size:320px 220px}
+
+
+/* ===== 3D CUBE HARD FIX — HOVER MUST NEVER REPLACE FACE TRANSFORMS ===== */
+#home3dStage,#home3dScene,#home3dCube{transform-style:preserve-3d!important}
+#home3dStage{perspective:1100px!important;perspective-origin:50% 50%}
+#home3dCube{position:absolute!important;transform-style:preserve-3d!important}
+#home3dCube>.cube-face{backface-visibility:hidden;transform-style:preserve-3d!important}
+#home3dCube>.cube-front,#home3dCube>.cube-front:hover{transform:translateZ(110px)!important}
+#home3dCube>.cube-back,#home3dCube>.cube-back:hover{transform:rotateY(180deg) translateZ(110px)!important}
+#home3dCube>.cube-right,#home3dCube>.cube-right:hover{transform:rotateY(90deg) translateZ(110px)!important}
+#home3dCube>.cube-left,#home3dCube>.cube-left:hover{transform:rotateY(-90deg) translateZ(110px)!important}
+#home3dCube>.cube-top,#home3dCube>.cube-top:hover{transform:rotateX(90deg) translateZ(110px)!important}
+#home3dCube>.cube-bottom,#home3dCube>.cube-bottom:hover{transform:rotateX(-90deg) translateZ(110px)!important}
+#home3dCube>.cube-face:hover{filter:brightness(1.18);border-color:#b7ff52}

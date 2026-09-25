@@ -466,3 +466,11 @@ header{border-bottom-color:rgba(168,85,247,.12)}
   .motion-energy,.section-label:after,#pageTransition{display:none}
   .reveal{opacity:1;transform:none;transition:none}
 }
+
+/* ===== PERFORMANCE HARDENING ===== */
+body:before{display:none!important}
+header{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.spotlight{will-change:background}
+.motion-energy:before,.motion-energy:after{filter:blur(48px);will-change:transform}
+.experience-3d{will-change:opacity}
+@media(max-width:700px){header{backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}.motion-energy:before,.motion-energy:after{filter:blur(34px)}}

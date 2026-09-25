@@ -592,38 +592,6 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
 })();
 
 
-/* ===== NOVA PERSONAL KNOWLEDGE ===== */
-(()=>{
- const K={
-  identity:'Prince Dixit is 22, based in Delhi, India, focused on E-commerce Operations × Digital × Automation.',
-  contact:'Prince can be contacted at demonicspirit888@gmail.com or +91 88878 31825.',
-  education:'BA (Hons.) Economics at Banaras Hindu University; CUET Reasoning 99.43 percentile; Class 12 Commerce; Digital Marketing training.',
-  experience:'Experience includes Multybyte Marketing India — E-commerce Operations (May 2026–Present); Crafts Banaras — E-commerce Manager; Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive; and Unique Threads Sarees — Orders & Inventory Manager.',
-  skills:'E-commerce Operations, Google Sheets, Apps Script, JavaScript, SEO, Digital Marketing, AI Workflows, HTML/CSS and APIs.',
-  systems:'Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav / Doc, and the Prince-Resume portfolio system.',
-  multybyte:'Prince works on product/SKU workflows, purchasing coordination, vendor workflows, warehouse coordination and Google Sheets + Apps Script automation, including retries, caching, locks and backup/recovery.',
-  doc:'EyeNav evolved toward Doc, an Android voice-assistant concept using hey doc / doc commands, with background and locked-screen command goals.',
-  menu:'ME N U is a private relationship-focused Google Sheets/AI project with TODAY, MEMORIES, FUTURE and SECRET areas plus tasks, coins and assistant interactions.',
-  nova:'Nova is Prince’s portfolio assistant. Keep Nova’s physical appearance basic unless Prince explicitly asks for a visual/model change.'
- };
- window.princeNovaPersonalAnswer=function(q){const x=q.toLowerCase();
-  if(/who is prince|about prince|tell me about prince/.test(x))return K.identity;
-  if(/where.*prince|location.*prince/.test(x))return 'Prince is based in Delhi, India.';
-  if(/contact|email|phone|reach prince/.test(x))return K.contact;
-  if(/education|bhu|cuet/.test(x))return K.education;
-  if(/experience|career|worked|jobs/.test(x))return K.experience;
-  if(/skills|stack|technology/.test(x))return K.skills;
-  if(/multybyte/.test(x))return K.multybyte;
-  if(/eyenav|doc android|voice assistant/.test(x))return K.doc;
-  if(/me n u|menu project/.test(x))return K.menu;
-  if(/nova.*look|nova.*model|nova.*appearance/.test(x))return K.nova;
-  if(/projects|systems|what.*build/.test(x))return K.systems;
-  return null;
- };
- const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');
- if(form&&input&&messages){form.addEventListener('submit',e=>{const q=input.value.trim(),a=window.princeNovaPersonalAnswer(q);if(!q||!a)return;e.preventDefault();e.stopImmediatePropagation();const u=document.createElement('div');u.className='bot-msg user';u.textContent=q;messages.appendChild(u);input.value='';setTimeout(()=>{const b=document.createElement('div');b.className='bot-msg bot';b.textContent=a;messages.appendChild(b);messages.scrollTop=messages.scrollHeight},160)},true)}
-})();
-
 /* ===== HOMEPAGE 3D INTERACTIVE CORE ===== */
 (()=>{const stage=document.getElementById('home3dStage'),cube=document.getElementById('home3dCube');if(!stage||!cube)return;
 let rx=-18,ry=-32,lastX=0,lastY=0,drag=false,raf=0;

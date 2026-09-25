@@ -195,3 +195,65 @@ main,header,footer{position:relative;z-index:2}
 @keyframes novaBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}@keyframes novaPulse{50%{transform:scale(1.35);opacity:.55}}@keyframes novaWalk{to{transform:translateY(-5px) rotate(1deg)}}@keyframes novaArmL{to{transform:rotate(-18deg)}}@keyframes novaArmR{to{transform:rotate(18deg)}}@keyframes novaLegL{to{transform:rotate(12deg)}}@keyframes novaLegR{to{transform:rotate(-12deg)}}
 @media(max-width:700px){.page-bot{right:10px;bottom:10px}.bot-orb{transform:scale(.82);transform-origin:bottom right}.bot-reaction{right:58px;bottom:99px}.bot-chat{bottom:112px;height:min(470px,65vh)}.bot-chat-body{height:calc(min(470px,65vh) - 96px)}}
 @media(prefers-reduced-motion:reduce){.bot-character,.bot-antenna{animation:none!important}.bot-orb{transition:none}}
+
+/* ===== NOVA FACE-FIRST MODE =====
+   Nova stays as a compact floating face until tapped.
+   Opening Nova reveals her full character together with the AI chat.
+*/
+.page-bot:not(.nova-open) .bot-orb{
+  width:70px;
+  height:68px;
+  overflow:hidden;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.38));
+}
+.page-bot:not(.nova-open) .bot-character{
+  left:0;
+  bottom:0;
+  width:70px;
+  height:120px;
+}
+.page-bot:not(.nova-open) .bot-shadow,
+.page-bot:not(.nova-open) .bot-neck,
+.page-bot:not(.nova-open) .bot-body,
+.page-bot:not(.nova-open) .bot-arm,
+.page-bot:not(.nova-open) .bot-leg{
+  opacity:0;
+  pointer-events:none;
+}
+.page-bot:not(.nova-open) .bot-reaction{
+  right:52px;
+  bottom:58px;
+}
+.page-bot.nova-open .bot-orb{
+  width:104px;
+  height:136px;
+  overflow:visible;
+}
+.page-bot.nova-open .bot-character{
+  left:17px;
+  bottom:7px;
+}
+.page-bot.nova-open .bot-shadow,
+.page-bot.nova-open .bot-neck,
+.page-bot.nova-open .bot-body,
+.page-bot.nova-open .bot-arm,
+.page-bot.nova-open .bot-leg{
+  opacity:1;
+}
+.page-bot.nova-open .bot-reaction{
+  right:72px;
+  bottom:116px;
+}
+.page-bot.nova-open .bot-orb:hover{
+  transform:translateY(-4px) scale(1.02);
+}
+@media(max-width:700px){
+  .page-bot:not(.nova-open) .bot-orb{
+    width:62px;
+    height:60px;
+  }
+  .page-bot:not(.nova-open) .bot-character{
+    transform:scale(.9);
+    transform-origin:top center;
+  }
+}

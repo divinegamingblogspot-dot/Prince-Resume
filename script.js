@@ -216,3 +216,143 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     img.decoding='async';
   });
 })();
+
+
+/* ===== RECRUITER EXPERIENCE / INTERACTION PACK ===== */
+(()=> {
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Resume CTA: opens the clean printable resume; browser can Save as PDF. */
+  document.getElementById('downloadResume')?.addEventListener('click',()=>{});
+
+  /* Interactive skill constellation. */
+  const skillInfo={
+    systems:['Systems thinking','Connecting people, process, data and technology.'],
+    operations:['E-commerce operations','Orders, inventory, fulfillment, purchasing and warehouse workflows.'],
+    sheets:['Google Sheets','Structured operational data, formulas, validation and controlled workbooks.'],
+    automation:['Apps Script','Practical automation, retries, caching, locks and workflow protection.'],
+    web:['Web / SEO','Websites, search visibility, content structure and digital presence.'],
+    javascript:['JavaScript','Interactive web behavior, automation logic and API-connected experiences.'],
+    ai:['AI / Voice','AI experiments, voice interaction and Android assistant concepts.'],
+    marketing:['Digital marketing','SEO, websites and social media marketing supporting business growth.']
+  };
+  const info=document.getElementById('skillMapInfo');
+  document.querySelectorAll('.skill-node').forEach(node=>{
+    const show=()=>{
+      document.querySelectorAll('.skill-node').forEach(n=>n.classList.remove('active'));
+      node.classList.add('active');
+      const d=skillInfo[node.dataset.skill]||skillInfo.systems;
+      if(info) info.innerHTML='<strong>'+d[0]+'</strong><span>'+d[1]+'</span>';
+    };
+    node.addEventListener('mouseenter',show);
+    node.addEventListener('focus',show);
+    node.addEventListener('click',show);
+  });
+
+  /* Before → after micro demos. */
+  const demoSteps={
+    images:['Reading product URL…','Discovering og:image / CDN source…','Validating image source…','Retry + cache check…','✓ Image formula ready.'],
+    data:['Reading SKU rows…','Checking required fields…','Validating product / vendor mapping…','Applying controlled workflow…','✓ Data path ready.']
+  };
+  document.querySelectorAll('.demo-run').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const log=btn.parentElement.querySelector('.demo-log');
+      const steps=demoSteps[btn.dataset.demo]||demoSteps.images;
+      let i=0;
+      btn.disabled=true;
+      log.className='demo-log running';
+      const tick=()=>{
+        log.textContent=steps[i++];
+        if(i<steps.length) setTimeout(tick,360);
+        else {log.className='demo-log done';btn.disabled=false;}
+      };
+      tick();
+    });
+  });
+
+  /* Gentle card depth without fighting reveal transforms. */
+  if(!reduce){
+    document.querySelectorAll('.case-study,.automation-demo,.github-repo-card').forEach(card=>{
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const rx=((e.clientY-r.top)/r.height-.5)*-2.2;
+        const ry=((e.clientX-r.left)/r.width-.5)*2.2;
+        card.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-6px)';
+      });
+      card.addEventListener('pointerleave',()=>{card.style.transform=''});
+    });
+  }
+
+  /* Active navigation state while scrolling through the resume. */
+  const navLinks=[...document.querySelectorAll('header nav a[href^="#"]')];
+  const observed=[...document.querySelectorAll('main section[id]')];
+  if('IntersectionObserver' in window){
+    const navIO=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        navLinks.forEach(link=>link.classList.toggle('current',link.getAttribute('href')==='#'+entry.target.id));
+      });
+    },{rootMargin:'-35% 0px -55% 0px',threshold:0});
+    observed.forEach(s=>navIO.observe(s));
+  }
+
+  /* Scroll-linked visual depth, throttled through requestAnimationFrame. */
+  if(!reduce){
+    let raf=0;
+    const parallax=()=>{
+      raf=0;
+      const y=scrollY;
+      document.querySelectorAll('.section-heading-visual img').forEach((img,i)=>{
+        const r=img.parentElement.getBoundingClientRect();
+        if(r.bottom<0||r.top>innerHeight)return;
+        const shift=(r.top-innerHeight/2)*-0.035;
+        img.style.transform='translate3d(0,'+shift+'px,0) scale(1.04)';
+      });
+    };
+    addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(parallax)},{passive:true});
+    parallax();
+  }
+
+  /* Public GitHub activity: small, cached, non-blocking enhancement with local fallback. */
+  const repoWrap=document.getElementById('githubRepos'),status=document.getElementById('githubStatus');
+  const owner='divinegamingblogspot-dot';
+  const cached=(()=>{try{return JSON.parse(sessionStorage.getItem('princeGithubRepos')||'null')}catch{return null}})();
+  function renderRepos(repos){
+    if(!repoWrap||!Array.isArray(repos)||!repos.length)return;
+    repoWrap.innerHTML=repos.slice(0,6).map(r=>{
+      const desc=(r.description||'Public repository by Prince Dixit.').replace(/[<>&"]/g,'');
+      return '<a class="github-repo-card" href="'+r.html_url+'" target="_blank" rel="noopener"><span>'+((r.language||'GITHUB')+' · PUBLIC').toUpperCase()+'</span><strong>'+r.name.replace(/[<>&"]/g,'')+'</strong><small>'+desc.slice(0,130)+'</small><b>★ '+r.stargazers_count+' · Open ↗</b></a>';
+    }).join('');
+  }
+  if(cached){renderRepos(cached);if(status)status.innerHTML='<span></span> Public repository snapshot loaded.';}
+  fetch('https://api.github.com/users/'+owner+'/repos?sort=updated&per_page=6',{headers:{Accept:'application/vnd.github+json'}})
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(repos=>{
+      sessionStorage.setItem('princeGithubRepos',JSON.stringify(repos));
+      renderRepos(repos);
+      if(status)status.innerHTML='<span></span> Live public repositories connected.';
+    })
+    .catch(()=>{if(status)status.innerHTML='<span></span> Using the built-in repository list.';});
+
+  /* Recruiter mode gets a direct keyboard shortcut for fast review. */
+  document.addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){
+      e.preventDefault();
+      document.getElementById('recruiterBtn')?.click();
+    }
+  });
+
+  /* Mobile navigation closes after a destination is selected. */
+  document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('nav')?.classList.remove('open')));
+
+  /* Small performance wins for a static resume: defer non-critical image decoding and avoid layout work offscreen. */
+  document.querySelectorAll('img').forEach(img=>{
+    img.decoding='async';
+    if(!img.closest('.hero')) img.loading='lazy';
+  });
+
+  /* Keyboard-visible current nav state. */
+  const style=document.createElement('style');
+  style.textContent='header nav a.current{color:#f4f5f2} header nav a.current:after{content:"";display:block;height:1px;background:#b7ff52;transform:scaleX(1);transform-origin:left}';
+  document.head.appendChild(style);
+})();

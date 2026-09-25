@@ -559,6 +559,9 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   enhance();
 })();
 
+/* ===== PAGE-AWARE CINEMATIC CONTEXT ===== */
+(()=>{const sections=[...document.querySelectorAll('.section,.inner-section')];if(!sections.length)return;const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;document.body.dataset.visual=el.dataset.visual||'violet';if(el.classList.contains('inner-section')&&!el.querySelector('.inner-section-nova')){const b=document.createElement('button');b.className='inner-section-nova';b.type='button';b.textContent='✦ ASK NOVA ABOUT THIS SECTION';b.dataset.askNova='Explain this section';el.appendChild(b)}}),{threshold:.35});sections.forEach((s,i)=>{s.dataset.visual=['violet','red','blue','acid'][i%4];io.observe(s)});if(reduce)document.body.dataset.visual='violet'})();
+
 /* ===== FINAL PORTFOLIO SYSTEM — ADDITIVE / DEFENSIVE ===== */
 (()=> {
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -14,14 +14,23 @@ document.querySelectorAll('#experience .job').forEach((job,index)=>{
   visual.innerHTML='<img loading="lazy" alt="" src="images/'+visuals[index]+'"><span class="job-index">0'+(index+1)+'</span>';
   job.insertBefore(visual,job.firstElementChild);
 });
-/* Subtle pointer tilt for interactive cards. */
-if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+/* Smooth, throttled pointer tilt — avoids per-event layout churn. */
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(pointer:fine)').matches){
   document.querySelectorAll('.project,.process-card,.build-grid>div,.edu-grid>div,.training-card').forEach(card=>{
+    let raf=0,px=0,py=0;
     card.addEventListener('pointermove',e=>{
       const r=card.getBoundingClientRect();
-      card.style.transform='perspective(900px) rotateX('+(((e.clientY-r.top)/r.height-.5)*-2.2)+'deg) rotateY('+(((e.clientX-r.left)/r.width-.5)*2.2)+'deg) translateY(-4px)';
+      px=((e.clientX-r.left)/r.width-.5)*2.2;
+      py=((e.clientY-r.top)/r.height-.5)*-2.2;
+      if(!raf) raf=requestAnimationFrame(()=>{
+        card.style.transform='perspective(1000px) rotateX('+py+'deg) rotateY('+px+'deg) translate3d(0,-4px,0)';
+        raf=0;
+      });
+    },{passive:true});
+    card.addEventListener('pointerleave',()=>{
+      if(raf)cancelAnimationFrame(raf);raf=0;
+      card.style.transform='';
     });
-    card.addEventListener('pointerleave',()=>card.style.transform='');
   });
 }
 

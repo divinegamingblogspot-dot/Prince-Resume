@@ -890,3 +890,23 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 /* keep mobile readable rather than merely brighter */
 @media(max-width:700px){.hero-copy{color:#c4c8d0}.about-text p:not(.lead),.job p,.project p,.process-card p,.build-grid p,.training-card p{color:#b0b5bf}.section-label{color:#b9bec7}.hero-meta-link{border-color:#303742;background:rgba(12,15,21,.84)}}
 @media(prefers-reduced-motion:reduce){.btn:hover,.project:hover,.process-card:hover,.build-grid>div:hover,.edu-grid>div:hover,.training-card:hover{transform:none}.home-cube .cube-face:hover{filter:none}}
+
+
+/* ===== PRISMATIC CUBE — COLOR + GLOW ONLY ===== */
+.home-3d-stage{filter:saturate(1.12)}
+.home-3d-stage:before{content:"";position:absolute;left:50%;top:50%;width:390px;height:390px;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 0deg,rgba(183,255,82,.13),rgba(0,214,201,.09),rgba(91,124,255,.12),rgba(168,85,247,.15),rgba(255,59,92,.11),rgba(255,190,70,.10),rgba(183,255,82,.13));filter:blur(48px);opacity:.72;pointer-events:none;animation:cubeAura 10s linear infinite}
+.home-3d-stage:after{content:"";position:absolute;left:50%;top:50%;width:300px;height:300px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(183,255,82,.14);box-shadow:0 0 55px rgba(168,85,247,.12),inset 0 0 55px rgba(0,214,201,.06);pointer-events:none}
+.home-cube .cube-front{background:linear-gradient(145deg,rgba(183,255,82,.19),rgba(15,18,22,.94) 48%,rgba(8,9,13,.96))!important;border-color:rgba(183,255,82,.72)!important;box-shadow:inset 0 0 70px rgba(183,255,82,.20),0 0 28px rgba(183,255,82,.34),0 0 85px rgba(183,255,82,.16)!important}
+.home-cube .cube-back{background:linear-gradient(145deg,rgba(168,85,247,.20),rgba(15,18,22,.94) 48%,rgba(8,9,13,.96))!important;border-color:rgba(168,85,247,.72)!important;box-shadow:inset 0 0 70px rgba(168,85,247,.22),0 0 28px rgba(168,85,247,.34),0 0 85px rgba(168,85,247,.16)!important}
+.home-cube .cube-right{background:linear-gradient(145deg,rgba(255,59,92,.18),rgba(15,18,22,.94) 48%,rgba(8,9,13,.96))!important;border-color:rgba(255,59,92,.68)!important;box-shadow:inset 0 0 70px rgba(255,59,92,.20),0 0 28px rgba(255,59,92,.32),0 0 85px rgba(255,59,92,.15)!important}
+.home-cube .cube-left{background:linear-gradient(145deg,rgba(91,124,255,.20),rgba(15,18,22,.94) 48%,rgba(91,124,255,.31),rgba(8,9,13,.96))!important;border-color:rgba(91,124,255,.68)!important;box-shadow:inset 0 0 70px rgba(91,124,255,.21),0 0 28px rgba(91,124,255,.31),0 0 85px rgba(91,124,255,.15)!important}
+.home-cube .cube-top{background:linear-gradient(145deg,rgba(0,214,201,.18),rgba(15,18,22,.94) 48%,rgba(8,9,13,.96))!important;border-color:rgba(0,214,201,.68)!important;box-shadow:inset 0 0 70px rgba(0,214,201,.20),0 0 28px rgba(0,214,201,.31),0 0 85px rgba(0,214,201,.14)!important}
+.home-cube .cube-bottom{background:linear-gradient(145deg,rgba(255,190,70,.18),rgba(15,18,22,.94) 48%,rgba(8,9,13,.96))!important;border-color:rgba(255,190,70,.68)!important;box-shadow:inset 0 0 70px rgba(255,190,70,.20),0 0 28px rgba(255,190,70,.30),0 0 85px rgba(255,190,70,.14)!important}
+.home-cube .cube-face strong{letter-spacing:.02em;text-shadow:0 0 12px rgba(255,255,255,.22),0 0 30px rgba(183,255,82,.10)}
+.home-cube .cube-face small{font-weight:900;color:#fff;text-shadow:0 0 14px currentColor}.home-cube .cube-face span{color:#dce1e8}
+.home-cube .cube-face:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.09) 48%,transparent 62%);transform:translateX(-130%);transition:transform .8s ease;pointer-events:none}.home-cube .cube-face:hover:after{transform:translateX(130%)}
+.home-cube .cube-front small{color:#b7ff52}.home-cube .cube-back small{color:#d79cff}.home-cube .cube-right small{color:#ff8297}.home-cube .cube-left small{color:#91a9ff}.home-cube .cube-top small{color:#63f0e5}.home-cube .cube-bottom small{color:#ffd27a}
+.home-cube .cube-face:hover{filter:brightness(1.36) saturate(1.18)!important}
+@keyframes cubeAura{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(max-width:700px){.home-3d-stage:before{width:300px;height:300px;filter:blur(38px)}.home-3d-stage:after{width:230px;height:230px}}
+@media(prefers-reduced-motion:reduce){.home-3d-stage:before{animation:none}.home-cube .cube-face:after{display:none}}

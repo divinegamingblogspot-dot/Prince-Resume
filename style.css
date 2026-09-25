@@ -256,3 +256,31 @@ body{background-image:radial-gradient(circle at 12% 18%,rgba(183,255,82,.045),tr
 .job-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,10,.08),rgba(5,7,10,.58));pointer-events:none}
 .job-index{z-index:2}
 .section-heading-visual img{object-fit:cover}
+
+/* ===== NOVA MODEL 2.0 — anime-inspired humanoid robot ===== */
+.page-bot{right:24px;bottom:18px}
+.bot-orb{width:154px;height:190px}
+.bot-character{left:19px;bottom:4px;width:112px;height:178px}
+.bot-shadow{width:94px;height:13px;left:28px;bottom:1px}
+.bot-hair{left:4px;top:2px;width:104px;height:130px;border-radius:48% 50% 38% 35%;background:linear-gradient(105deg,#581427 0%,#a91f43 28%,#db4266 52%,#9b1d3d 77%,#4e1225 100%);clip-path:polygon(18% 4%,48% 0,78% 5%,94% 20%,100% 39%,92% 55%,100% 92%,78% 76%,67% 100%,53% 76%,39% 98%,26% 74%,4% 94%,12% 59%,0 39%,9% 19%);z-index:1;box-shadow:inset -9px -8px 20px rgba(35,0,10,.3),0 10px 18px rgba(0,0,0,.22)}
+.bot-hair:before{content:"";position:absolute;left:27px;top:4px;width:47px;height:93px;border-radius:55%;background:linear-gradient(115deg,#ed5b7b,#a91f43 70%);transform:rotate(-8deg);opacity:.75}
+.bot-hair:after{content:"";position:absolute;right:-3px;top:36px;width:31px;height:108px;border-radius:50%;background:linear-gradient(180deg,#c52e52,#5c142a);transform:rotate(-8deg)}
+.bot-head{left:28px;top:31px;width:60px;height:57px;z-index:3;border-radius:28px 28px 23px 23px;background:linear-gradient(145deg,#f8fafb,#d4dae0 58%,#8c95a2);border:2px solid #a8b0bb;box-shadow:inset 0 -9px 14px rgba(30,35,45,.12),0 7px 16px rgba(0,0,0,.3)}
+.bot-ear{top:19px}
+.bot-eye{top:27px;width:10px;height:14px}
+.bot-eye.left{left:14px}.bot-eye.right{right:14px}
+.bot-blush{top:40px}
+.bot-mouth{top:44px;left:24px}
+.bot-antenna{left:48px;top:13px;z-index:5}
+.bot-neck{left:51px;top:86px;width:13px;height:10px}
+.bot-body{left:28px;top:94px;width:56px;height:46px;border-radius:14px 14px 8px 8px;z-index:2;background:linear-gradient(145deg,#e7ebef,#4d5563);border:2px solid #747d8a}
+.bot-body:after{content:"";position:absolute;left:6px;right:6px;bottom:-15px;height:22px;background:linear-gradient(135deg,#8d1836,#e14869 48%,#68142e);clip-path:polygon(13% 0,87% 0,100% 100%,0 100%);border:1px solid rgba(255,113,142,.22);border-top:0}
+.bot-core{left:20px;top:13px}
+.bot-arm{top:97px;width:10px;height:36px}
+.bot-arm.left{left:16px}.bot-arm.right{right:16px}
+.bot-leg{top:132px;width:12px;height:30px}
+.bot-leg.left{left:39px}.bot-leg.right{right:39px}
+.bot-leg:after{content:"";position:absolute;left:-4px;bottom:-5px;width:20px;height:7px;border-radius:7px 9px 4px 4px;background:#303540;border:1px solid #697280}
+.page-bot.walking .bot-character{animation:novaWalk .36s ease-in-out infinite alternate}
+.bot-reaction{right:112px;bottom:164px}
+@media(max-width:700px){.page-bot{right:3px;bottom:5px}.bot-orb{transform:scale(.72);transform-origin:bottom right}.bot-reaction{right:72px;bottom:120px}}

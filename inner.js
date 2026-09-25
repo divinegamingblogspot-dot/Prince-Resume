@@ -46,11 +46,16 @@ function intent(q){
  // Identity questions are classified first so Nova cannot route them to Prince answers.
  const directSelf=/^(who are you|who r u|who r you|what are you|what r u|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|your identity|your name|your role|about nova|who is nova|whos nova|who's nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai|apna introduction|apne baare me|apne bare me|are you an ai|are you real|are you a bot)$/i.test(s);
  const directPurpose=/^(why do you exist|why were you created|why were you made|your purpose|tumhe kyu banaya|tumhe kyun banaya|tumhara purpose)$/i.test(s);
+ // Natural follow-ups often contain a prefix such as "and", "also", or "okay".
+ // Strip those conversational wrappers before classifying Nova's identity.
+ const selfProbe=s.replace(/^(and|also|okay|ok|so|hey|hi|hello|plus|then)\\s+/i,'');
+ const novaMention=/\\bnova\\b/i.test(selfProbe);
+ const selfPhrase=/(who are you|who r u|who r you|what are you|what r u|your identity|your name|your role|about yourself|tell me about yourself|introduce yourself|who is nova|what is nova|who's nova|whos nova|nova kaun|nova kon|nova kya|tum kaun|tum kon|aap kaun|aap kon|tumhara naam|tumhari identity|tumhara role|apne baare me|apne bare me)/i.test(selfProbe);
  const tokens=words(s);
  const topic=(arr)=>arr.some(x=>{const p=norm(x);if(s.includes(p))return true;const pt=p.split(' ').filter(Boolean);return pt.length>1&&pt.every(t=>tokens.has(t)||t.length<3)});
  const asks=(arr)=>topic(arr)||arr.some(x=>{const p=norm(x);return p.length>3&&s.includes(p.slice(0,Math.max(4,p.length-2)))})
  return{
-  self:directSelf||asks(['who are you','what are you','tell me about yourself','introduce yourself','about yourself','your identity','your name','your role','who is nova','about nova','nova identity','nova kaun','nova kya','tum kaun','aap kaun','tumhara naam','tumhari identity','tumhara role','apna introduction','apne baare me','apne bare me','are you an ai','are you real','are you a bot','what is your identity']),
+  self:directSelf||((novaMention&&selfPhrase)||selfPhrase)||asks(['who are you','what are you','tell me about yourself','introduce yourself','about yourself','your identity','your name','your role','who is nova','about nova','nova identity','nova kaun','nova kya','tum kaun','aap kaun','tumhara naam','tumhari identity','tumhara role','apna introduction','apne baare me','apne bare me','are you an ai','are you real','are you a bot','what is your identity']),
   consciousness:asks(['conscious','consciousness','sentient','alive','feelings','emotion','mind','real person','human']),
   purpose:directPurpose||asks(['why do you exist','why were you created','your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
   capability:asks(['what can you do','what can you answer','your capabilities','what do you know','tum kya kar sakti','kya kya bata sakti']),

@@ -248,3 +248,11 @@ body{background-image:radial-gradient(circle at 12% 18%,rgba(183,255,82,.045),tr
 .bot-suggestions button:hover{border-color:rgba(255,113,142,.45);color:#ff91a8}
 .page-bot[data-mood="love"] .bot-eye{background:var(--nova-pink);box-shadow:0 0 11px rgba(255,113,142,.65)}
 @media(max-width:700px){.page-bot{right:7px;bottom:8px}.bot-orb{transform:scale(.78);transform-origin:bottom right}.bot-reaction{right:70px;bottom:112px}.bot-chat{bottom:112px}}
+
+/* External experience imagery */
+.job-visual{overflow:hidden;position:relative;background:#111}
+.job-visual img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.86) contrast(1.05);transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .5s ease}
+.job-card:hover .job-visual img{transform:scale(1.06);filter:saturate(1) contrast(1.08)}
+.job-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,10,.08),rgba(5,7,10,.58));pointer-events:none}
+.job-index{z-index:2}
+.section-heading-visual img{object-fit:cover}

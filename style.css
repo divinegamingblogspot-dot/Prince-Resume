@@ -257,3 +257,38 @@ main,header,footer{position:relative;z-index:2}
     transform-origin:top center;
   }
 }
+
+/* Nova open-state repair: keep the complete character visible beside the chat. */
+.page-bot.nova-open .bot-orb{
+  overflow:visible !important;
+  width:104px !important;
+  height:136px !important;
+  position:relative;
+}
+.page-bot.nova-open .bot-character{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:70px !important;
+  height:120px !important;
+  left:17px !important;
+  bottom:7px !important;
+  z-index:5;
+  pointer-events:none;
+}
+.page-bot.nova-open .bot-shadow,
+.page-bot.nova-open .bot-neck,
+.page-bot.nova-open .bot-body,
+.page-bot.nova-open .bot-arm,
+.page-bot.nova-open .bot-leg{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+.page-bot.nova-open .bot-shadow{z-index:4}
+.page-bot.nova-open .bot-head,
+.page-bot.nova-open .bot-hair,
+.page-bot.nova-open .bot-antenna{
+  visibility:visible !important;
+  opacity:1 !important;
+}

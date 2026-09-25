@@ -575,7 +575,29 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const loader=document.getElementById('loader'),bar=loader?.querySelector('.loader-bar i'),pct=loader?.querySelector('#loaderPercent'),status=loader?.querySelector('#loaderStatus');
   if(loader){
-    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=reduce?500:4800;
+    /* Original synthesized TVA-like soundscape: no copyrighted audio file is loaded. */
+    const startAudio=()=>{
+      if(reduce||window.__princeIntroAudioStarted)return;
+      window.__princeIntroAudioStarted=true;
+      try{
+        const AC=window.AudioContext||window.webkitAudioContext;
+        if(!AC)return;
+        const ac=new AC();
+        const master=ac.createGain(); master.gain.setValueAtTime(0.0001,ac.currentTime); master.gain.exponentialRampToValueAtTime(.055,ac.currentTime+.65); master.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+6.8); master.connect(ac.destination);
+        const now=ac.currentTime;
+        const osc=(type,freq,start,dur,gain)=>{
+          const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(freq,now+start);o.frequency.exponentialRampToValueAtTime(Math.max(30,freq*.72),now+start+dur);g.gain.setValueAtTime(.0001,now+start);g.gain.exponentialRampToValueAtTime(gain,now+start+.18);g.gain.exponentialRampToValueAtTime(.0001,now+start+dur);o.connect(g).connect(master);o.start(now+start);o.stop(now+start+dur+.08);
+        };
+        [55,82.4,110,146.8].forEach((f,i)=>osc('sawtooth',f,i*1.05,2.8,.16));
+        osc('sine',220,1.7,3.8,.07); osc('triangle',329.6,3.9,2.3,.055);
+        [0.55,1.62,2.7,3.78,4.86,5.94].forEach((t,i)=>osc('square',110+i*13,t,.18,.018));
+        setTimeout(()=>{try{ac.close()}catch(e){}},7600);
+        loader.classList.add('loader-audio-active');
+      }catch(e){}
+    };
+    document.addEventListener('pointerdown',startAudio,{once:true,passive:true});
+    document.addEventListener('keydown',startAudio,{once:true});
+    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=reduce?500:7000;
     const frame=now=>{const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.round(e*100);if(bar)bar.style.width=v+'%';if(pct)pct.textContent=String(v).padStart(2,'0')+'%';if(status)status.textContent=stages[Math.min(4,Math.floor(p*5))];if(p<1)requestAnimationFrame(frame)};requestAnimationFrame(frame);
     addEventListener('load',()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent='SYSTEM READY'},{once:true});
   }
@@ -601,7 +623,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
 
 
 /* ===== PERFORMANCE PASS ===== */
-(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};window.addEventListener('load',()=>setTimeout(hide,reduce?180:5000),{once:true});setTimeout(hide,reduce?900:5050)}})();
+(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};window.addEventListener('load',()=>setTimeout(hide,reduce?180:7200),{once:true});setTimeout(hide,reduce?900:7250)}})();
 
 
 /* ===== UI UPGRADE JS — ADDITIVE / DEFENSIVE ===== */

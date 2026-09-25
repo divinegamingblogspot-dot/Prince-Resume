@@ -1036,13 +1036,13 @@ footer{color:#747d89;border-top-color:#2b323d}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:clamp(1px,.35vw,7px);
+  gap:clamp(7px,1.05vw,18px);
   width:100%;
   min-height:clamp(90px,15vw,180px);
   margin:18px 0 22px;
   font-size:clamp(76px,12vw,154px)!important;
   line-height:.78!important;
-  letter-spacing:-.075em!important;
+  letter-spacing:-.028em!important;
   color:#f4f4f2;
   perspective:900px;
   text-shadow:0 0 16px rgba(255,255,255,.12),0 0 70px rgba(183,255,82,.07);
@@ -1053,7 +1053,7 @@ footer{color:#747d89;border-top-color:#2b323d}
   text-align:center;
   transform-origin:50% 58%;
   will-change:transform,filter,opacity,font-family;
-  animation:morphLetter 7.2s steps(1,end) infinite;
+  animation:morphLetter 7.2s cubic-bezier(.65,0,.35,1) infinite;
 }
 .loader-name-morph .morph-p{animation-delay:-.02s}
 .loader-name-morph .morph-r{animation-delay:-.62s}
@@ -1069,17 +1069,22 @@ footer{color:#747d89;border-top-color:#2b323d}
   animation:dotPulse 1.15s ease-in-out infinite;
 }
 @keyframes morphLetter{
-  0%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(1) skewX(0);filter:none;opacity:1}
-  10%{font-family:Georgia,serif;font-weight:900;transform:scaleX(.82) skewX(-8deg);filter:contrast(1.35);opacity:.92}
-  20%{font-family:"Times New Roman",serif;font-weight:700;transform:scaleX(1.12) rotate(-2deg);filter:blur(.15px);opacity:.98}
-  30%{font-family:"Arial Black",Impact,sans-serif;font-weight:900;transform:scaleX(.9) skewX(5deg);filter:contrast(1.5);opacity:.96}
-  40%{font-family:"Courier New",monospace;font-weight:900;transform:scaleX(1.02) scaleY(.84);filter:drop-shadow(0 0 8px rgba(32,230,213,.45));opacity:.9}
-  50%{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:700;transform:scaleX(.92) rotate(3deg);filter:drop-shadow(0 0 10px rgba(184,108,255,.45));opacity:.94}
-  60%{font-family:Impact,"Arial Black",sans-serif;font-weight:900;transform:scaleX(1.14) skewX(-4deg);filter:drop-shadow(0 0 12px rgba(255,63,104,.42));opacity:1}
-  70%{font-family:Georgia,serif;font-weight:900;transform:scaleX(.78) scaleY(1.12) rotate(-3deg);filter:drop-shadow(0 0 9px rgba(255,200,87,.35));opacity:.92}
-  80%{font-family:fantasy,"Times New Roman",serif;font-weight:900;transform:scaleX(1.08) skewY(2deg);filter:contrast(1.45);opacity:.97}
-  90%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(.96) skewX(1deg);filter:drop-shadow(0 0 15px rgba(183,255,82,.32));opacity:.94}
-  100%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(1) skewX(0);filter:drop-shadow(0 0 20px rgba(183,255,82,.18));opacity:1}
+  0%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:translateY(0) scaleX(1) skewX(0) rotate(0);filter:none;opacity:1}
+  6%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:translateY(-2px) scaleX(.94) skewX(-3deg);filter:blur(.15px);opacity:.9}
+  12%{font-family:Georgia,serif;font-weight:900;transform:translateY(1px) scaleX(.82) skewX(-8deg) rotate(-1deg);filter:contrast(1.28);opacity:.86}
+  18%{font-family:Georgia,serif;font-weight:900;transform:translateY(-1px) scaleX(.96) skewX(-4deg) rotate(1deg);filter:blur(.2px);opacity:.96}
+  25%{font-family:"Times New Roman",serif;font-weight:700;transform:translateY(2px) scaleX(1.12) rotate(-2deg);filter:contrast(1.18);opacity:.98}
+  32%{font-family:"Arial Black",Impact,sans-serif;font-weight:900;transform:translateY(-2px) scaleX(.9) skewX(5deg) rotate(1deg);filter:contrast(1.42);opacity:.91}
+  39%{font-family:"Arial Black",Impact,sans-serif;font-weight:900;transform:translateY(1px) scaleX(1.02) skewX(1deg);filter:drop-shadow(0 0 7px rgba(255,63,104,.32));opacity:1}
+  46%{font-family:"Courier New",monospace;font-weight:900;transform:translateY(-1px) scaleX(1.04) scaleY(.86);filter:drop-shadow(0 0 10px rgba(32,230,213,.48));opacity:.88}
+  53%{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:700;transform:translateY(2px) scaleX(.92) rotate(3deg);filter:drop-shadow(0 0 11px rgba(184,108,255,.5));opacity:.92}
+  60%{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:700;transform:translateY(-1px) scaleX(1.04) rotate(1deg);filter:drop-shadow(0 0 8px rgba(184,108,255,.32));opacity:.98}
+  67%{font-family:Impact,"Arial Black",sans-serif;font-weight:900;transform:translateY(1px) scaleX(1.14) skewX(-4deg);filter:drop-shadow(0 0 13px rgba(255,63,104,.45));opacity:1}
+  74%{font-family:Georgia,serif;font-weight:900;transform:translateY(-2px) scaleX(.78) scaleY(1.12) rotate(-3deg);filter:drop-shadow(0 0 10px rgba(255,200,87,.38));opacity:.9}
+  81%{font-family:fantasy,"Times New Roman",serif;font-weight:900;transform:translateY(1px) scaleX(1.08) skewY(2deg);filter:contrast(1.4);opacity:.96}
+  88%{font-family:fantasy,"Times New Roman",serif;font-weight:900;transform:translateY(-1px) scaleX(.94) skewY(-1deg);filter:drop-shadow(0 0 9px rgba(99,136,255,.35));opacity:.94}
+  94%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:translateY(1px) scaleX(.96) skewX(1deg);filter:drop-shadow(0 0 15px rgba(183,255,82,.34));opacity:.92}
+  100%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:translateY(0) scaleX(1) skewX(0) rotate(0);filter:drop-shadow(0 0 20px rgba(183,255,82,.18));opacity:1}
 }
 @keyframes dotPulse{
   0%,100%{transform:scale(1);opacity:.7}
@@ -1128,7 +1133,7 @@ footer{color:#747d89;border-top-color:#2b323d}
 @keyframes load{to{width:100%;background-position:100% 0}}
 @media(max-width:700px){
   .loader-inner{width:min(96vw,620px)!important}
-  .loader-name-morph{font-size:clamp(52px,16vw,92px)!important;gap:0;min-height:82px;margin:10px 0 18px}
+  .loader-name-morph{font-size:clamp(52px,16vw,92px)!important;gap:clamp(4px,1.4vw,9px);min-height:82px;margin:10px 0 18px}
   .loader-name-morph .morph-letter{min-width:.48em}
   .loader-top,.loader-meta{font-size:9px}
   .loader-meta{gap:8px}

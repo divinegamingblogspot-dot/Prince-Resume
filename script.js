@@ -623,3 +623,16 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
  const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');
  if(form&&input&&messages){form.addEventListener('submit',e=>{const q=input.value.trim(),a=window.princeNovaPersonalAnswer(q);if(!q||!a)return;e.preventDefault();e.stopImmediatePropagation();const u=document.createElement('div');u.className='bot-msg user';u.textContent=q;messages.appendChild(u);input.value='';setTimeout(()=>{const b=document.createElement('div');b.className='bot-msg bot';b.textContent=a;messages.appendChild(b);messages.scrollTop=messages.scrollHeight},160)},true)}
 })();
+
+/* ===== HOMEPAGE 3D INTERACTIVE CORE ===== */
+(()=>{const stage=document.getElementById('home3dStage'),cube=document.getElementById('home3dCube');if(!stage||!cube)return;
+let rx=-18,ry=-32,lastX=0,lastY=0,drag=false,raf=0;
+const render=()=>{raf=0;cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';};
+const move=(x,y)=>{if(!drag)return;ry+=(x-lastX)*.45;rx-=(y-lastY)*.45;rx=Math.max(-70,Math.min(70,rx));lastX=x;lastY=y;if(!raf)raf=requestAnimationFrame(render)};
+stage.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)});
+stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY));
+stage.addEventListener('pointerup',()=>{drag=false;stage.classList.remove('dragging')});
+stage.addEventListener('pointercancel',()=>{drag=false;stage.classList.remove('dragging')});
+stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.18;rx-=e.deltaX*.08;if(!raf)raf=requestAnimationFrame(render)},{passive:false});
+render();
+})();

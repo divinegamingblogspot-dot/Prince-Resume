@@ -138,7 +138,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     [/where.*(from|live)|location|delhi/i,'Prince is based in Delhi, India.'],
     [/why|purpose|motivation|what drives/i,'Prince likes building useful things that solve real problems. He moved toward Delhi for personal and career reasons and has focused on turning business work into better systems, automation and digital workflows.'],
     [/experience|work|job|career/i,'He has worked across e-commerce operations, management, telesales, orders and inventory — including Multybyte, Crafts Banaras, Paraxion and Unique Threads.'],
-    [/multybyte|current job|current work/i,'At Multybyte, Prince works around wholesale e-commerce operations, product and SKU data, inventory, purchasing coordination, vendor workflows, warehouse coordination, packing/dispatch, website and app bug rectification, on-page SEO, digital marketing and Meta Ads. He joined when the site's internal on-page SEO assessment was around 45% and has taken it to around 95% at present, alongside broader website/data improvements.'],
+    [/multybyte|current job|current work/i,'At Multybyte, Prince works around wholesale e-commerce operations, product and SKU data, inventory, purchasing coordination, vendor workflows, warehouse coordination, packing/dispatch and website/data issues.'],
     [/crafts|banaras/i,'At Crafts Banaras, Prince handled e-commerce management, daily operations, team coordination, customer service, digital marketing, social media, orders, inventory and website work.'],
     [/education|bhu|degree|study|college|school/i,'Prince studied BA (Hons.) Economics at BHU and completed Class 12 in Commerce. His CUET Reasoning percentile was 99.43%. He also completed training in SEO, website building and social media marketing.'],
     [/skill|stack|technology|tech|know/i,'His toolkit includes Google Sheets, Google Apps Script, JavaScript, HTML/CSS, APIs, SEO, social media marketing, e-commerce operations, inventory, fulfillment, website management, AI workflows and business automation.'],
@@ -640,7 +640,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
  /* Active navigation indicator, including inner pages. */
  const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
  document.querySelectorAll('nav a').forEach(a=>{const href=(a.getAttribute('href')||'').split('#')[0].toLowerCase();if(href===file||((file==='index.html'||!file)&&href==='#home'))a.classList.add('active')});
- /* Native navigation: never intercept page links. This keeps every page, Nova, and external link reliable. */
+ /* Native navigation: leave browser navigation untouched. */
  /* Mobile sticky high-value actions: Contact, Resume and Nova. */
  if(matchMedia('(max-width:700px)').matches && !document.querySelector('.mobile-action-bar')){
    const bar=document.createElement('div');bar.className='mobile-action-bar';bar.setAttribute('aria-label','Quick actions');

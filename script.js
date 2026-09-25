@@ -1,7 +1,7 @@
 const spotlight=document.createElement('div');spotlight.className='spotlight';document.body.appendChild(spotlight);
 let spotlightRaf=0,spotX=innerWidth*.5,spotY=innerHeight*.5;
 window.addEventListener('pointermove',e=>{spotX=e.clientX;spotY=e.clientY;if(!spotlightRaf)spotlightRaf=requestAnimationFrame(()=>{spotlight.style.setProperty('--mx',spotX+'px');spotlight.style.setProperty('--my',spotY+'px');spotlightRaf=0})},{passive:true});
-const loader=document.getElementById('loader');window.addEventListener('load',()=>setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden'},1350));
+const loader=document.getElementById('loader');window.addEventListener('load',()=>setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'},10400));
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
 const menu=document.querySelector('.menu'),nav=document.querySelector('nav');menu?.addEventListener('click',()=>nav.classList.toggle('open'));document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
 const c=document.querySelector('.cursor'),d=document.querySelector('.cursor-dot');

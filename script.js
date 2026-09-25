@@ -75,48 +75,87 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   });
 });
 
-/* ===== NOVA AI KNOWLEDGE + INTERACTION ===== */
-const nova=document.getElementById('novaBot'), novaCharacter=document.getElementById('novaCharacter'), reaction=document.getElementById('novaReaction'), reactionText=document.getElementById('novaReactionText'), chat=document.getElementById('novaChat'), messages=document.getElementById('novaMessages'), form=document.getElementById('novaForm'), input=document.getElementById('novaInput'), close=document.getElementById('novaClose');
-const novaKnowledge=[
-  [/who is prince|who is he|tell me about prince|about prince/i,'Prince Dixit is a 22-year-old builder from Delhi who works across e-commerce operations, digital marketing, automation, websites and practical AI/software experiments.'],
-  [/name|what is prince.*name/i,'His name is Prince Dixit. He also uses Prince/Monu casually.'],
-  [/age|how old/i,'Prince is 22.'],
-  [/where.*(from|live)|location|delhi/i,'Prince is based in Delhi, India.'],
-  [/work|job|career|profession/i,'Prince works across e-commerce operations and digital systems. His current work includes product/SKU data, inventory, purchasing coordination, vendor workflows, warehouse coordination, packing/dispatch, spreadsheets and automation.'],
-  [/multybyte/i,'At Multybyte Marketing India, Prince works in wholesale e-commerce operations and connects product data, purchasing, office workflows and warehouse execution. He also builds Sheets and Apps Script automation.'],
-  [/crafts|banaras/i,'At Crafts Banaras, Prince worked in e-commerce management, fulfillment, inventory, customer requirements, website work and digital marketing.'],
-  [/education|bhu|degree|college/i,'Prince studied BA (Hons.) Economics at Banaras Hindu University. He completed Class 12 in Commerce and achieved 99.43 percentile in CUET Reasoning.'],
-  [/skills|technology|tech stack|what.*know/i,'His practical toolkit includes Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, social media marketing, e-commerce operations, inventory, fulfillment, website management, AI workflows and business automation.'],
-  [/project|projects/i,'Key projects include Multybyte purchase/image automation, EyeNav → Doc, ME N U and this portfolio.'],
-  [/eyenav|doc|voice assistant/i,'EyeNav evolved from gaze-navigation experiments into Doc, a hands-free Android voice-command assistant concept focused on hotword interaction and accessibility.'],
-  [/me n u|menu|relationship.*project/i,'ME N U is Prince’s private zero-cost personal companion project using Google Sheets, Apps Script, AI-assisted memory, tasks, coins/shop logic and voice interaction.'],
-  [/ai|artificial intelligence|nova/i,'Prince likes practical AI experiments rather than AI for its own sake. Nova is the portfolio’s cheerful AI assistant, designed to explain Prince’s work and interact with visitors.'],
-  [/like|likes|interest|hobby|free time/i,'Prince is interested in technology, automation, AI experiments, websites, gaming, bikes and creative digital projects. He enjoys games including Brawl Stars, Mortal Kombat and Genshin.'],
-  [/personality|what.*like|why.*build/i,'Prince is hands-on, ambitious and systems-focused. He likes finding friction in real workflows, building something practical, testing it and improving it.'],
-  [/contact|email|reach/i,'You can contact Prince at divinegamingblogspot@gmail.com.'],
-  [/hello|hi|hey|namaste/i,'Hii! ✦ I’m Nova. Ask me anything about Prince’s work, skills, projects or interests.'],
-  [/thank|thanks/i,'You’re welcome! ✦ Keep exploring — Prince has built quite a few systems.']
-];
-function novaAnswer(q){
-  const hit=novaKnowledge.find(([re])=>re.test(q));
-  return hit?hit[1]:'I know Prince’s public portfolio story, work, skills, projects and interests. Try asking “Who is Prince?”, “What does he do?”, “What are his projects?”, or “What does he like?”';
-}
-function novaReact(text, mood='excited', ms=2600){
-  if(!nova)return;
-  reactionText.textContent=text; nova.classList.remove('excited','wink','surprised','moving'); nova.classList.add(mood); reaction.classList.add('show');
-  clearTimeout(window.novaReactionTimer); window.novaReactionTimer=setTimeout(()=>reaction.classList.remove('show'),ms);
-}
-function novaOpen(){chat?.classList.add('open');chat?.setAttribute('aria-hidden','false');setTimeout(()=>input?.focus(),80)}
-function novaCloseChat(){chat?.classList.remove('open');chat?.setAttribute('aria-hidden','true')}
-function novaAdd(text,type='bot'){if(!messages)return;const el=document.createElement('div');el.className='nova-msg '+type;el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight}
-novaCharacter?.addEventListener('click',()=>{novaOpen();novaReact('Yay! You clicked me ✦','wink')});
-close?.addEventListener('click',novaCloseChat);
-form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(!q)return;novaAdd(q,'user');input.value='';setTimeout(()=>{const answer=novaAnswer(q);novaAdd(answer);novaReact('I’ve got an answer ✦','excited');},220)});
-document.querySelectorAll('[data-nova]').forEach(b=>b.addEventListener('click',()=>{input.value=b.dataset.nova;form.requestSubmit()}));
-document.addEventListener('click',e=>{if(!nova?.contains(e.target))novaReact(['Hehe ✦','I saw that!','Nice click ✦','Let’s explore!'][Math.floor(Math.random()*4)],'wink',1500)});
-document.querySelectorAll('a,button,.skill,.project,.job-card,.system-card').forEach(el=>el.addEventListener('click',()=>{if(nova)novaReact(['Ooh, good choice ✦','Nice!','Let’s gooo ✦','I like that one!'][Math.floor(Math.random()*4)],'excited',1300)}));
-let novaScrollTimer=0,novaLastScroll=window.scrollY;
-window.addEventListener('scroll',()=>{if(!nova)return;const delta=window.scrollY-novaLastScroll;novaLastScroll=window.scrollY;if(Math.abs(delta)<2)return;nova.classList.add('moving');clearTimeout(novaScrollTimer);novaScrollTimer=setTimeout(()=>nova.classList.remove('moving'),420);const pct=Math.round((window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100);if(pct>7&&pct%10<2)novaReact(pct<50?'I’m walking with you ✦':'We’re getting to the good stuff ✦','excited',1400)},{passive:true});
-let novaMoveTimer=0;
-document.addEventListener('mousemove',e=>{if(!nova||window.innerWidth<760)return;const r=novaCharacter?.getBoundingClientRect();if(!r)return;const cx=r.left+r.width/2,cy=r.top+r.height/3;const dx=e.clientX-cx,dy=e.clientY-cy;const eyeX=Math.max(-3,Math.min(3,dx/65)),eyeY=Math.max(-2,Math.min(2,dy/100));document.querySelectorAll('.nova-eye').forEach(eye=>eye.style.transform='translate('+eyeX+'px,'+eyeY+'px)');if(Math.abs(dx)<120&&Math.abs(dy)<160){clearTimeout(novaMoveTimer);novaReact('Hi there ✦','wink',900)}});
-setTimeout(()=>novaReact('Hi Prince ✦ I’m Nova — ask me anything.','excited',4200),2100);
+/* ===== NOVA AI ASSISTANT ===== */
+(()=> {
+  const root=document.getElementById('pageBot'),orb=document.getElementById('botOrb'),chat=document.getElementById('botChat'),close=document.getElementById('botClose'),reaction=document.getElementById('botReaction'),messages=document.getElementById('botMessages'),form=document.getElementById('botForm'),input=document.getElementById('botInput');
+  if(!root||!orb) return;
+  const moods=['happy','wink','surprised','love'];
+  const reactions=['Ooo, nice choice ✦','I saw that click!','Hehe, exploring?','Good eye 👀','That part matters.','Boop! ✨','Okayyy, I like that.'];
+  let reactionTimer;
+  function mood(m,txt){
+    root.dataset.mood=m||'happy';
+    if(txt){reaction.textContent=txt;reaction.classList.add('show');clearTimeout(reactionTimer);reactionTimer=setTimeout(()=>reaction.classList.remove('show'),2300);}
+  }
+  function toggle(open){
+    chat.classList.toggle('open',open);
+    chat.setAttribute('aria-hidden',String(!open));
+    if(open){mood('happy','Ask me about Prince ✦');setTimeout(()=>input?.focus(),180);}
+  }
+  orb.addEventListener('click',()=>toggle(!chat.classList.contains('open')));
+  close?.addEventListener('click',()=>toggle(false));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')toggle(false)});
+  document.addEventListener('click',e=>{
+    if(e.target.closest('#pageBot')) return;
+    const el=e.target.closest('a,button,.system-card,.job-card,.range-card,.skill,.process-card,.training-card');
+    if(!el) return;
+    const label=(el.innerText||el.getAttribute('aria-label')||'that').replace(/\s+/g,' ').trim().slice(0,42);
+    mood(moods[Math.floor(Math.random()*moods.length)],reactions[Math.floor(Math.random()*reactions.length)]+' · '+label);
+  });
+  let lastX=innerWidth*.75,lastY=innerHeight*.8;
+  document.addEventListener('pointermove',e=>{
+    lastX=e.clientX;lastY=e.clientY;
+    const r=orb.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height*.4);
+    if(Math.abs(dx)<260&&Math.abs(dy)<230){
+      const eyes=root.querySelectorAll('.bot-eye');
+      eyes.forEach(eye=>{const lim=2.2;eye.style.transform='translate('+Math.max(-lim,Math.min(lim,dx/70))+'px,'+Math.max(-lim,Math.min(lim,dy/80))+'px)'});
+    }
+  });
+  const replies=[
+    [/who is prince|who are you|about prince|tell me about prince/i,'Prince Dixit is 22 and based in Delhi, India. He works at the intersection of e-commerce operations, digital work, automation and practical software.'],
+    [/name|full name/i,'His name is Prince Dixit.'],
+    [/age|how old/i,'Prince is 22 years old.'],
+    [/where.*(from|live)|location|delhi/i,'Prince is based in Delhi, India.'],
+    [/why|purpose|motivation|what drives/i,'Prince likes building useful things that solve real problems. He moved toward Delhi for personal and career reasons and has focused on turning business work into better systems, automation and digital workflows.'],
+    [/experience|work|job|career/i,'He has worked across e-commerce operations, management, telesales, orders and inventory — including Multybyte, Crafts Banaras, Paraxion and Unique Threads.'],
+    [/multybyte|current job|current work/i,'At Multybyte, Prince works around wholesale e-commerce operations, product and SKU data, inventory, purchasing coordination, vendor workflows, warehouse coordination, packing/dispatch and website/data issues.'],
+    [/crafts|banaras/i,'At Crafts Banaras, Prince handled e-commerce management, daily operations, team coordination, customer service, digital marketing, social media, orders, inventory and website work.'],
+    [/education|bhu|degree|study|college|school/i,'Prince studied BA (Hons.) Economics at BHU and completed Class 12 in Commerce. His CUET Reasoning percentile was 99.43%. He also completed training in SEO, website building and social media marketing.'],
+    [/skill|stack|technology|tech|know/i,'His toolkit includes Google Sheets, Google Apps Script, JavaScript, HTML/CSS, APIs, SEO, social media marketing, e-commerce operations, inventory, fulfillment, website management, AI workflows and business automation.'],
+    [/project|system|build|portfolio/i,'His main systems include Multybyte automation, EyeNav → Doc, the private ME N U companion, and this portfolio/resume website.'],
+    [/multybyte.*automation|automation|sheet|apps script/i,'Prince builds practical automation with Google Sheets, Apps Script, JavaScript and APIs — especially for product, image, purchasing, inventory and vendor workflows.'],
+    [/eyenav|doc|voice|android/i,'EyeNav evolved into Doc, an Android voice-assistant experiment focused on voice commands and hands-free interaction.'],
+    [/me n u|relationship companion|spreadsheet/i,'ME N U is a private relationship companion system Prince built as a zero-cost personal project, with memories, tasks, coins, questions and an AI-style assistant.'],
+    [/ai|artificial intelligence|assistant|nova/i,'Prince is interested in practical AI and software experiments. Nova is the portfolio assistant built to explain his work, personality, skills, projects and background.'],
+    [/like|likes|favorite|hobby|interests|enjoy/i,'Prince likes technology, automation, AI experiments, building websites and useful systems, gaming, bikes and creative digital projects. He also enjoys Brawl Stars, Mortal Kombat and exploring games and anime-style entertainment.'],
+    [/bike|gt650|royal enfield/i,'One of Prince’s bike goals is a Royal Enfield GT 650. He has tied that goal to growing his monthly income and savings.'],
+    [/gaming|game|games/i,'Prince plays games including Brawl Stars and Mortal Kombat, and has also played Genshin Impact.'],
+    [/relationship|girlfriend|love|partner/i,'Prince values close relationships and has built personal digital projects around memories, tasks and shared experiences. Nova keeps personal relationship details intentionally general rather than exposing private conversations.'],
+    [/personality|kind of person|character/i,'Prince tends to be hands-on, ambitious and systems-focused. He likes turning an idea into something working instead of stopping at a concept.'],
+    [/contact|email|hire|reach/i,'You can reach Prince at divinegamingblogspot@gmail.com or use the Contact section.'],
+    [/hello|hi|hey|hii/i,'Heyyy ✦ I’m Nova. Ask me about Prince, what he likes, what he builds, his work, education, skills, projects or goals.']
+  ];
+  function answer(q){
+    for(const [re,ans] of replies) if(re.test(q)) return ans;
+    return 'I’m still learning that one 😅 Try asking about Prince’s experience, skills, projects, automation, AI, education or contact details.';
+  }
+  function addMsg(textValue,type){
+    const div=document.createElement('div');div.className='bot-msg '+type;div.textContent=textValue;messages.appendChild(div);messages.scrollTop=messages.scrollHeight;
+  }
+  function ask(q){
+    if(!q.trim())return;
+    addMsg(q.trim(),'user');mood(q.length>28?'surprised':'happy');
+    setTimeout(()=>{addMsg(answer(q),'bot');mood(['happy','wink','love'][Math.floor(Math.random()*3)],'There you go ✦')},350);
+  }
+  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';ask(q)});
+  messages?.addEventListener('click',e=>{const b=e.target.closest('[data-bot-q]');if(b)ask(b.dataset.botQ)});
+  let scrollTimer;
+  window.addEventListener('scroll',()=>{
+    root.classList.add('walking');clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>root.classList.remove('walking'),180);
+    const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
+    const x=10+Math.min(82,p*82);
+    root.style.right='auto';root.style.left=x+'vw';
+    root.style.transition='left .55s cubic-bezier(.22,.7,.2,1)';
+    if(p>.93)mood('happy','We made it to the end! ✦');
+  },{passive:true});
+  setTimeout(()=>mood('happy','Hi! I’m Nova ✦'),1200);
+})();

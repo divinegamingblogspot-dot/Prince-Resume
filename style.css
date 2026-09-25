@@ -539,3 +539,29 @@ header{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 
 /* Dedicated-page cinematic environment */
 body[data-visual="violet"] .motion-energy:before{background:rgba(168,85,247,.13)!important}body[data-visual="red"] .motion-energy:after{background:rgba(255,59,92,.12)!important}body[data-visual="blue"] .motion-energy:before{background:rgba(91,124,255,.10)!important}body[data-visual="acid"] .motion-energy:after{background:rgba(183,255,82,.08)!important}
+/* HOMEPAGE ADDITIONS */
+.home-additions{padding:0 9vw 90px;border-top:1px solid #171920;position:relative;z-index:2}
+.home-build-section,.home-featured-system,.home-thinking,.home-nova-cta,.home-recruiter-cta{border-bottom:1px solid #20222a}
+.home-build-section{padding:85px 0 70px}.home-section-kicker{color:#696c77;font:600 10px "Space Grotesk";letter-spacing:.16em}
+.home-metrics{display:grid;grid-template-columns:repeat(4,1fr);margin-top:35px;border-top:1px solid #292b33;border-left:1px solid #292b33}
+.home-metric{min-height:145px;padding:25px;border-right:1px solid #292b33;border-bottom:1px solid #292b33;display:flex;flex-direction:column;justify-content:space-between}
+.home-metric strong{font:700 clamp(38px,5vw,68px)/1 "Space Grotesk";letter-spacing:-.05em;color:#f4f4f2}.home-metric span{color:#656872;font:600 9px "Space Grotesk";letter-spacing:.14em}
+.home-featured-system{display:grid;grid-template-columns:1.25fr .75fr;gap:7vw;padding:95px 0;align-items:center}
+.home-featured-top{display:flex;gap:20px;margin:22px 0 10px;color:#b7ff52;font:600 10px "Space Grotesk";letter-spacing:.14em}
+.home-featured-top span+span{color:#646771}
+.home-featured-copy h2,.home-thinking h2,.home-nova-cta h2,.home-recruiter-cta h2{font:700 clamp(38px,5vw,68px)/1 "Space Grotesk";letter-spacing:-.045em;margin:12px 0 20px}
+.home-featured-copy p,.home-nova-cta p,.home-recruiter-cta p{color:#858792;max-width:680px}
+.home-inline-link{display:inline-block;margin-top:20px;color:#b7ff52;font:600 11px "Space Grotesk";letter-spacing:.12em}.home-inline-link b{margin-left:8px}
+.home-terminal-mini{border:1px solid #292c35;border-radius:8px;background:#07080b;box-shadow:0 20px 70px rgba(0,0,0,.25);overflow:hidden}
+.mini-terminal-head{height:38px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#101116;border-bottom:1px solid #20222a;color:#626571;font:600 10px "Space Grotesk"}
+.mini-terminal-head span{width:7px;height:7px;border-radius:50%;background:#383a43}.mini-terminal-head b{margin-left:8px}
+.mini-terminal-body{padding:24px;font:12px/2 ui-monospace,monospace;color:#858792}.mini-terminal-body p{margin:0}.mini-terminal-body i{color:#b7ff52;font-style:normal}.mini-terminal-body .ok{color:#b7ff52}
+.home-thinking{padding:95px 0;display:grid;grid-template-columns:.75fr 1.25fr;gap:7vw;align-items:start}
+.home-thinking-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.home-thinking-steps div{border:1px solid #252730;padding:24px;min-height:180px;background:#0b0c10;transition:.35s}.home-thinking-steps div:hover{transform:translateY(-5px);border-color:#3c3f48}
+.home-thinking-steps span{color:#b7ff52;font:600 10px "Space Grotesk"}.home-thinking-steps strong{display:block;margin:35px 0 8px;font:600 20px "Space Grotesk"}.home-thinking-steps p{color:#777983;font-size:12px;margin:0}
+.home-nova-cta{padding:100px 0;background:radial-gradient(circle at 75% 50%,rgba(168,85,247,.10),transparent 34%),radial-gradient(circle at 20% 50%,rgba(255,59,92,.07),transparent 30%)}
+.nova-signal{display:flex;align-items:center;gap:9px;color:#777983;font:600 10px "Space Grotesk";letter-spacing:.14em}.nova-dot{width:7px;height:7px;border-radius:50%;background:#b7ff52;box-shadow:0 0 18px rgba(183,255,82,.55);animation:novaPulse 1.6s ease-in-out infinite}
+@keyframes novaPulse{50%{opacity:.35;transform:scale(.7)}}
+.home-recruiter-cta{padding:80px 0;display:flex;align-items:center;justify-content:space-between;gap:50px}.home-recruiter-cta h2{margin-bottom:10px}
+@media(max-width:700px){.home-additions{padding:0 6vw 65px}.home-metrics{grid-template-columns:1fr 1fr}.home-featured-system,.home-thinking{grid-template-columns:1fr;gap:40px;padding:70px 0}.home-thinking-steps{grid-template-columns:1fr}.home-recruiter-cta{display:block}.home-recruiter-cta .btn{display:inline-block;margin-top:22px}}
+@media(prefers-reduced-motion:reduce){.nova-dot{animation:none}.home-thinking-steps div{transition:none}}

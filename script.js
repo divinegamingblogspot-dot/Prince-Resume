@@ -640,3 +640,32 @@ render();
 
 /* ===== PERFORMANCE PASS ===== */
 (()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};window.addEventListener('load',()=>setTimeout(hide,reduce?180:650),{once:true});setTimeout(hide,reduce?900:1800)}})();
+
+
+/* ===== UI UPGRADE JS — ADDITIVE / DEFENSIVE ===== */
+(()=>{
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const fine=matchMedia('(pointer:fine)').matches;
+ const header=document.querySelector('header');
+ let raf=0;
+ addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{header?.classList.toggle('scrolled',scrollY>18);raf=0})},{passive:true});
+ header?.classList.toggle('scrolled',scrollY>18);
+ /* Active navigation indicator, including inner pages. */
+ const file=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ document.querySelectorAll('nav a').forEach(a=>{const href=(a.getAttribute('href')||'').split('#')[0].toLowerCase();if(href===file||((file==='index.html'||!file)&&href==='#home'))a.classList.add('active')});
+ /* Smooth page transition without blocking navigation. */
+ if(!reduce){document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const href=a.getAttribute('href');if(!href||href.startsWith('#')||href.startsWith('mailto:')||href.startsWith('tel:')||href.startsWith('javascript:')||a.target==='_blank'||href.startsWith('http'))return;const u=new URL(href,location.href);if(u.origin!==location.origin)return;e.preventDefault();document.body.classList.add('page-exit');setTimeout(()=>{location.href=u.href},150)})}
+ /* Mobile sticky high-value actions: Contact, Resume and Nova. */
+ if(matchMedia('(max-width:700px)').matches && !document.querySelector('.mobile-action-bar')){
+   const bar=document.createElement('div');bar.className='mobile-action-bar';bar.setAttribute('aria-label','Quick actions');
+   bar.innerHTML='<a href="contact.html">CONTACT</a><a href="resume.html">RESUME</a><button type="button" data-mobile-nova>NOVA ✦</button>';
+   document.body.appendChild(bar);
+   bar.querySelector('[data-mobile-nova]')?.addEventListener('click',()=>document.getElementById('botOrb')?.click());
+ }
+ /* Keep mobile interactions lightweight: no tilt, no pointer-follow spotlight work. */
+ if(!fine){document.querySelectorAll('.project,.process-card,.build-grid>div,.edu-grid>div,.training-card').forEach(el=>{el.style.willChange='auto'});}
+ /* Prevent accidental long-press selection on interactive controls while retaining text selection elsewhere. */
+ document.querySelectorAll('.btn,.menu,.bot-orb,.inner-cta,.demo-run').forEach(el=>el.style.webkitTapHighlightColor='transparent');
+ /* Respect reduced motion and avoid the page-exit animation in that mode. */
+ if(reduce)document.body.classList.add('motion-reduced');
+})();

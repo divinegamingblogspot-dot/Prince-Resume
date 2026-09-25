@@ -43,13 +43,16 @@ function calc(q){const m=norm(q).match(/(?:calculate|solve|what is|how much is|k
 
 function intent(q){
  const s=norm(q);const prev=session.filter(x=>x.role==='user').slice(-3).map(x=>x.text).join(' ');const combined=s+' '+norm(prev);
+ // Identity questions are classified first so Nova cannot route them to Prince answers.
+ const directSelf=/^(who are you|who r u|who r you|what are you|what r u|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|your identity|your name|your role|about nova|who is nova|whos nova|who's nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai|apna introduction|apne baare me|apne bare me|are you an ai|are you real|are you a bot)$/i.test(s);
+ const directPurpose=/^(why do you exist|why were you created|why were you made|your purpose|tumhe kyu banaya|tumhe kyun banaya|tumhara purpose)$/i.test(s);
  const tokens=words(s);
  const topic=(arr)=>arr.some(x=>{const p=norm(x);if(s.includes(p))return true;const pt=p.split(' ').filter(Boolean);return pt.length>1&&pt.every(t=>tokens.has(t)||t.length<3)});
  const asks=(arr)=>topic(arr)||arr.some(x=>{const p=norm(x);return p.length>3&&s.includes(p.slice(0,Math.max(4,p.length-2)))})
  return{
-  self:asks(['who are you','what are you','tell me about yourself','introduce yourself','about yourself','your identity','your name','your role','who is nova','about nova','nova identity','nova kaun','nova kya','tum kaun','aap kaun','tumhara naam','tumhari identity','tumhara role','apna introduction','apne baare me','apne bare me','are you an ai','are you real','are you a bot','what is your identity']),
+  self:directSelf||asks(['who are you','what are you','tell me about yourself','introduce yourself','about yourself','your identity','your name','your role','who is nova','about nova','nova identity','nova kaun','nova kya','tum kaun','aap kaun','tumhara naam','tumhari identity','tumhara role','apna introduction','apne baare me','apne bare me','are you an ai','are you real','are you a bot','what is your identity']),
   consciousness:asks(['conscious','consciousness','sentient','alive','feelings','emotion','mind','real person','human']),
-  purpose:asks(['why do you exist','why were you created','your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
+  purpose:directPurpose||asks(['why do you exist','why were you created','your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
   capability:asks(['what can you do','what can you answer','your capabilities','what do you know','tum kya kar sakti','kya kya bata sakti']),
   prince:asks(['who is prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince ke baare']),
   age:asks(['age','how old','umar','kitne saal']),location:asks(['where is prince','where does prince live','location of prince','prince kaha','prince kahan']),

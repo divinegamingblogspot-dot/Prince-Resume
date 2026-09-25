@@ -87,9 +87,16 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     if(txt){reaction.textContent=txt;reaction.classList.add('show');clearTimeout(reactionTimer);reactionTimer=setTimeout(()=>reaction.classList.remove('show'),2300);}
   }
   function toggle(open){
+    root.classList.toggle('nova-open',open);
     chat.classList.toggle('open',open);
     chat.setAttribute('aria-hidden',String(!open));
-    if(open){mood('happy','Ask me about Prince ✦');setTimeout(()=>input?.focus(),180);}
+    orb.setAttribute('aria-expanded',String(open));
+    if(open){
+      mood('happy','Ask me about Prince ✦');
+      setTimeout(()=>input?.focus(),180);
+    }else{
+      root.classList.remove('walking');
+    }
   }
   orb.addEventListener('click',()=>toggle(!chat.classList.contains('open')));
   close?.addEventListener('click',()=>toggle(false));

@@ -19,3 +19,14 @@ body:before{content:"";position:fixed;inset:-20%;pointer-events:none;background:
 .cta:hover{color:#fff;border-color:#ec4899;box-shadow:0 12px 40px rgba(236,72,153,.16);transform:translateY(-2px)}
 .footer{border-top-color:rgba(168,85,247,.14)}
 @media(prefers-reduced-motion:reduce){body:before{animation:none}.card,.cta,.visual img{transition:none}.visual:hover img,.card:hover{transform:none}}
+
+/* ===== DETAIL PAGE MOTION + PERFORMANCE ===== */
+body:after{
+  content:"";position:fixed;inset:0;z-index:100;pointer-events:none;
+  background:radial-gradient(circle at 35% 45%,rgba(168,85,247,.12),transparent 30%),radial-gradient(circle at 70% 55%,rgba(255,59,92,.10),transparent 28%),#080a0f;
+  animation:detailPageEnter .7s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes detailPageEnter{0%{opacity:1}100%{opacity:0;visibility:hidden}}
+.topbar{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+body:before{filter:blur(28px)!important}
+@media(prefers-reduced-motion:reduce){body:after{display:none}.topbar{backdrop-filter:none;-webkit-backdrop-filter:none}}

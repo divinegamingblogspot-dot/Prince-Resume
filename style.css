@@ -743,3 +743,8 @@ nav a.active,.inner-nav a.active{color:#fff}
 /* mobile sticky action bar */
 .mobile-action-bar{display:none}
 @media(max-width:700px){.mobile-action-bar{position:fixed;left:10px;right:10px;bottom:10px;z-index:95;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(8,10,14,.88);backdrop-filter:blur(16px);box-shadow:0 18px 60px rgba(0,0,0,.45)}.mobile-action-bar a,.mobile-action-bar button{min-height:44px;border:1px solid #292d36;border-radius:8px;background:#0e1117;color:#bfc3cc;font:700 9px "Space Grotesk";letter-spacing:.08em;text-align:center;display:grid;place-items:center}.mobile-action-bar a:first-child,.mobile-action-bar button:last-child{color:#b7ff52;border-color:rgba(183,255,82,.3)}}
+
+
+/* Page transition cue */
+body.page-exit{opacity:0;transform:translateY(5px);transition:opacity .15s ease,transform .15s ease}
+@media(prefers-reduced-motion:reduce){body.page-exit{opacity:1;transform:none;transition:none}}

@@ -40,20 +40,39 @@ const princeKnowledge={
   homepage:'Homepage should remain a focused landing page; detailed information belongs on dedicated pages.'
  }
 };
+function normalizeNovaText(q){
+ return String(q||'').toLowerCase()
+  .normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'')
+  .replace(/[’'“”"!?.,:;()\\[\\]{}]/g,' ')
+  .replace(/\\s+/g,' ').trim();
+}
 function personalKnowledge(q){
- const s=q.toLowerCase();
- if(/who is prince|about prince|tell me about prince/.test(s)) return 'Prince Dixit is a 22-year-old professional in Delhi focused on e-commerce operations, digital work and practical business automation. His portfolio combines operational experience with systems built using Google Sheets, Apps Script, JavaScript, web technologies and AI workflows.';
- if(/where.*prince|location.*prince/.test(s)) return 'Prince is based in Delhi, India.';
- if(/contact prince|email prince|phone prince/.test(s)) return 'Prince can be contacted at demonicspirit888@gmail.com or +91 88878 31825.';
- if(/education|bhu|cuet/.test(s)) return 'Prince studied BA (Hons.) Economics at Banaras Hindu University, scored 99.43 percentile in CUET Reasoning, completed Class 12 in Commerce, and has digital marketing training.';
- if(/experience|career|jobs|worked/.test(s)) return 'Prince’s documented experience includes Multybyte Marketing India, Crafts Banaras, Paraxion Management & Consultant Pvt. Ltd., and Unique Threads Sarees.';
- if(/skills|technology|stack/.test(s)) return 'Prince works across e-commerce operations, Google Sheets, Apps Script, JavaScript, SEO, digital marketing, AI workflows, HTML/CSS and APIs.';
- if(/multybyte/.test(s)) return princeKnowledge.projects.multybyte;
- if(/eyenav|doc android|voice assistant/.test(s)) return princeKnowledge.projects.eyenav;
- if(/me n u|menu project/.test(s)) return princeKnowledge.projects.meNu;
- if(/portfolio|website|resume system/.test(s)) return princeKnowledge.projects.portfolio;
- if(/nova.*appearance|nova.*look|nova.*model/.test(s)) return princeKnowledge.preferences.nova;
- if(/what.*build|projects|systems/.test(s)) return 'Prince builds practical systems around operations, automation, AI/software experiments, spreadsheets, accessibility/voice concepts and portfolio tooling.';
+ const s=normalizeNovaText(q);
+ const has=(words)=>words.some(w=>s.includes(w));
+ const asksWho=has(['who is prince','who s prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince k bare','prince ke baare']);
+ const asksLocation=has(['where is prince','where does prince live','prince kaha','prince kahan','location of prince']);
+ const asksContact=has(['contact prince','how contact prince','reach prince','prince email','prince phone','prince se contact','prince ka number','prince ka email']);
+ const asksEducation=has(['education','degree','college','university','bhu','banaras hindu','cuet','padhai','qualification','qualified']);
+ const asksExperience=has(['experience','career','work history','worked','job','jobs','company','companies','naukri','kaam','kam kiya']);
+ const asksSkills=has(['skills','skillset','technology','technologies','tech stack','stack','what can he do','capabilities','expertise','kya aata']);
+ const asksMultybyte=has(['multybyte','sku','vendor workflow','product workflow','purchasing','warehouse','apps script automation']);
+ const asksDoc=has(['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']);
+ const asksMenu=has(['me n u','me nu','menu project','relationship sheet']);
+ const asksPortfolio=has(['portfolio','website','resume system','github portfolio']);
+ const asksNova=has(['nova appearance','nova look','nova model','nova physical','nova dikhti','nova ka look']);
+ const asksSystems=has(['projects','systems','what did he build','what has he built','builds','projects kya','kya banaya']);
+ if(asksWho)return 'Prince Dixit is a professional based in Delhi, India, focused on E-commerce Operations × Digital × Automation. His work combines real-world business operations with spreadsheets, Apps Script, JavaScript, web technologies, SEO, digital marketing and practical AI/software projects.';
+ if(asksLocation)return 'Prince is based in Delhi, India.';
+ if(asksContact)return 'Prince can be contacted at demonicspirit888@gmail.com or +91 88878 31825.';
+ if(asksEducation)return 'Prince studied BA (Hons.) Economics at Banaras Hindu University, scored 99.43 percentile in CUET Reasoning, completed Class 12 in Commerce, and has Digital Marketing training.';
+ if(asksExperience)return 'Prince’s documented experience includes Multybyte Marketing India — E-commerce Operations (May 2026–Present), Crafts Banaras — E-commerce Manager, Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive, and Unique Threads Sarees — Orders & Inventory Manager.';
+ if(asksSkills)return 'Prince works across E-commerce Operations, Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, Digital Marketing and AI Workflows.';
+ if(asksMultybyte)return princeKnowledge.projects.multybyte;
+ if(asksDoc)return princeKnowledge.projects.eyenav;
+ if(asksMenu)return princeKnowledge.projects.meNu;
+ if(asksPortfolio)return princeKnowledge.projects.portfolio;
+ if(asksNova)return princeKnowledge.preferences.nova;
+ if(asksSystems)return 'Prince builds practical systems around e-commerce operations, spreadsheet automation, AI/software experiments, Android voice/accessibility concepts and portfolio tooling.';
  return null;
 }
 

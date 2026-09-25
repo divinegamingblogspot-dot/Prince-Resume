@@ -1147,13 +1147,13 @@ footer{color:#747d89;border-top-color:#2b323d}
 
 
 /* ===== PRINCE INTRO — SLOWER TYPOGRAPHIC PHASES ===== */
-#loader .loader-name-morph .morph-letter{animation-duration:10.2s!important}
+#loader .loader-name-morph .morph-letter{animation-duration:7.2s!important}
 #loader .loader-name-morph .morph-p{animation-delay:-.02s!important}
-#loader .loader-name-morph .morph-r{animation-delay:-1.48s!important}
-#loader .loader-name-morph .morph-i{animation-delay:-2.96s!important}
-#loader .loader-name-morph .morph-n{animation-delay:-4.44s!important}
-#loader .loader-name-morph .morph-c{animation-delay:-5.92s!important}
-#loader .loader-name-morph .morph-e{animation-delay:-7.40s!important}
+#loader .loader-name-morph .morph-r{animation-delay:-1.05s!important}
+#loader .loader-name-morph .morph-i{animation-delay:-2.10s!important}
+#loader .loader-name-morph .morph-n{animation-delay:-3.15s!important}
+#loader .loader-name-morph .morph-c{animation-delay:-4.20s!important}
+#loader .loader-name-morph .morph-e{animation-delay:-5.25s!important}
 #loader .loader-name-morph .morph-letter{
   animation-timing-function:cubic-bezier(.45,0,.55,1)!important;
 }

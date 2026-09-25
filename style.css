@@ -1004,3 +1004,138 @@ footer{color:#747d89;border-top-color:#2b323d}
 @media(prefers-reduced-motion:reduce){
   .btn.primary,.project:hover,.process-card:hover,.build-grid>div:hover,.edu-grid>div:hover,.training-card:hover{box-shadow:none}
 }
+
+
+/* ===== PRINCE MORPH INTRO — LOKI-INSPIRED TYPOGRAPHIC LOADER ===== */
+#loader{
+  background:
+    radial-gradient(circle at 50% 45%,rgba(183,255,82,.055),transparent 25%),
+    radial-gradient(circle at 18% 70%,rgba(184,108,255,.055),transparent 28%),
+    radial-gradient(circle at 82% 30%,rgba(32,230,213,.045),transparent 26%),
+    #08090d!important;
+  overflow:hidden;
+}
+#loader:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);
+  opacity:.32;
+}
+.loader-inner{
+  width:min(900px,88vw)!important;
+  position:relative;
+  z-index:2;
+}
+.loader-name-morph{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(1px,.35vw,7px);
+  width:100%;
+  min-height:clamp(90px,15vw,180px);
+  margin:18px 0 22px;
+  font-size:clamp(76px,12vw,154px)!important;
+  line-height:.78!important;
+  letter-spacing:-.075em!important;
+  color:#f4f4f2;
+  perspective:900px;
+  text-shadow:0 0 16px rgba(255,255,255,.12),0 0 70px rgba(183,255,82,.07);
+}
+.loader-name-morph .morph-letter{
+  display:inline-block;
+  min-width:.52em;
+  text-align:center;
+  transform-origin:50% 58%;
+  will-change:transform,filter,opacity,font-family;
+  animation:morphLetter 4.55s steps(1,end) infinite;
+}
+.loader-name-morph .morph-p{animation-delay:-.02s}
+.loader-name-morph .morph-r{animation-delay:-.62s}
+.loader-name-morph .morph-i{animation-delay:-1.18s}
+.loader-name-morph .morph-n{animation-delay:-1.74s}
+.loader-name-morph .morph-c{animation-delay:-2.30s}
+.loader-name-morph .morph-e{animation-delay:-2.86s}
+.loader-name-morph .morph-dot{
+  color:#b7ff52;
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:800;
+  text-shadow:0 0 14px rgba(183,255,82,.8),0 0 44px rgba(183,255,82,.35);
+  animation:dotPulse 1.15s ease-in-out infinite;
+}
+@keyframes morphLetter{
+  0%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(1) skewX(0);filter:none;opacity:1}
+  10%{font-family:Georgia,serif;font-weight:900;transform:scaleX(.82) skewX(-8deg);filter:contrast(1.35);opacity:.92}
+  20%{font-family:"Times New Roman",serif;font-weight:700;transform:scaleX(1.12) rotate(-2deg);filter:blur(.15px);opacity:.98}
+  30%{font-family:"Arial Black",Impact,sans-serif;font-weight:900;transform:scaleX(.9) skewX(5deg);filter:contrast(1.5);opacity:.96}
+  40%{font-family:"Courier New",monospace;font-weight:900;transform:scaleX(1.02) scaleY(.84);filter:drop-shadow(0 0 8px rgba(32,230,213,.45));opacity:.9}
+  50%{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:700;transform:scaleX(.92) rotate(3deg);filter:drop-shadow(0 0 10px rgba(184,108,255,.45));opacity:.94}
+  60%{font-family:Impact,"Arial Black",sans-serif;font-weight:900;transform:scaleX(1.14) skewX(-4deg);filter:drop-shadow(0 0 12px rgba(255,63,104,.42));opacity:1}
+  70%{font-family:Georgia,serif;font-weight:900;transform:scaleX(.78) scaleY(1.12) rotate(-3deg);filter:drop-shadow(0 0 9px rgba(255,200,87,.35));opacity:.92}
+  80%{font-family:fantasy,"Times New Roman",serif;font-weight:900;transform:scaleX(1.08) skewY(2deg);filter:contrast(1.45);opacity:.97}
+  90%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(.96) skewX(1deg);filter:drop-shadow(0 0 15px rgba(183,255,82,.32));opacity:.94}
+  100%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:scaleX(1) skewX(0);filter:drop-shadow(0 0 20px rgba(183,255,82,.18));opacity:1}
+}
+@keyframes dotPulse{
+  0%,100%{transform:scale(1);opacity:.7}
+  50%{transform:scale(1.35);opacity:1}
+}
+.loader-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  text-align:center;
+}
+.loader-status i{
+  box-shadow:0 0 12px #b7ff52,0 0 30px rgba(183,255,82,.35);
+}
+.loader-bar{margin:22px auto 12px!important;max-width:620px!important;height:2px!important}
+.loader-bar i{
+  background:linear-gradient(90deg,#b7ff52,#20e6d5,#6388ff,#b86cff,#ff3f68,#ffc857,#b7ff52)!important;
+  background-size:220% 100%;
+  animation:load 4.8s linear forwards!important;
+  box-shadow:0 0 16px rgba(183,255,82,.42);
+}
+.loader-top,.loader-meta{
+  font-family:"Space Grotesk",sans-serif;
+}
+.loader-top{color:#dce1e8}
+.loader-meta{color:#60636d}
+.loader-scan{
+  position:absolute!important;
+  left:-10%;
+  right:-10%;
+  top:16%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(183,255,82,.75),rgba(32,230,213,.45),transparent);
+  box-shadow:0 0 18px rgba(183,255,82,.25);
+  animation:loaderScan 2.4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes loaderScan{
+  0%{transform:translateY(0);opacity:0}
+  12%{opacity:.9}
+  50%{opacity:.35}
+  88%{opacity:.9}
+  100%{transform:translateY:62vh);opacity:0}
+}
+@keyframes load{to{width:100%;background-position:100% 0}}
+@media(max-width:700px){
+  .loader-inner{width:min(96vw,620px)!important}
+  .loader-name-morph{font-size:clamp(52px,16vw,92px)!important;gap:0;min-height:82px;margin:10px 0 18px}
+  .loader-name-morph .morph-letter{min-width:.48em}
+  .loader-top,.loader-meta{font-size:9px}
+  .loader-meta{gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .loader-name-morph .morph-letter{animation:none!important;font-family:"Space Grotesk",sans-serif!important;transform:none!important;filter:none!important}
+  .loader-name-morph .morph-dot{animation:none!important}
+  .loader-scan{animation:none!important;opacity:.35}
+  .loader-bar i{animation:none!important}
+}

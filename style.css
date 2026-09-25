@@ -234,3 +234,13 @@ main,header,footer{position:relative;z-index:2}
  .page-bot.nova-at-top .bot-chat{right:72px}.page-bot.nova-at-bottom .bot-chat{left:72px}
 }
 @media(prefers-reduced-motion:reduce){.bot-character,.bot-antenna{animation:none!important}.bot-orb{transition:none}}
+
+/* ===== CONTACT + PREMIUM UI FINISH ===== */
+.contact-actions{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0 4px}
+.contact-phone,.contact-email{display:inline-flex;align-items:center;padding:13px 16px;border:1px solid #292b33;border-radius:7px;color:#bfc1c8;font:600 12px "Space Grotesk";transition:transform .3s,border-color .3s,background .3s,color .3s}
+.contact-phone:hover,.contact-email:hover{transform:translateY(-3px);border-color:#b7ff52;background:rgba(183,255,82,.04);color:#b7ff52}
+.contact-phone:focus-visible,.contact-email:focus-visible,.btn:focus-visible,.nav-recruiter:focus-visible,a:focus-visible{outline:2px solid #b7ff52;outline-offset:4px}
+.btn,.hero-meta-link,.nav-recruiter{will-change:transform}
+.process-card,.job-card,.system-card,.range-card,.skill,.build-grid>div,.edu-grid>div{animation-delay:var(--motion-delay)}
+.reveal.visible{transition-delay:var(--motion-delay)}
+@media(max-width:700px){.contact-actions{display:grid;grid-template-columns:1fr}.contact-phone,.contact-email{justify-content:center}.hero-actions{flex-wrap:wrap}}

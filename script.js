@@ -669,3 +669,7 @@ render();
  /* Respect reduced motion and avoid the page-exit animation in that mode. */
  if(reduce)document.body.classList.add('motion-reduced');
 })();
+
+
+/* Mobile menu visual state — additive to existing menu behavior. */
+(()=>{const m=document.querySelector('.menu'),n=document.querySelector('nav');if(!m||!n)return;m.addEventListener('click',()=>m.classList.toggle('open'));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>m.classList.remove('open')));})();

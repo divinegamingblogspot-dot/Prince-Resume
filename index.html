@@ -7,6 +7,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Critical loader failsafe: the cinematic intro must never block the portfolio. */
+(function(){
+  var started=Date.now();
+  function release(){
+    var loader=document.getElementById('loader');
+    if(!loader)return;
+    loader.style.opacity='0';
+    loader.style.visibility='hidden';
+    loader.style.pointerEvents='none';
+    loader.setAttribute('aria-hidden','true');
+  }
+  setTimeout(release, 5200);
+  setTimeout(function(){ if(Date.now()-started>6500) release(); }, 6800);
+})();
+</script>
 </head>
 <body>
 <div id="loader" aria-label="Loading Prince Dixit portfolio" role="status"><div class="loader-grid" aria-hidden="true"></div><div class="loader-orbit loader-orbit-a" aria-hidden="true"></div><div class="loader-orbit loader-orbit-b" aria-hidden="true"></div><div class="loader-inner"><div class="loader-top"><span>PRINCE.OS</span><span id="loaderPercent">00%</span></div><div class="loader-name loader-name-morph" aria-label="PRINCE"><span class="morph-letter morph-p">P</span><span class="morph-letter morph-r">R</span><span class="morph-letter morph-i">I</span><span class="morph-letter morph-n">N</span><span class="morph-letter morph-c">C</span><span class="morph-letter morph-e">E</span><span class="morph-dot">.</span></div><div class="loader-status"><i></i><span id="loaderStatus">INITIALIZING SYSTEM</span></div><div class="loader-bar"><i></i></div><div class="loader-meta"><span>PORTFOLIO / RESUME</span><span>DELHI · INDIA</span></div><div class="loader-scan" aria-hidden="true"></div></div></div>

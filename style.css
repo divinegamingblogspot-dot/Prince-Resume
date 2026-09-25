@@ -327,3 +327,26 @@ p{color:#a5a9b3}
 @media(max-width:850px){.timeline-head,.skill-map-head,.automation-lab-head,.github-live-head{grid-template-columns:1fr;gap:15px;margin-bottom:35px}.career-line{grid-template-columns:1fr 1fr;gap:20px}.career-line:before{left:12%;right:12%;top:10px}.career-node{min-height:170px}.case-study-grid,.github-repos{grid-template-columns:1fr}.skill-map{min-height:500px}.automation-demo-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.career-line{grid-template-columns:1fr}.career-line:before{left:20px;right:auto;top:10px;bottom:10px;width:1px;height:auto}.career-node{padding:38px 18px 22px 48px;border-left:0;border-bottom:1px solid #252a34}.career-node:last-child{border-right:0}.career-dot{left:13px}.skill-map{min-height:520px}.skill-node[data-skill="operations"]{left:7%;top:18%}.skill-node[data-skill="sheets"]{left:7%;top:38%}.skill-node[data-skill="automation"]{right:7%;top:18%}.skill-node[data-skill="web"]{right:7%;top:40%}.skill-node[data-skill="javascript"]{right:8%;bottom:22%}.skill-node[data-skill="ai"]{left:8%;bottom:16%}.skill-node[data-skill="marketing"]{left:34%;bottom:7%}.skill-map-info{bottom:62px}.demo-columns{grid-template-columns:1fr}.demo-columns>i{transform:rotate(90deg);justify-self:center}.hero-actions .btn{flex:1 1 auto;text-align:center}.resume-quick{display:none}}
 @media(prefers-reduced-motion:reduce){.section,.hero h1,.hero-copy,.hero-console,.hero:before,.skill-map:before,.skill-map:after{animation:none}.reveal{transition:none}.job-card:after,.system-card:after,.case-study:after,.automation-demo:after,.github-repo-card:after{display:none}}
+
+/* ===== CLICKABLE DETAIL PAGES + EXPERIENCE 3D VISUALS ===== */
+.detail-card{cursor:pointer;position:relative}
+.detail-card:focus-visible{outline:2px solid var(--acid);outline-offset:5px}
+.detail-card:after{content:"OPEN DETAIL ↗";position:absolute;right:18px;bottom:16px;color:var(--acid);font:700 8px "Space Grotesk";letter-spacing:.12em;opacity:.45;transition:.3s;pointer-events:none}
+.detail-card:hover:after{opacity:1;transform:translateX(3px)}
+.job-visual{isolation:isolate;overflow:hidden}
+.experience-3d{position:absolute;inset:0;z-index:2;display:grid;place-items:center;pointer-events:none;perspective:700px;overflow:hidden}
+.experience-3d:before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(183,255,82,.15),transparent 65%);filter:blur(3px);animation:expPulse 4s ease-in-out infinite}
+.experience-3d i{position:absolute;width:115px;height:115px;border:1px solid rgba(183,255,82,.32);border-radius:50%;transform:rotateX(65deg);animation:expOrbit 8s linear infinite}
+.experience-3d .ring{position:absolute;width:165px;height:55px;border:1px solid rgba(183,255,82,.22);border-radius:50%;transform-style:preserve-3d}
+.experience-3d .r1{transform:rotateX(70deg) rotateZ(15deg);animation:expRing1 7s linear infinite}
+.experience-3d .r2{transform:rotateY(70deg) rotateZ(-18deg);animation:expRing2 9s linear infinite}
+.experience-3d .cube{position:absolute;width:42px;height:42px;border:1px solid rgba(183,255,82,.6);background:linear-gradient(145deg,rgba(183,255,82,.16),rgba(183,255,82,.015));box-shadow:0 0 28px rgba(183,255,82,.13);transform-style:preserve-3d}
+.experience-3d .c1{animation:expCube1 6s ease-in-out infinite}
+.experience-3d .c2{width:22px;height:22px;animation:expCube2 5s ease-in-out infinite reverse}
+@keyframes expPulse{50%{transform:scale(1.25);opacity:.65}}
+@keyframes expOrbit{to{transform:rotateX(65deg) rotateZ(360deg)}}
+@keyframes expRing1{to{transform:rotateX(70deg) rotateZ(375deg)}}
+@keyframes expRing2{to{transform:rotateY(70deg) rotateZ(-378deg)}}
+@keyframes expCube1{0%,100%{transform:translate3d(-42px,-18px,20px) rotateX(0) rotateY(0) rotateZ(0)}50%{transform:translate3d(35px,22px,70px) rotateX(180deg) rotateY(220deg) rotateZ(90deg)}}
+@keyframes expCube2{0%,100%{transform:translate3d(45px,25px,50px) rotateX(0) rotateY(0)}50%{transform:translate3d(-38px,-30px,95px) rotateX(240deg) rotateY(180deg)}}
+@media(prefers-reduced-motion:reduce){.experience-3d *,.experience-3d:before{animation:none!important}.detail-card:after{opacity:.65}}

@@ -407,3 +407,154 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   };
   requestAnimationFrame(tick);
 })();
+
+
+/* ===== UI UPGRADE PACK / 10-LAYER EXPERIENCE ===== */
+(()=> {
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const main=document.querySelector('main');
+  if(!main) return;
+
+  /* 1. Cinematic hero layer — injected so existing hero markup stays untouched. */
+  const hero=document.querySelector('.hero');
+  if(hero){
+    const cinematic=document.createElement('div'); cinematic.className='hero-cinematic'; cinematic.setAttribute('aria-hidden','true'); hero.prepend(cinematic);
+    const hud=document.createElement('div'); hud.className='hero-hud reveal';
+    hud.innerHTML='<b>PRINCE.OS / ONLINE</b><span>BUILD · TEST · IMPROVE</span><span class="hud-live">● SYSTEM LIVE</span><i class="hud-line"></i>';
+    hero.appendChild(hud);
+  }
+
+  /* 2. Moving red/purple energy layer — visual only, no layout interaction. */
+  const energy=document.createElement('div'); energy.className='ui-energy'; energy.setAttribute('aria-hidden','true');
+  for(let i=0;i<4;i++) energy.appendChild(document.createElement('i'));
+  document.body.appendChild(energy);
+
+  /* 3. Scroll storytelling HUD. */
+  const story=document.createElement('div'); story.className='section-story'; story.innerHTML='<b>SCROLL / BUILD STORY</b><i></i>'; document.body.appendChild(story);
+
+  /* 4. Experience timeline enhancement. */
+  const exp=document.querySelector('#experience .experience-stack');
+  exp?.querySelectorAll('.job-card').forEach((card,i)=>card.dataset.timeline=String(i+1).padStart(2,'0'));
+
+  /* 5. Skills constellation. Add beside the existing skills UI without replacing it. */
+  const skills=document.querySelector('#skills');
+  if(skills && !skills.querySelector('.skills-constellation')){
+    const box=document.createElement('div'); box.className='skills-constellation';
+    box.innerHTML='<div class="skill-orbit"><div class="skill-core">PRINCE<br>STACK</div><button class="skill-node-ui n1" data-skill-ui="OPERATIONS">OPERATIONS</button><button class="skill-node-ui n2" data-skill-ui="AUTOMATION">AUTOMATION</button><button class="skill-node-ui n3" data-skill-ui="AI / VOICE">AI / VOICE</button><button class="skill-node-ui n4" data-skill-ui="WEB / SEO">WEB / SEO</button><button class="skill-node-ui n5" data-skill-ui="JAVASCRIPT">JAVASCRIPT</button><button class="skill-node-ui n6" data-skill-ui="SHEETS">GOOGLE SHEETS</button></div><div class="skill-constellation-info" id="uiSkillInfo"><strong>Select a capability</strong><span>Explore how the pieces connect into one operating layer.</span></div>';
+    skills.appendChild(box);
+    const descriptions={
+      OPERATIONS:'Orders, inventory, fulfillment, purchasing and warehouse execution.',
+      AUTOMATION:'Apps Script, formulas, retries, caching, locks and controlled workflows.',
+      'AI / VOICE':'AI experiments, voice interaction and practical assistant concepts.',
+      'WEB / SEO':'Websites, search visibility, content structure and digital presence.',
+      JAVASCRIPT:'Interactive web behavior, automation logic and API-connected experiences.',
+      'GOOGLE SHEETS':'Structured operational data, formulas, validation and business workbooks.'
+    };
+    box.querySelectorAll('.skill-node-ui').forEach(n=>n.addEventListener('click',()=>{
+      box.querySelectorAll('.skill-node-ui').forEach(x=>x.classList.remove('active')); n.classList.add('active');
+      const d=descriptions[n.dataset.skillUi]; box.querySelector('#uiSkillInfo').innerHTML='<strong>'+n.dataset.skillUi+'</strong><span>'+d+'</span>';
+    }));
+  }
+
+  /* 6. Project cards: live-system status strip and lightweight counter. */
+  document.querySelectorAll('.system-card,.project').forEach((card,i)=>{
+    if(card.querySelector('.ui-counter')) return;
+    const c=document.createElement('div'); c.className='ui-counter';
+    c.innerHTML='<b>0'+((i%9)+1)+'</b> / SYSTEM MODULE';
+    const target=card.querySelector('.system-copy,.project-top');
+    (target||card).appendChild(c);
+  });
+
+  /* 7. Recruiter-friendly system status — non-blocking, purely visual. */
+  const status=document.createElement('div'); status.className='ui-counter'; status.style.position='fixed'; status.style.right='18px'; status.style.bottom='16px'; status.style.zIndex='8'; status.style.opacity='.7';
+  status.innerHTML='<b>99.9%</b> UI READY · <span style="color:#a855f7">●</span> MOTION';
+  document.body.appendChild(status);
+
+  /* 8. Magnetic controls, throttled through RAF to avoid pointer lag. */
+  if(!reduce){
+    const magnets=document.querySelectorAll('.btn,.nav-recruiter,.hero-meta-link,.system-copy a,.text-link');
+    magnets.forEach(el=>{
+      let raf=0,tx=0,ty=0;
+      const move=e=>{
+        const r=el.getBoundingClientRect(); tx=(e.clientX-(r.left+r.width/2))/r.width*8; ty=(e.clientY-(r.top+r.height/2))/r.height*8;
+        if(!raf) raf=requestAnimationFrame(()=>{raf=0;el.style.transform='translate3d('+tx+'px,'+ty+'px,0)'});
+      };
+      const leave=()=>{el.classList.remove('magnetic-active');el.style.transform='';};
+      el.addEventListener('pointerenter',()=>el.classList.add('magnetic-active')); el.addEventListener('pointermove',move); el.addEventListener('pointerleave',leave);
+    });
+  }
+
+  /* 9. Section progress color language — violet/red follows scroll depth. */
+  if(!reduce){
+    let raf=0;
+    const update=()=>{
+      raf=0;
+      const max=document.documentElement.scrollHeight-innerHeight, p=max?scrollY/max:0;
+      document.documentElement.style.setProperty('--scroll-energy',p);
+      const hue=p<.5?'#a855f7':'#ff3b5c';
+      document.querySelector('.section-story i')?.style.setProperty('background','linear-gradient('+hue+',#292c35)');
+    };
+    addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true}); update();
+  }
+
+  /* 10. Premium page-change/load behavior: keep existing transition, add a tiny motion cue. */
+  addEventListener('pageshow',()=>{document.body.classList.add('ui-ready');setTimeout(()=>document.body.classList.remove('ui-ready'),900)});
+})();
+
+/* ===== NOVA GENERIC KNOWLEDGE + REASONING LAYER ===== */
+(()=> {
+  const root=document.getElementById('pageBot'), messages=document.getElementById('botMessages');
+  if(!root||!messages) return;
+  const form=document.getElementById('botForm'), input=document.getElementById('botInput');
+  const generic=[
+    [/what is ai|what is artificial intelligence/i,'AI (artificial intelligence) is software designed to perform tasks that normally require human-like capabilities such as pattern recognition, language understanding, prediction or decision support.'],
+    [/what is machine learning|define machine learning/i,'Machine learning is a branch of AI where systems learn patterns from data rather than being explicitly programmed with every rule.'],
+    [/what is javascript|what is html|what is css/i,'JavaScript adds behavior and logic to web pages; HTML structures content; CSS controls presentation and layout.'],
+    [/what is api|define api/i,'An API is a defined way for software systems to communicate, request data or trigger actions from another system.'],
+    [/what is seo|define seo/i,'SEO means search engine optimization: improving a website so search engines can understand, index and surface its useful content.'],
+    [/what is a database|define database/i,'A database is an organized system for storing and retrieving structured information efficiently.'],
+    [/capital of india|capital of india/i,'New Delhi is the capital of India.'],
+    [/largest planet/i,'Jupiter is the largest planet in our Solar System.'],
+    [/red planet/i,'Mars is commonly called the Red Planet because iron minerals on its surface give it a reddish appearance.'],
+    [/how many continents/i,'There are seven commonly recognized continents: Africa, Antarctica, Asia, Europe, North America, South America and Australia.'],
+    [/speed of light/i,'The speed of light in vacuum is approximately 299,792,458 metres per second.'],
+    [/water.*boil|boiling point/i,'At standard atmospheric pressure, water boils at 100°C (212°F). Boiling temperature changes with pressure and altitude.'],
+    [/photosynthesis/i,'Photosynthesis is the process by which plants, algae and some microorganisms use light energy to convert carbon dioxide and water into chemical energy, releasing oxygen in the process.'],
+    [/difference.*ram.*storage|ram vs storage/i,'RAM is fast working memory used while programs run; storage such as SSDs keeps data persistently when the device is powered off.'],
+    [/what is iq|meaning of iq/i,'IQ stands for intelligence quotient. Traditional IQ tests measure selected reasoning and problem-solving abilities; they do not capture every aspect of intelligence or human capability.'],
+    [/prime number/i,'A prime number is a whole number greater than 1 that has exactly two positive divisors: 1 and itself.'],
+    [/gravity/i,'Gravity is the attractive interaction associated with mass and energy. Near Earth’s surface it gives objects an acceleration of about 9.8 m/s² downward.'],
+    [/why is sky blue/i,'Earth’s sky appears blue mainly because air molecules scatter shorter blue wavelengths of sunlight more strongly than longer red wavelengths.'],
+    [/difference.*http.*https|http vs https/i,'HTTPS is HTTP protected by TLS encryption and authentication, helping protect data in transit between a browser and server.']
+  ];
+  const original=window.__novaOriginalAnswer;
+  function genericAnswer(q){
+    for(const [re,ans] of generic) if(re.test(q)) return ans;
+    const m=q.match(/(?:what is|calculate|solve|how much is)\s+(-?\d+(?:\.\d+)?)\s*([+\-*x×÷/])\s*(-?\d+(?:\.\d+)?)/i);
+    if(m){
+      const a=Number(m[1]),b=Number(m[3]),op=m[2];
+      let v=null;
+      if(op==='+')v=a+b; else if(op==='-')v=a-b; else if(op==='*'||op.toLowerCase()==='x'||op==='×')v=a*b; else if(op==='/'||op==='÷')v=b===0?null:a/b;
+      if(v!==null) return 'The answer is '+v+'.';
+      return 'Division by zero is undefined.';
+    }
+    return null;
+  }
+  function princeContext(q){
+    if(!/prince|dixit/i.test(q)) return '';
+    return ' If you mean Prince Dixit specifically, I can also connect the answer to his work, skills, projects or portfolio.';
+  }
+  function enhance(){
+    const originalForm=form; if(!originalForm)return;
+    originalForm.addEventListener('submit',e=>{
+      const q=input?.value?.trim(); if(!q)return;
+      const ans=genericAnswer(q);
+      if(!ans)return;
+      e.preventDefault();
+      const oldInput=input.value; input.value='';
+      const u=document.createElement('div');u.className='bot-msg user';u.textContent=oldInput;messages.appendChild(u);
+      setTimeout(()=>{const b=document.createElement('div');b.className='bot-msg bot';b.textContent=ans+princeContext(q);messages.appendChild(b);messages.scrollTop=messages.scrollHeight;},220);
+    },true);
+  }
+  enhance();
+})();

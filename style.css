@@ -642,7 +642,7 @@ body[data-visual="violet"] .motion-energy:before{background:rgba(168,85,247,.13)
 .home-cube .cube-face strong{color:#fff;text-shadow:0 0 22px rgba(255,255,255,.10)}
 .home-cube .cube-face small{color:#d7dbe2}
 .home-cube .cube-face span{color:#aeb5bf}
-.home-cube .cube-face:hover{filter:brightness(1.18);transform:translateZ(3px)}
+.home-cube .cube-face:hover{filter:brightness(1.18)}
 @keyframes coreAura{to{transform:scale(1.08);opacity:.72}}
 @media(prefers-reduced-motion:reduce){.home-3d-stage:before{animation:none}}
 

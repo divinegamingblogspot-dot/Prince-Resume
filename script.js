@@ -673,3 +673,31 @@ render();
 
 /* Mobile menu visual state — additive to existing menu behavior. */
 (()=>{const m=document.querySelector('.menu'),n=document.querySelector('nav');if(!m||!n)return;m.addEventListener('click',()=>m.classList.toggle('open'));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>m.classList.remove('open')));})();
+
+
+/* ===== UI 2.0 ENGINE — 3D INERTIA + MOBILE NAV + SEO + PERFORMANCE ===== */
+(()=>{
+'use strict';
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* Better 3D: idle rotation + momentum, while preserving drag/wheel navigation. */
+const stage=document.getElementById('home3dStage'),cube=document.getElementById('home3dCube');
+if(stage&&cube&&!reduce){let rx=-18,ry=-32,lastX=0,lastY=0,vx=0,vy=0,drag=false,idle=0,raf=0,last=performance.now();
+ const draw=()=>{raf=0;cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'};
+ const frame=(now)=>{const dt=Math.min(32,now-last);last=now;if(!drag){ry+=.012*dt+vx*.92;rx+=vy*.92;vx*=.94;vy*=.94;if(Math.abs(vx)+Math.abs(vy)<.002)idle+=dt;else idle=0;if(idle>1200)ry+=.008*dt}if(!raf)raf=requestAnimationFrame(frame);draw()};
+ const move=(x,y)=>{if(!drag)return;const dx=x-lastX,dy=y-lastY;ry+=dx*.45;rx-=dy*.45;vx=dx*.006;vy=-dy*.006;rx=Math.max(-70,Math.min(70,rx));lastX=x;lastY=y};
+ stage.addEventListener('pointerdown',e=>{drag=true;idle=0;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)});
+ stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY));stage.addEventListener('pointerup',()=>{drag=false;stage.classList.remove('dragging')});stage.addEventListener('pointercancel',()=>{drag=false;stage.classList.remove('dragging')});stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.18;vx=e.deltaY*.001;idle=0},{passive:false});requestAnimationFrame(frame);draw();
+}
+/* Inner-page mobile menu: inject only when needed; existing desktop nav remains untouched. */
+const top=document.querySelector('.inner-top');
+if(top&&!top.querySelector('.inner-menu')){const nav=top.querySelector('.inner-nav'),b=document.createElement('button');b.className='inner-menu';b.type='button';b.setAttribute('aria-label','Open navigation');b.setAttribute('aria-expanded','false');b.innerHTML='<span></span><span></span>';top.insertBefore(b,nav);b.addEventListener('click',()=>{const open=nav.classList.toggle('open');b.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open));b.setAttribute('aria-label',open?'Close navigation':'Open navigation')});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-expanded','false')}));}
+/* Performance: prioritize first visible image, lazy-load the rest, decode asynchronously. */
+const imgs=[...document.images];imgs.forEach((img,i)=>{img.decoding='async';if(i===0){img.loading='eager';img.fetchPriority='high'}else if(!img.loading)img.loading='lazy'});
+/* Pause expensive ambient animation when the tab is hidden. */
+document.addEventListener('visibilitychange',()=>document.documentElement.classList.toggle('tab-hidden',document.hidden));
+/* Lightweight structured SEO for pages that already have canonical metadata. */
+const canonical=document.querySelector('link[rel="canonical"]');
+if(canonical&&!document.querySelector('script[data-dynamic-schema]')){const path=location.pathname.split('/').pop()||'index.html',title=document.title,desc=document.querySelector('meta[name="description"]')?.content||'';const schema={'@context':'https://schema.org','@type':'WebPage','name':title,'description':desc,'url':canonical.href,'isPartOf':{'@type':'WebSite','name':'Prince Dixit Portfolio','url':canonical.href.replace(/[^/]+$/,'')}};const s=document.createElement('script');s.type='application/ld+json';s.dataset.dynamicSchema='true';s.textContent=JSON.stringify(schema);document.head.appendChild(s);}
+/* Make external project/profile links explicit for search/accessibility without changing destinations. */
+document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopener');
+})();

@@ -292,3 +292,13 @@ main,header,footer{position:relative;z-index:2}
   visibility:visible !important;
   opacity:1 !important;
 }
+
+
+/* ===== NOVA FULL-BODY CORNER MODE ===== */
+.page-bot .bot-orb{width:104px !important;height:136px !important;overflow:visible !important;}
+.page-bot .bot-character{display:block !important;visibility:visible !important;opacity:1 !important;left:17px !important;bottom:7px !important;width:70px !important;height:120px !important;}
+.page-bot .bot-shadow,.page-bot .bot-neck,.page-bot .bot-body,.page-bot .bot-arm,.page-bot .bot-leg{display:block !important;visibility:visible !important;opacity:1 !important;pointer-events:none;}
+.page-bot .bot-chat{bottom:0;right:92px;left:auto;transform-origin:bottom right;}
+.page-bot.nova-at-top .bot-chat{left:auto;right:92px;transform-origin:bottom right;}
+.page-bot.nova-at-bottom .bot-chat{left:92px;right:auto;transform-origin:bottom left;}
+@media(max-width:700px){.page-bot .bot-orb{width:88px !important;height:116px !important}.page-bot .bot-character{transform:scale(.86);transform-origin:bottom center;left:9px !important;bottom:0 !important}.page-bot .bot-chat{width:min(350px,calc(100vw - 24px));bottom:0}.page-bot.nova-at-top .bot-chat{right:72px}.page-bot.nova-at-bottom .bot-chat{left:72px}}

@@ -356,3 +356,6 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   style.textContent='header nav a.current{color:#f4f5f2} header nav a.current:after{content:"";display:block;height:1px;background:#b7ff52;transform:scaleX(1);transform-origin:left}';
   document.head.appendChild(style);
 })();
+
+/* ===== DETAIL PAGE NAVIGATION ===== */
+(()=>{const cards=document.querySelectorAll('.detail-card[data-detail]');cards.forEach(card=>{const open=()=>{if(card.dataset.detail) window.location.href=card.dataset.detail};card.addEventListener('click',e=>{if(e.target.closest('a,button,input,textarea,select'))return;open()});card.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('a,button,input,textarea,select')){e.preventDefault();open()}})})})();

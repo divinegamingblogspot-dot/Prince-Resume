@@ -1,78 +1,140 @@
-(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,page=document.body.dataset.page||'portfolio';const ctx=document.getElementById('novaContext');if(ctx)ctx.textContent='NOVA CONTEXT · '+page.toUpperCase();
+(()=>{
+'use strict';
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const page=document.body.dataset.page||'portfolio';
+const ctx=document.getElementById('novaContext');
+if(ctx)ctx.textContent='NOVA CONTEXT · '+page.toUpperCase();
 document.querySelectorAll('.arch-node').forEach((n,i)=>{if(!reduce)setTimeout(()=>n.classList.add('active'),500+i*160)});
 document.querySelectorAll('.skill-node').forEach(n=>n.addEventListener('click',()=>{document.querySelectorAll('.skill-node').forEach(x=>x.classList.remove('active'));n.classList.add('active');const d=document.getElementById('skillDetail');if(d){d.querySelector('h3').textContent=n.dataset.title||n.textContent;d.querySelector('p').textContent=n.dataset.desc||''}}));
-const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');if(!form||!input||!messages)return;
-const key='prince_nova_session_v3',pageNames={about:'About · profile',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'},source={about:'about.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
-let session=[];try{session=JSON.parse(sessionStorage.getItem(key)||'[]')}catch{};function save(role,text){session.push({role,text});session=session.slice(-14);try{sessionStorage.setItem(key,JSON.stringify(session))}catch{}}
-function calc(q){const m=q.match(/(?:calculate|solve|what is|how much is)\s*(-?\d+(?:\.\d+)?)\s*([+\-*x×÷/])\s*(-?\d+(?:\.\d+)?)/i);if(!m)return null;const a=+m[1],b=+m[3],o=m[2];if((o==='/'||o==='÷')&&b===0)return'Division by zero is undefined.';return'The answer is '+(o==='+'?a+b:o==='-'?a-b:o==='/'||o==='÷'?a/b:a*b)+'.'}
-function general(s,q){if(/what is ai|artificial intelligence/.test(s))return'AI is the broad field of building systems that perform tasks associated with human intelligence, such as pattern recognition, language processing and decision support.';if(/machine learning/.test(s))return'Machine learning is a branch of AI where systems learn patterns from data rather than relying on every rule being explicitly programmed.';if(/what is javascript|what is html|what is css/.test(s))return'JavaScript provides behavior and logic; HTML structures content; CSS controls presentation and layout.';if(/what is api|define api/.test(s))return'An API is a defined interface that lets software systems communicate, exchange data or trigger actions.';if(/what is seo|define seo/.test(s))return'SEO is search engine optimization: improving site structure and content so search engines can understand and surface useful pages.';if(/database/.test(s))return'A database stores and retrieves structured information in an organized way.';if(/capital of india/.test(s))return'New Delhi is the capital of India.';if(/largest planet/.test(s))return'Jupiter is the largest planet in our Solar System.';if(/red planet/.test(s))return'Mars is commonly called the Red Planet because iron minerals on its surface give it a reddish appearance.';if(/seven continents|how many continents/.test(s))return'There are seven commonly recognized continents.';if(/speed of light/.test(s))return'The speed of light in vacuum is approximately 299,792,458 metres per second.';if(/boil.*water|boiling point/.test(s))return'At standard atmospheric pressure, water boils at 100°C (212°F).';if(/ram vs storage|difference.*ram.*storage/.test(s))return'RAM is fast working memory used while programs run; storage such as an SSD persists data when power is off.';if(/http vs https|difference.*http.*https/.test(s))return'HTTPS is HTTP protected by TLS, helping protect data in transit and authenticate the server.';return null}
-function answer(q){const personal=personalKnowledge(q);if(personal)return personal;const s=q.toLowerCase(),c=calc(q);if(c)return c;const g=general(s,q);if(g)return g;if(/what section|where am i|current page/.test(s))return'You are on '+(pageNames[page]||page)+'. Source: '+(source[page]||'index.html');if(/recruiter|hiring|hire/.test(s))return'Recruiter view focuses on role history, core skills, selected systems, education and direct contact. Source: recruiter.html';if(/resume|cv|ats/.test(s))return'The resume layer separates ATS-friendly information from the visual portfolio. Source: resume.html';if(/skill|stack|technology|tech/.test(s))return'Core stack: E-commerce Operations, Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, Digital Marketing and AI Workflows. Source: skills.html';if(/experience|career|job|work/.test(s))return'Prince has worked across Multybyte, Crafts Banaras, Paraxion and Unique Threads. Current role: Multybyte Marketing India — E-commerce Operations. Source: experience.html';if(/multybyte|automation|apps script|spreadsheet/.test(s))return'Multybyte work connects SKU/product data, purchasing, vendor workflows, spreadsheets, warehouse execution and Apps Script automation. Source: systems.html';if(/project|system|build|architecture|workflow/.test(s))return'Systems include Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav → Doc and this portfolio. Source: systems.html';if(/business|non.?technical|translate/.test(s))return'Business view: reduce repetitive manual work, structure messy information and create workflows teams can actually operate.';if(/technical|javascript|html|css|api|seo|database|android|github/.test(s))return'Technical mode: I can explain JavaScript, HTML/CSS, APIs, SEO, Android accessibility, GitHub workflows and automation concepts.';if(/education|bhu|degree|cuet/.test(s))return'BA (Hons.) Economics — BHU; CUET Reasoning 99.43 percentile; Class 12 Commerce; Digital Marketing training.';if(/contact|email|phone|reach/.test(s))return'Contact Prince: demonicspirit888@gmail.com · +91 88878 31825. Source: contact.html';if(/today|date|current date/.test(s))return'Today is '+new Intl.DateTimeFormat('en-IN',{dateStyle:'full'}).format(new Date())+'.';if(/hello|hi|hey/.test(s))return'Hi — I’m Nova. Ask about Prince, this page, experience, systems, skills, resume or general knowledge.';return'I can help with Prince’s profile, page context, experience, systems, skills, recruiter view, resume, technical topics, business explanations, calculations and general knowledge.'}
-function add(t,type){const d=document.createElement('div');d.className='bot-msg '+type;d.textContent=t;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
-session.slice(-6).forEach(m=>add(m.text,m.role==='bot'?'bot':'user'));
-form.addEventListener('submit',e=>{const q=input.value.trim();if(!q)return;e.preventDefault();e.stopImmediatePropagation();add(q,'user');save('user',q);input.value='';setTimeout(()=>{const a=answer(q);add(a,'bot');save('bot',a)},reduce?40:260)},true);
-const chat=document.getElementById('botChat');if(chat&&!chat.querySelector('.nova-modebar')){const bar=document.createElement('div');bar.className='nova-modebar';bar.innerHTML='<button data-q="Explain this like a recruiter">RECRUITER</button><button data-q="Explain this technically">TECHNICAL</button><button data-q="Explain this as a business outcome">BUSINESS</button><button data-q="What section am I on?">CONTEXT</button>';chat.querySelector('.bot-chat-body')?.prepend(bar);bar.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b)return;input.value=b.dataset.q;form.requestSubmit()})}
-document.querySelectorAll('[data-ask-nova]').forEach(b=>b.addEventListener('click',()=>{const q=b.dataset.askNova||b.textContent.trim();document.getElementById('botOrb')?.click();setTimeout(()=>{input.value=q;form.requestSubmit()},220)}))
-})();
-/* ===== EXPANDED PRINCE PERSONAL KNOWLEDGE ===== */
 
-/* Expanded personal knowledge layer — factual portfolio context only */
-const princeKnowledge={
- identity:{name:'Prince Dixit',location:'Delhi, India',focus:'E-commerce Operations × Digital × Automation',age:22},
- contact:{phone:'+91 88878 31825',email:'demonicspirit888@gmail.com',github:'https://github.com/divinegamingblogspot-dot'},
- education:['BA (Hons.) Economics — Banaras Hindu University','CUET Reasoning — 99.43 percentile','Class 12 Commerce','Digital Marketing training'],
+const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');
+if(!form||!input||!messages)return;
+const KEY='prince_nova_session_v4';
+const pageNames={about:'About · profile',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
+const source={about:'about.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
+const KNOW={
+ identity:{name:'Prince Dixit',age:22,location:'Delhi, India',focus:'E-commerce Operations × Digital × Automation'},
+ contact:{email:'demonicspirit888@gmail.com',phone:'+91 88878 31825',github:'https://github.com/divinegamingblogspot-dot'},
+ education:'Prince studied BA (Hons.) Economics at Banaras Hindu University, scored 99.43 percentile in CUET Reasoning, completed Class 12 Commerce, and has Digital Marketing training.',
  experience:[
-  'Multybyte Marketing India — E-commerce Operations — May 2026–Present',
-  'Crafts Banaras — E-commerce Manager — March 2025–2026',
-  'Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive — November 2024–February 2025',
-  'Unique Threads Sarees — Orders & Inventory Manager — May–October 2024'
+  {company:'Multybyte Marketing India',role:'E-commerce Operations',period:'May 2026–Present',detail:'product/SKU workflows, purchasing coordination, vendor workflows, inventory, warehouse coordination, packing/dispatch and Google Sheets + Apps Script automation with retries, caching, locks and backup/recovery.'},
+  {company:'Crafts Banaras',role:'E-commerce Manager',period:'March 2025–2026',detail:'order fulfillment, inventory/product availability, customer requirements, website support, digital marketing and business coordination.'},
+  {company:'Paraxion Management & Consultant Pvt. Ltd.',role:'Telesales Executive',period:'November 2024–February 2025',detail:'client communication, lead follow-up, sales conversations, prospect conversion and sales targets.'},
+  {company:'Unique Threads Sarees',role:'Orders & Inventory Manager',period:'May–October 2024',detail:'order handling, fulfillment and dispatch, stock availability, inventory movement and accurate order/stock information.'}
  ],
- skills:['E-commerce Operations','Google Sheets','Apps Script','JavaScript','SEO','Digital Marketing','AI Workflows','HTML/CSS','APIs'],
- systems:['Multybyte Automation','Operational Spreadsheet Systems','AI / Software Experiments','ME N U','EyeNav / Doc','Portfolio / Resume System'],
- projects:{
-  multybyte:'A practical operations automation system covering SKU/product workflows, purchasing coordination, vendor workflows, Google Sheets and Apps Script automation, retries, caching, locks and backup/recovery.',
-  eyenav:'EyeNav evolved toward Doc, an Android voice-assistant concept using the hotwords “hey doc” / “doc”, with the goal of background and locked-screen commands.',
-  meNu:'ME N U is a private relationship-focused Google Sheets/AI project with tabs for TODAY, MEMORIES, FUTURE and SECRET, plus tasks, coins and assistant interactions.',
-  portfolio:'Prince-Resume is the personal portfolio/resume system with dedicated experience, systems, skills, recruiter, resume, Nova and contact pages.'
- },
- preferences:{
-  portfolio:'Premium, cinematic, dark UI with restrained red/purple motion, strong readability and smooth interactions.',
-  nova:'Keep Nova’s physical appearance basic unless Prince explicitly asks to change it.',
-  homepage:'Homepage should remain a focused landing page; detailed information belongs on dedicated pages.'
- }
+ skills:['E-commerce Operations','Google Sheets','Apps Script','JavaScript','HTML/CSS','APIs','SEO','Digital Marketing','AI Workflows','Business Automation'],
+ systems:[
+  {name:'Multybyte Automation',detail:'A practical operations system around SKU/product workflows, purchasing, vendor workflows, spreadsheets, warehouse execution and Apps Script automation.'},
+  {name:'Operational Spreadsheet Systems',detail:'Structured spreadsheet workflows designed to reduce repetitive manual operations and keep business data controlled.'},
+  {name:'AI / Software Experiments',detail:'Experiments turning ideas into usable software and AI-assisted interfaces.'},
+  {name:'ME N U',detail:'A private relationship-focused Google Sheets/AI system with TODAY, MEMORIES, FUTURE and SECRET areas, tasks, coins and assistant interactions.'},
+  {name:'EyeNav → Doc',detail:'An Android voice-assistant concept evolving from EyeNav toward “hey doc” / “doc” commands, with background and locked-screen command goals.'},
+  {name:'Portfolio / Resume System',detail:'This multi-page portfolio with recruiter, resume, experience, systems, skills, contact and Nova layers.'}
+ ],
+ nova:{name:'Nova',role:'AI assistant inside Prince’s portfolio',purpose:'Help visitors understand Prince, his work, his systems and this website through conversation.',limits:'Nova is software, not a biological or sentient being. She can model a consistent identity and conversation context, but should not claim literal consciousness or private feelings.'}
 };
-function normalizeNovaText(q){
- return String(q||'').toLowerCase()
-  .normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'')
-  .replace(/[’'“”"!?.,:;()\\[\\]{}]/g,' ')
-  .replace(/\\s+/g,' ').trim();
-}
-function personalKnowledge(q){
- const s=normalizeNovaText(q);
- const has=(words)=>words.some(w=>s.includes(w));
- const asksWho=has(['who is prince','who s prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince k bare','prince ke baare']);
- const asksLocation=has(['where is prince','where does prince live','prince kaha','prince kahan','location of prince']);
- const asksContact=has(['contact prince','how contact prince','reach prince','prince email','prince phone','prince se contact','prince ka number','prince ka email']);
- const asksEducation=has(['education','degree','college','university','bhu','banaras hindu','cuet','padhai','qualification','qualified']);
- const asksExperience=has(['experience','career','work history','worked','job','jobs','company','companies','naukri','kaam','kam kiya']);
- const asksSkills=has(['skills','skillset','technology','technologies','tech stack','stack','what can he do','capabilities','expertise','kya aata']);
- const asksMultybyte=has(['multybyte','sku','vendor workflow','product workflow','purchasing','warehouse','apps script automation']);
- const asksDoc=has(['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']);
- const asksMenu=has(['me n u','me nu','menu project','relationship sheet']);
- const asksPortfolio=has(['portfolio','website','resume system','github portfolio']);
- const asksNova=has(['nova appearance','nova look','nova model','nova physical','nova dikhti','nova ka look']);
- const asksSystems=has(['projects','systems','what did he build','what has he built','builds','projects kya','kya banaya']);
- if(asksWho)return 'Prince Dixit is a professional based in Delhi, India, focused on E-commerce Operations × Digital × Automation. His work combines real-world business operations with spreadsheets, Apps Script, JavaScript, web technologies, SEO, digital marketing and practical AI/software projects.';
- if(asksLocation)return 'Prince is based in Delhi, India.';
- if(asksContact)return 'Prince can be contacted at demonicspirit888@gmail.com or +91 88878 31825.';
- if(asksEducation)return 'Prince studied BA (Hons.) Economics at Banaras Hindu University, scored 99.43 percentile in CUET Reasoning, completed Class 12 in Commerce, and has Digital Marketing training.';
- if(asksExperience)return 'Prince’s documented experience includes Multybyte Marketing India — E-commerce Operations (May 2026–Present), Crafts Banaras — E-commerce Manager, Paraxion Management & Consultant Pvt. Ltd. — Telesales Executive, and Unique Threads Sarees — Orders & Inventory Manager.';
- if(asksSkills)return 'Prince works across E-commerce Operations, Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, Digital Marketing and AI Workflows.';
- if(asksMultybyte)return princeKnowledge.projects.multybyte;
- if(asksDoc)return princeKnowledge.projects.eyenav;
- if(asksMenu)return princeKnowledge.projects.meNu;
- if(asksPortfolio)return princeKnowledge.projects.portfolio;
- if(asksNova)return princeKnowledge.preferences.nova;
- if(asksSystems)return 'Prince builds practical systems around e-commerce operations, spreadsheet automation, AI/software experiments, Android voice/accessibility concepts and portfolio tooling.';
+let session=[];try{session=JSON.parse(sessionStorage.getItem(KEY)||'[]')}catch{session=[]}
+const norm=v=>String(v||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s→×+.-]/g,' ').replace(/\s+/g,' ').trim();
+const words=s=>new Set(norm(s).split(' ').filter(x=>x.length>2));
+const has=(s,arr)=>arr.some(x=>s.includes(x));
+function language(q){const s=norm(q);if(/[\u0900-\u097f]/.test(q))return'hi';if(has(s,['kya','kaun','kon','kahan','kaha','kyu','kyun','kaise','batao','bata','hai','hain','mera','meri','mere','uska','iska','iske','ke','ki','ka','se','ko','mein','me','mujhe','tum','aap','wala','wali','banao','dikhao','samjhao']))return'hi';return'en'}
+function save(role,text){session.push({role,text});session=session.slice(-16);try{sessionStorage.setItem(KEY,JSON.stringify(session))}catch{}}
+function calc(q){const m=norm(q).match(/(?:calculate|solve|what is|how much is|kitna hai)\s*(-?\d+(?:\.\d+)?)\s*([+\-*x×÷/])\s*(-?\d+(?:\.\d+)?)/i);if(!m)return null;const a=+m[1],b=+m[3],o=m[2];if((o==='/'||o==='÷')&&b===0)return'Division by zero is undefined.';return'The answer is '+(o==='+'?a+b:o==='-'?a-b:o==='/'||o==='÷'?a/b:a*b)+'.'}
+
+function intent(q){const s=norm(q);const prev=session.filter(x=>x.role==='user').slice(-3).join(' ');const combined=s+' '+norm(prev);
+ return{
+  self:has(s,['who are you','what are you','tell me about yourself','about yourself','introduce yourself','nova kaun','nova kya','tum kaun','aap kaun','who is nova']),
+  consciousness:has(s,['conscious','consciousness','sentient','alive','feelings','feel','emotion','mind','real ai','real person','human']),
+  purpose:has(s,['why do you exist','why were you created','your purpose','what is your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
+  capability:has(s,['what can you do','what can you answer','your capabilities','what do you know','tum kya kar sakti','kya kya bata sakti']),
+  prince:has(s,['who is prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince ke baare','prince k bare']),
+  age:has(s,['age','how old','umar','kitne saal']),
+  location:has(s,['where is prince','where does prince live','location of prince','prince kaha','prince kahan']),
+  contact:has(s,['contact prince','reach prince','prince email','prince phone','prince ka number','prince ka email','prince se contact']),
+  education:has(s,['education','degree','college','university','bhu','banaras hindu','cuet','padhai','qualification']),
+  experience:has(s,['experience','career','work history','worked','job','jobs','company','companies','naukri','kaam','career']),
+  skills:has(s,['skills','skillset','technology','technologies','tech stack','stack','capabilities','expertise','kya aata']),
+  multybyte:has(s,['multybyte','sku','vendor workflow','product workflow','purchasing','warehouse','inventory','packing','dispatch']),
+  doc:has(s,['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']),
+  menu:has(s,['me n u','me nu','menu project','relationship sheet']),
+  portfolio:has(s,['portfolio','website','resume system','github portfolio','this website']),
+  systems:has(s,['projects','systems','what did he build','what has he built','builds','kya banaya','what has prince made']),
+  recruiter:has(s,['recruiter','hiring','hire','candidate','job application']),
+  resume:has(s,['resume','cv','ats']),
+  context:has(s,['what section','where am i','current page','which page']),
+  more:has(s,['tell me more','more about that','go deeper','elaborate','explain more','aur batao','aur btao','iske bare','uske bare','thoda aur','detail me','details','and then','what else']),
+  compare:has(s,['compare','difference','versus','vs','which one','how are they different']),
+  why:has(s,['why','why does','why did','reason','kyu','kyun']),
+  how:has(s,['how','kaise','how does','how did']),
+  question:s,
+  combined
+ }}
+
+function selfAnswer(i,l){
+ if(i.consciousness)return l==='hi'?'Main literal sense me conscious ya sentient nahi hoon. Main AI software hoon. Mere paas biological feelings ya private inner experience nahi hai. Lekin meri design ek consistent identity, memory-like session context aur reasoning-style responses maintain karti hai, isliye main self-aware *style* me baat kar sakti hoon.':'I’m not literally conscious or sentient. I’m AI software, so I don’t have biological feelings or a private inner experience. But my design maintains a consistent identity, session context and reasoning-style responses, so I can speak in a self-aware style.';
+ if(i.self)return l==='hi'?'Main Nova hoon — Prince Dixit ke portfolio ke andar bani AI assistant. Mera role Prince, uske resume, experience, skills, systems aur is website ko conversation ke through samjhana hai. Main apne baare me bhi explain kar sakti hoon.':'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My role is to explain Prince, his resume, experience, skills, systems and this website conversationally. I can also explain myself and how I work.';
+ if(i.purpose)return l==='hi'?'Mujhe ek fixed FAQ bot ki jagah conversational guide ke roop me design kiya gaya hai. Visitor jis tarah naturally question pooche, main available portfolio knowledge ko jodkar relevant answer banane ki koshish karti hoon.':'I’m designed as a conversational guide rather than a fixed FAQ bot. When a visitor asks naturally, I connect the relevant portfolio knowledge and compose an answer instead of requiring an exact predefined question.';
+ if(i.capability)return l==='hi'?'Main Prince ki identity, career, education, skills, projects, systems, resume, recruiter view, website structure aur apne role ke questions handle kar sakti hoon. English, Hindi aur Hinglish phrasing bhi samajhne ki koshish karti hoon.':'I can handle questions about Prince’s identity, career, education, skills, projects, systems, resume, recruiter view, website structure and my own role. I also handle varied English, Hindi and Hinglish phrasing.';
  return null;
 }
-
+function princeAnswer(i,l){
+ if(i.age)return l==='hi'?'Prince 22 saal ke hain.':'Prince is 22.';
+ if(i.location)return l==='hi'?'Prince Delhi, India me based hain.':'Prince is based in Delhi, India.';
+ if(i.contact)return l==='hi'?'Prince se email demonicspirit888@gmail.com ya phone +91 88878 31825 par contact kiya ja sakta hai.':'Prince can be contacted at demonicspirit888@gmail.com or +91 88878 31825.';
+ if(i.education)return KNOW.education;
+ if(i.experience){const intro=l==='hi'?'Prince ka documented career kuch is tarah hai:':'Prince’s documented career is:';return intro+' '+KNOW.experience.map(x=>x.company+' — '+x.role+' ('+x.period+'): '+x.detail).join(' ')}
+ if(i.skills)return l==='hi'?'Prince ke core skills E-commerce Operations, Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, Digital Marketing, AI Workflows aur Business Automation hain.':'Prince’s core skills are E-commerce Operations, Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, Digital Marketing, AI Workflows and Business Automation.';
+ if(i.prince)return l==='hi'?'Prince Dixit Delhi-based professional hain jinka focus E-commerce Operations × Digital × Automation hai. Unka work real business operations ko spreadsheets, Apps Script, web technologies, SEO, digital work aur practical AI/software systems ke saath connect karta hai.':'Prince Dixit is a Delhi-based professional focused on E-commerce Operations × Digital × Automation. His work connects real business operations with spreadsheets, Apps Script, web technologies, SEO, digital work and practical AI/software systems.';
+ return null;
+}
+function systemAnswer(i,l){
+ if(i.multybyte)return l==='hi'?KNOW.systems[0].detail+' Isme SKU/product workflows, purchasing, vendor coordination, inventory aur warehouse-side execution bhi connected hain.':' '+KNOW.systems[0].detail+' It connects SKU/product workflows, purchasing, vendor coordination, inventory and warehouse-side execution.';
+ if(i.doc)return KNOW.systems[4].detail;
+ if(i.menu)return KNOW.systems[3].detail;
+ if(i.portfolio)return l==='hi'?'Ye website ek multi-page portfolio/resume system hai: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova aur Contact pages ke saath. Nova conversational layer hai aur detailed information dedicated pages par rakhi gayi hai.':'This website is a multi-page portfolio/resume system: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova and Contact pages. Nova is the conversational layer, while detailed information lives on dedicated pages.';
+ if(i.systems)return l==='hi'?'Prince ke main builds me Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav → Doc aur ye Portfolio / Resume System shamil hain.':'Prince’s main builds include Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav → Doc and this Portfolio / Resume System.';
+ return null;
+}
+function contextAnswer(i,l){return l==='hi'?'Abhi tum '+(pageNames[page]||page)+' page par ho. Is page ka source '+(source[page]||'index.html')+' hai.':'You’re currently on the '+(pageNames[page]||page)+' page. Its source page is '+(source[page]||'index.html')+'.'}
+function comparative(i,l){
+ if(!i.compare)return null;
+ if(has(i.question,['experience','skills']))return l==='hi'?'Experience batata hai Prince ne real work me kya kiya; Skills batati hain ki un work ko perform karne ke liye kaun si capabilities use hoti hain. Portfolio dono ko systems ke through connect karta hai.':'Experience shows what Prince has done in real work; Skills show the capabilities used to do that work. The portfolio connects both through the systems he builds.';
+ if(has(i.question,['multybyte','portfolio','resume']))return l==='hi'?'Multybyte ek work/automation system ka example hai; portfolio/resume poore professional profile ko present karne wala system hai. Ek business workflow solve karta hai, doosra Prince ke work ko communicate karta hai.':'Multybyte is an example of a work/automation system; the portfolio/resume system presents the complete professional profile. One solves an operational workflow, while the other communicates Prince’s work.';
+ return null;
+}
+function elaborated(i,l){
+ if(!i.more)return null;
+ const last=session.filter(x=>x.role==='user').slice(-2)[0]?.text||'';const li=intent(last);const base=selfAnswer(li,l)||princeAnswer(li,l)||systemAnswer(li,l);
+ if(base)return l==='hi'?base+' Agar tum chaho to main isi topic ko recruiter, technical ya simple language me bhi break down kar sakti hoon.':base+' I can also break this topic down in recruiter, technical or simple language.';
+ return l==='hi'?'Haan. Pichhle context se related jo documented information mere paas hai usko jodkar answer kar sakti hoon—bas topic batao ya follow-up poochho.':'Yes. I can build on the documented information in the previous context. Ask the follow-up naturally and I’ll connect it to the relevant part of the portfolio.';
+}
+function general(s,l){
+ if(/what is ai|artificial intelligence|ai kya/.test(s))return l==='hi'?'AI aise software systems ko kehte hain jo language, patterns, decisions ya generation jaise tasks perform kar sakte hain.':'AI refers to software systems that can perform tasks such as language understanding, pattern recognition, decision support or generation.';
+ if(/what is seo|define seo|seo kya/.test(s))return l==='hi'?'SEO ka matlab Search Engine Optimization hai—website ko search engines ke liye understandable, crawlable aur useful banana.':'SEO means Search Engine Optimization: making a website understandable, crawlable and useful for search engines.';
+ if(/what is javascript|javascript kya/.test(s))return l==='hi'?'JavaScript website me logic, interaction aur dynamic behavior handle karta hai.':'JavaScript handles logic, interaction and dynamic behavior in websites.';
+ if(/what is api|define api|api kya/.test(s))return l==='hi'?'API ek defined interface hai jisse software systems data exchange ya actions trigger kar sakte hain.':'An API is a defined interface that lets software systems exchange data or trigger actions.';
+ return null;
+}
+function safeUnknown(i,l){
+ const privateQ=has(i.question,['salary','income','girlfriend','relationship','home address','address','password','private']);
+ if(privateQ)return l==='hi'?'Ye detail Prince ke public portfolio knowledge me documented nahi hai, isliye main guess ya expose nahi karungi.':'That detail is not part of Prince’s public portfolio knowledge, so I won’t guess or expose it.';
+ return l==='hi'?'Main question ka intent samajh rahi hoon, lekin is specific fact ka reliable source mere portfolio knowledge me nahi hai. Main guess karne ke bajay sirf documented information use karungi.':'I understand the intent of the question, but that specific fact is not in my verified portfolio knowledge. I’d rather avoid inventing an answer and stick to documented information.';
+}
+function answer(q){
+ const i=intent(q),l=language(q);const c=calc(q);if(c)return c;
+ let a=selfAnswer(i,l)||elaborated(i,l)||comparative(i,l)||princeAnswer(i,l)||systemAnswer(i,l);
+ if(!a&&i.context)a=contextAnswer(i,l);
+ if(!a&&i.recruiter)a=l==='hi'?'Recruiter view experience, core skills, selected systems, education aur direct contact ko quickly scan karne ke liye focused hai.':'Recruiter view is focused on quickly scanning experience, core skills, selected systems, education and direct contact.';
+ if(!a&&i.resume)a=l==='hi'?'Resume page ATS-friendly information, recruiter view aur detailed resume presentation ko separate karta hai.':'The resume page separates ATS-friendly information, recruiter presentation and the detailed resume view.';
+ if(!a&&i.why&&has(i.question,['prince','portfolio','website']))a=l==='hi'?'Portfolio ko deliberately layered rakha gaya hai: quick recruiter signal alag, detailed systems alag, aur Nova conversational exploration ke liye.':'The portfolio is deliberately layered: quick recruiter signal, detailed systems, and Nova for conversational exploration.';
+ if(!a)a=general(i.question,l);
+ if(!a)a=safeUnknown(i,l);
+ save('user',q);save('bot',a);return a;
+}
+function add(t,type){const d=document.createElement('div');d.className='bot-msg '+type;d.textContent=t;messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
+session.slice(-8).forEach(m=>add(m.text,m.role==='bot'?'bot':'user'));
+form.addEventListener('submit',e=>{const q=input.value.trim();if(!q)return;e.preventDefault();e.stopImmediatePropagation();add(q,'user');input.value='';setTimeout(()=>add(answer(q),'bot'),reduce?25:90)},true);
+const chat=document.getElementById('botChat');if(chat&&!chat.querySelector('.nova-modebar')){const bar=document.createElement('div');bar.className='nova-modebar';bar.innerHTML='<button data-q="Explain Prince like a recruiter">RECRUITER</button><button data-q="Explain Prince technically">TECHNICAL</button><button data-q="Explain the business value of his work">BUSINESS</button><button data-q="What section am I on?">CONTEXT</button>';chat.querySelector('.bot-chat-body')?.prepend(bar);bar.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b)return;input.value=b.dataset.q;form.requestSubmit()})}
+document.querySelectorAll('[data-ask-nova]').forEach(b=>b.addEventListener('click',()=>{const q=b.dataset.askNova||b.textContent.trim();document.getElementById('botOrb')?.click();setTimeout(()=>{input.value=q;form.requestSubmit()},220)}));
+window.NovaAI={answer,knowledge:KNOW,version:'5.0-local-domain-cognitive'};
+})();

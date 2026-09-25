@@ -389,3 +389,80 @@ header{border-bottom-color:rgba(168,85,247,.12)}
 .reveal{transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
 @media(prefers-reduced-motion:reduce){body:after{animation:none}.job-card,.project,.process-card,.build-grid>div,.edu-grid>div,.training-card{transition:none}.job-card:hover .job-visual img{transform:none!important}}
 @media(max-width:700px){.experience-stack:before{display:none}.job-visual{height:240px;min-height:240px}.job-visual img{padding:22px}.experience-3d{opacity:.6}}
+
+/* ===== MOTION SYSTEM v3 — color belongs to motion, not experience cards ===== */
+.job-card,
+.job-visual{
+  background:#0b0d11!important;
+  border-color:#252930!important;
+  box-shadow:none!important;
+}
+.job-card:hover{
+  border-color:#3a3e47!important;
+  box-shadow:0 22px 55px rgba(0,0,0,.28)!important;
+}
+.job-visual:after{
+  background:linear-gradient(90deg,transparent 45%,#0b0d11 100%)!important;
+}
+.job-card:before{
+  background:linear-gradient(120deg,rgba(255,255,255,.018),transparent 28%)!important;
+}
+.job:before{background:radial-gradient(circle,rgba(255,255,255,.06),transparent 70%)!important;opacity:.45!important}
+.experience-stack:before{background:linear-gradient(180deg,transparent,#343943,#252830,transparent)!important}
+.experience-3d:before{background:radial-gradient(circle,rgba(255,255,255,.07),transparent 68%)!important}
+.experience-3d .cube{border-color:rgba(255,255,255,.22)!important;background:rgba(255,255,255,.018)!important;box-shadow:0 0 20px rgba(255,255,255,.035)!important}
+.experience-3d .ring,.experience-3d i,.experience-3d .r2{border-color:rgba(255,255,255,.18)!important}
+
+/* Move the red/purple energy into page motion layers. */
+.motion-energy{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
+.motion-energy:before,.motion-energy:after{
+  content:"";position:absolute;border-radius:50%;filter:blur(70px);will-change:transform;
+}
+.motion-energy:before{
+  width:38vw;height:38vw;left:-12vw;top:8vh;
+  background:rgba(168,85,247,.11);
+  animation:energyFloatA 16s ease-in-out infinite alternate;
+}
+.motion-energy:after{
+  width:32vw;height:32vw;right:-10vw;top:48vh;
+  background:rgba(255,59,92,.09);
+  animation:energyFloatB 19s ease-in-out infinite alternate;
+}
+@keyframes energyFloatA{0%{transform:translate3d(0,0,0) scale(.92)}50%{transform:translate3d(13vw,12vh,0) scale(1.08)}100%{transform:translate3d(4vw,25vh,0) scale(.96)}}
+@keyframes energyFloatB{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-12vw,-10vh,0) scale(.9)}100%{transform:translate3d(-4vw,8vh,0) scale(1.08)}}
+
+/* Scroll/reveal motion: short, compositor-friendly transforms. */
+.reveal{
+  opacity:0;
+  transform:translate3d(0,22px,0);
+  transition:opacity .55s ease,transform .65s cubic-bezier(.16,1,.3,1);
+  will-change:opacity,transform;
+}
+.reveal.visible{opacity:1;transform:translate3d(0,0,0)}
+.section{position:relative;isolation:isolate}
+.section>*{position:relative;z-index:1}
+
+/* Animated section entrance line */
+.section-label:after{
+  content:"";display:block;width:0;height:1px;margin-top:10px;
+  background:linear-gradient(90deg,var(--violet),var(--red),transparent);
+  transition:width .9s cubic-bezier(.16,1,.3,1);
+}
+.section.in-view .section-label:after{width:120px}
+
+/* Smooth page-to-page transition */
+#pageTransition{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 30% 50%,rgba(168,85,247,.22),transparent 30%),radial-gradient(circle at 70% 50%,rgba(255,59,92,.18),transparent 28%),#07080d;
+  transition:opacity .28s ease;
+}
+#pageTransition.active{opacity:1}
+@media(max-width:700px){
+  .motion-energy:before,.motion-energy:after{filter:blur(50px);width:55vw;height:55vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .motion-energy,.section-label:after,#pageTransition{display:none}
+  .reveal{opacity:1;transform:none;transition:none}
+}

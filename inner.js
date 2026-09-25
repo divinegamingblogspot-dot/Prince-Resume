@@ -41,35 +41,32 @@ function language(q){const s=norm(q);if(/[\u0900-\u097f]/.test(q))return'hi';if(
 function save(role,text){session.push({role,text});session=session.slice(-16);try{sessionStorage.setItem(KEY,JSON.stringify(session))}catch{}}
 function calc(q){const m=norm(q).match(/(?:calculate|solve|what is|how much is|kitna hai)\s*(-?\d+(?:\.\d+)?)\s*([+\-*x×÷/])\s*(-?\d+(?:\.\d+)?)/i);if(!m)return null;const a=+m[1],b=+m[3],o=m[2];if((o==='/'||o==='÷')&&b===0)return'Division by zero is undefined.';return'The answer is '+(o==='+'?a+b:o==='-'?a-b:o==='/'||o==='÷'?a/b:a*b)+'.'}
 
-function intent(q){const s=norm(q);const prev=session.filter(x=>x.role==='user').slice(-3).join(' ');const combined=s+' '+norm(prev);
+function intent(q){
+ const s=norm(q);const prev=session.filter(x=>x.role==='user').slice(-3).map(x=>x.text).join(' ');const combined=s+' '+norm(prev);
+ const tokens=words(s);
+ const topic=(arr)=>arr.some(x=>{const p=norm(x);if(s.includes(p))return true;const pt=p.split(' ').filter(Boolean);return pt.length>1&&pt.every(t=>tokens.has(t)||t.length<3)});
+ const asks=(arr)=>topic(arr)||arr.some(x=>{const p=norm(x);return p.length>3&&s.includes(p.slice(0,Math.max(4,p.length-2)))})
  return{
-  self:has(s,['who are you','what are you','tell me about yourself','about yourself','introduce yourself','nova kaun','nova kya','tum kaun','aap kaun','who is nova']),
-  consciousness:has(s,['conscious','consciousness','sentient','alive','feelings','feel','emotion','mind','real ai','real person','human']),
-  purpose:has(s,['why do you exist','why were you created','your purpose','what is your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
-  capability:has(s,['what can you do','what can you answer','your capabilities','what do you know','tum kya kar sakti','kya kya bata sakti']),
-  prince:has(s,['who is prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince ke baare','prince k bare']),
-  age:has(s,['age','how old','umar','kitne saal']),
-  location:has(s,['where is prince','where does prince live','location of prince','prince kaha','prince kahan']),
-  contact:has(s,['contact prince','reach prince','prince email','prince phone','prince ka number','prince ka email','prince se contact']),
-  education:has(s,['education','degree','college','university','bhu','banaras hindu','cuet','padhai','qualification']),
-  experience:has(s,['experience','career','work history','worked','job','jobs','company','companies','naukri','kaam','career']),
-  skills:has(s,['skills','skillset','technology','technologies','tech stack','stack','capabilities','expertise','kya aata']),
-  multybyte:has(s,['multybyte','sku','vendor workflow','product workflow','purchasing','warehouse','inventory','packing','dispatch']),
-  doc:has(s,['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']),
-  menu:has(s,['me n u','me nu','menu project','relationship sheet']),
-  portfolio:has(s,['portfolio','website','resume system','github portfolio','this website']),
-  systems:has(s,['projects','systems','what did he build','what has he built','builds','kya banaya','what has prince made']),
-  recruiter:has(s,['recruiter','hiring','hire','candidate','job application']),
-  resume:has(s,['resume','cv','ats']),
-  context:has(s,['what section','where am i','current page','which page']),
-  more:has(s,['tell me more','more about that','go deeper','elaborate','explain more','aur batao','aur btao','iske bare','uske bare','thoda aur','detail me','details','and then','what else']),
-  compare:has(s,['compare','difference','versus','vs','which one','how are they different']),
-  why:has(s,['why','why does','why did','reason','kyu','kyun']),
-  how:has(s,['how','kaise','how does','how did']),
-  question:s,
-  combined
+  self:asks(['who are you','what are you','tell me about yourself','introduce yourself','nova kaun','nova kya','tum kaun','aap kaun','who is nova']),
+  consciousness:asks(['conscious','consciousness','sentient','alive','feelings','emotion','mind','real person','human']),
+  purpose:asks(['why do you exist','why were you created','your purpose','why were you made','tumhe kyu banaya','tumhara purpose']),
+  capability:asks(['what can you do','what can you answer','your capabilities','what do you know','tum kya kar sakti','kya kya bata sakti']),
+  prince:asks(['who is prince','tell me about prince','about prince','prince kaun','prince kon','prince ke bare','prince ke baare']),
+  age:asks(['age','how old','umar','kitne saal']),location:asks(['where is prince','where does prince live','location of prince','prince kaha','prince kahan']),
+  contact:asks(['contact prince','reach prince','prince email','prince phone','prince ka number','prince ka email','prince se contact']),
+  education:asks(['education','degree','college','university','bhu','banaras hindu','cuet','padhai','qualification']),
+  experience:asks(['experience','career','work history','worked','job','jobs','company','companies','naukri','kaam','career']),
+  skills:asks(['skills','skillset','technology','technologies','tech stack','stack','capabilities','expertise','kya aata']),
+  multybyte:asks(['multybyte','sku','vendor workflow','product workflow','purchasing','warehouse','inventory','packing','dispatch','operations automation']),
+  doc:asks(['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']),
+  menu:asks(['me n u','me nu','menu project','relationship sheet']),
+  portfolio:asks(['portfolio','website','resume system','github portfolio','this website','this site']),
+  systems:asks(['projects','systems','what did he build','what has he built','builds','what has prince made','automation','what did prince create','what does he build']),
+  recruiter:asks(['recruiter','hiring','hire','candidate','job application']),resume:asks(['resume','cv','ats']),
+  context:asks(['what section','where am i','current page','which page']),
+  more:asks(['tell me more','more about that','go deeper','elaborate','explain more','aur batao','aur btao','iske bare','uske bare','thoda aur','detail me','details','and then','what else']),
+  compare:asks(['compare','difference','versus','vs','which one','how are they different']),why:asks(['why','reason','kyu','kyun']),how:asks(['how','kaise','how does','how did']),question:s,combined
  }}
-
 function selfAnswer(i,l){
  if(i.consciousness)return l==='hi'?'Main literal sense me conscious ya sentient nahi hoon. Main AI software hoon. Mere paas biological feelings ya private inner experience nahi hai. Lekin meri design ek consistent identity, memory-like session context aur reasoning-style responses maintain karti hai, isliye main self-aware *style* me baat kar sakti hoon.':'I’m not literally conscious or sentient. I’m AI software, so I don’t have biological feelings or a private inner experience. But my design maintains a consistent identity, session context and reasoning-style responses, so I can speak in a self-aware style.';
  if(i.self)return l==='hi'?'Main Nova hoon — Prince Dixit ke portfolio ke andar bani AI assistant. Mera role Prince, uske resume, experience, skills, systems aur is website ko conversation ke through samjhana hai. Main apne baare me bhi explain kar sakti hoon.':'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My role is to explain Prince, his resume, experience, skills, systems and this website conversationally. I can also explain myself and how I work.';
@@ -92,7 +89,7 @@ function systemAnswer(i,l){
  if(i.doc)return KNOW.systems[4].detail;
  if(i.menu)return KNOW.systems[3].detail;
  if(i.portfolio)return l==='hi'?'Ye website ek multi-page portfolio/resume system hai: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova aur Contact pages ke saath. Nova conversational layer hai aur detailed information dedicated pages par rakhi gayi hai.':'This website is a multi-page portfolio/resume system: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova and Contact pages. Nova is the conversational layer, while detailed information lives on dedicated pages.';
- if(i.systems)return l==='hi'?'Prince ke main builds me Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav → Doc aur ye Portfolio / Resume System shamil hain.':'Prince’s main builds include Multybyte Automation, Operational Spreadsheet Systems, AI / Software Experiments, ME N U, EyeNav → Doc and this Portfolio / Resume System.';
+ if(i.systems){const intro=l==='hi'?'Prince ke builds ko ek hi theme connect karti hai: real work ko structured aur repeatable banana.':'A common thread connects Prince’s builds: turning real work into structured, repeatable systems.';return intro+' '+KNOW.systems.map(x=>x.name+' — '+x.detail).join(' ')}
  return null;
 }
 function contextAnswer(i,l){return l==='hi'?'Abhi tum '+(pageNames[page]||page)+' page par ho. Is page ka source '+(source[page]||'index.html')+' hai.':'You’re currently on the '+(pageNames[page]||page)+' page. Its source page is '+(source[page]||'index.html')+'.'}

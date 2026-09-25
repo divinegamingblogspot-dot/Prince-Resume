@@ -284,3 +284,47 @@ body{background-image:radial-gradient(circle at 12% 18%,rgba(183,255,82,.045),tr
 .page-bot.walking .bot-character{animation:novaWalk .36s ease-in-out infinite alternate}
 .bot-reaction{right:112px;bottom:164px}
 @media(max-width:700px){.page-bot{right:3px;bottom:5px}.bot-orb{transform:scale(.72);transform-origin:bottom right}.bot-reaction{right:72px;bottom:120px}}
+
+/* ===== NOVA FINAL ANIME CHARACTER OVERRIDE =====
+   Human/anime silhouette, expressive face, crimson hair; robot identity retained only
+   through subtle glow/core accents in the UI rather than a metallic body.
+*/
+.page-bot .bot-character{width:122px;height:190px;left:14px;bottom:1px;animation:novaAnimeIdle 2.8s ease-in-out infinite}
+.page-bot .bot-hair{left:0;top:0;width:122px;height:142px;z-index:4;border-radius:52% 48% 42% 40%;background:linear-gradient(108deg,#5a1028 0%,#a51f43 24%,#e84b6d 49%,#b72a4c 67%,#551025 100%);clip-path:polygon(18% 3%,43% 0,66% 3%,86% 13%,98% 30%,94% 51%,100% 88%,82% 72%,75% 100%,59% 77%,49% 98%,36% 75%,18% 96%,22% 70%,0 86%,9% 54%,0 35%,9% 15%);box-shadow:inset -12px -10px 20px rgba(38,0,13,.3),0 12px 22px rgba(0,0,0,.24)}
+.page-bot .bot-hair:before{left:31px;top:5px;width:51px;height:99px;background:linear-gradient(120deg,#f06784,#bd294c 70%);opacity:.72}
+.page-bot .bot-hair:after{right:-4px;top:42px;width:34px;height:116px;background:linear-gradient(180deg,#c93458,#60152b);border-radius:50%}
+.page-bot .bot-head{left:31px;top:35px;width:64px;height:62px;z-index:5;border:0;border-radius:46% 46% 48% 48%;background:linear-gradient(150deg,#fff4ef 0%,#f5d8d2 60%,#e7b8b3 100%);box-shadow:inset 0 -5px 10px rgba(105,40,50,.08),0 7px 15px rgba(0,0,0,.18)}
+.page-bot .bot-ear{display:none}
+.page-bot .bot-neck{left:54px;top:91px;width:17px;height:17px;background:#e6b6b0;border-radius:0 0 6px 6px;z-index:3}
+.page-bot .bot-eye{top:30px;width:15px;height:19px;border-radius:48% 48% 45% 45%;background:#263c4e;border:2px solid #17222c;box-shadow:0 1px 0 #fff inset,0 0 7px rgba(88,190,255,.2);z-index:8;overflow:hidden}
+.page-bot .bot-eye.left{left:13px}.page-bot .bot-eye.right{right:13px}
+.page-bot .bot-eye:before{content:"";position:absolute;left:2px;top:1px;width:5px;height:7px;border-radius:50%;background:#fff;opacity:.95}
+.page-bot .bot-eye:after{content:"";position:absolute;left:5px;bottom:2px;width:5px;height:7px;border-radius:50%;background:#72d8ff}
+.page-bot .bot-eye b{display:none}
+.page-bot .bot-blush{top:49px;width:12px;height:6px;border-radius:50%;background:rgba(239,91,116,.32);z-index:8}
+.page-bot .bot-blush.left{left:6px}.page-bot .bot-blush.right{right:6px}
+.page-bot .bot-mouth{left:28px;top:51px;width:9px;height:6px;border:0;border-bottom:2px solid #a4495c;border-radius:0 0 50% 50%;z-index:8}
+.page-bot .bot-body{left:29px;top:104px;width:68px;height:51px;border:0;border-radius:22px 22px 9px 9px;background:linear-gradient(160deg,#f2f0f3 0%,#38313e 44%,#241d2a 100%);box-shadow:inset 0 7px 10px rgba(255,255,255,.13),0 9px 16px rgba(0,0,0,.2);z-index:4}
+.page-bot .bot-body:before{content:"";position:absolute;left:7px;right:7px;top:0;height:23px;border-radius:50% 50% 12px 12px;background:linear-gradient(180deg,#f8f5f7,#d8d0d8);clip-path:polygon(0 0,100% 0,82% 100%,18% 100%)}
+.page-bot .bot-body:after{content:"";position:absolute;left:6px;right:6px;bottom:-26px;height:29px;background:linear-gradient(90deg,#771734,#d23b61 48%,#771734);clip-path:polygon(9% 0,91% 0,100% 100%,0 100%);border-top:1px solid rgba(255,255,255,.16)}
+.page-bot .bot-core{display:block;left:26px;top:24px;width:15px;height:8px;border:0;background:rgba(255,113,142,.4);border-radius:50%;color:transparent;box-shadow:0 0 12px rgba(255,113,142,.3);z-index:7}
+.page-bot .bot-arm{top:108px;width:11px;height:43px;border:0;border-radius:9px;background:linear-gradient(180deg,#f0d4d3,#b98691);z-index:3}
+.page-bot .bot-arm.left{left:20px;transform:rotate(10deg)}.page-bot .bot-arm.right{right:20px;transform:rotate(-10deg)}
+.page-bot .bot-leg{top:157px;width:13px;height:31px;border:0;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#f2d8d5,#d8a9aa);z-index:2}
+.page-bot .bot-leg.left{left:42px}.page-bot .bot-leg.right{right:42px}
+.page-bot .bot-leg:after{content:"";position:absolute;left:-5px;bottom:-5px;width:22px;height:8px;border:0;border-radius:10px 11px 5px 5px;background:#302b34}
+.page-bot .bot-antenna{display:none}
+.page-bot .bot-shadow{width:98px;height:12px;left:23px;bottom:0;background:rgba(0,0,0,.4);filter:blur(4px)}
+.page-bot[data-mood="happy"] .bot-mouth{width:13px;height:8px;left:26px;border-bottom:2px solid #9e3b52;border-radius:0 0 50% 50%}
+.page-bot[data-mood="surprised"] .bot-mouth{left:28px;top:49px;width:9px;height:9px;border:2px solid #9e3b52;border-radius:50%;background:rgba(255,255,255,.25)}
+.page-bot[data-mood="wink"] .bot-eye.left{height:3px;top:38px;border:0;border-radius:10px;background:#263c4e;box-shadow:none}
+.page-bot[data-mood="wink"] .bot-eye.left:before,.page-bot[data-mood="wink"] .bot-eye.left:after{display:none}
+.page-bot[data-mood="love"] .bot-eye{background:#ef5b79;border-color:#8e2945}
+.page-bot[data-mood="love"] .bot-eye:after{content:"♥";left:2px;bottom:0;width:auto;height:auto;background:none;color:#fff;font-size:8px}
+.page-bot.walking .bot-character{animation:novaAnimeWalk .42s ease-in-out infinite alternate}
+.page-bot.walking .bot-arm.left{animation:novaAnimeArmL .42s infinite alternate}.page-bot.walking .bot-arm.right{animation:novaAnimeArmR .42s infinite alternate}
+.page-bot.walking .bot-leg.left{animation:novaAnimeLegL .42s infinite alternate}.page-bot.walking .bot-leg.right{animation:novaAnimeLegR .42s infinite alternate}
+@keyframes novaAnimeIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes novaAnimeWalk{to{transform:translateY(-6px) rotate(1deg)}}
+@keyframes novaAnimeArmL{to{transform:rotate(-19deg)}}@keyframes novaAnimeArmR{to{transform:rotate(19deg)}}
+@keyframes novaAnimeLegL{to{transform:rotate(13deg)}}@keyframes novaAnimeLegR{to{transform:rotate(-13deg)}}

@@ -1314,3 +1314,13 @@ body.page-exit{
 #loader .loader-name-morph .morph-e{animation-delay:-3.80s!important}
 body.page-exit{opacity:0!important;transition:opacity .04s linear!important}
 @media(prefers-reduced-motion:reduce){#loader .loader-name-morph .morph-letter{animation:none!important;font-family:"Space Grotesk",sans-serif!important;opacity:1!important;filter:none!important;transform:none!important}body.page-exit{transition:none!important}}
+
+
+/* ===== CRITICAL HOMEPAGE 3D CORE VISIBILITY =====
+   The interactive cube must remain visible even if the optional reveal observer
+   or another non-critical animation script fails. */
+.home-3d-wrap.reveal{opacity:1;transform:none;visibility:visible}
+.home-3d-stage{isolation:isolate;z-index:1}
+.home-3d-scene,.home-cube{display:block;visibility:visible;opacity:1}
+.home-cube{z-index:3}
+.cube-face{visibility:visible;backface-visibility:hidden}

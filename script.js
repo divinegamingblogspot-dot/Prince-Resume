@@ -670,7 +670,7 @@ const stage=document.getElementById('home3dStage'),cube=document.getElementById(
 if(stage&&cube&&!reduce){let rx=-18,ry=-32,lastX=0,lastY=0,vx=0,vy=0,drag=false,idle=0,raf=0,last=performance.now();
  const draw=()=>{raf=0;cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'};
  const frame=(now)=>{const dt=Math.min(32,now-last);last=now;if(!drag){ry+=.012*dt+vx*.92;rx+=vy*.92;vx*=.94;vy*=.94;if(Math.abs(vx)+Math.abs(vy)<.002)idle+=dt;else idle=0;if(idle>1200)ry+=.008*dt}if(!raf)raf=requestAnimationFrame(frame);draw()};
- const move=(x,y)=>{if(!drag)return;const dx=x-lastX,dy=y-lastY;ry+=dx*.45;rx-=dy*.45;vx=dx*.006;vy=-dy*.006;rx=Math.max(-70,Math.min(70,rx));lastX=x;lastY=y};
+ const move=(x,y)=>{if(!drag)return;const dx=x-lastX,dy=y-lastY;ry+=dx*.72;rx-=dy*.72;vx=dx*.009;vy=-dy*.009;rx=Math.max(-70,Math.min(70,rx));lastX=x;lastY=y};
  stage.addEventListener('pointerdown',e=>{drag=true;idle=0;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)});
  stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY));stage.addEventListener('pointerup',()=>{drag=false;stage.classList.remove('dragging')});stage.addEventListener('pointercancel',()=>{drag=false;stage.classList.remove('dragging')});stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.18;vx=e.deltaY*.001;idle=0},{passive:false});requestAnimationFrame(frame);draw();
 }

@@ -111,15 +111,28 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     }
   });
   const replies=[
-    [/who is prince|about prince|who are you/i,'Prince is an e-commerce operations and digital automation professional. His work sits between business execution, websites, data, marketing and practical software systems.'],
-    [/experience|work|job|career/i,'He has worked across e-commerce operations, management, telesales, orders and inventory — with Multybyte, Crafts Banaras, Paraxion and Unique Threads.'],
-    [/skill|stack|technology|tech/i,'His toolkit includes Google Sheets, Apps Script, JavaScript, HTML/CSS, APIs, SEO, digital marketing, inventory, fulfillment, business automation and AI workflows.'],
-    [/project|system|build|portfolio/i,'Key builds include Multybyte automation, EyeNav → Doc, ME N U and this portfolio/resume system.'],
-    [/multybyte|automation|sheet|apps script/i,'The Multybyte work focuses on product/SKU workflows, purchasing, inventory, vendor processes and Sheets + Apps Script automation.'],
-    [/ai|artificial intelligence|assistant/i,'AI is one of Prince’s experimental layers: AI-assisted workflows, voice interaction, Android experiments and now… me. I’m Nova. ✦'],
+    [/who is prince|who are you|about prince|tell me about prince/i,'Prince Dixit is 22 and based in Delhi, India. He works at the intersection of e-commerce operations, digital work, automation and practical software.'],
+    [/name|full name/i,'His name is Prince Dixit.'],
+    [/age|how old/i,'Prince is 22 years old.'],
+    [/where.*(from|live)|location|delhi/i,'Prince is based in Delhi, India.'],
+    [/why|purpose|motivation|what drives/i,'Prince likes building useful things that solve real problems. He moved toward Delhi for personal and career reasons and has focused on turning business work into better systems, automation and digital workflows.'],
+    [/experience|work|job|career/i,'He has worked across e-commerce operations, management, telesales, orders and inventory — including Multybyte, Crafts Banaras, Paraxion and Unique Threads.'],
+    [/multybyte|current job|current work/i,'At Multybyte, Prince works around wholesale e-commerce operations, product and SKU data, inventory, purchasing coordination, vendor workflows, warehouse coordination, packing/dispatch and website/data issues.'],
+    [/crafts|banaras/i,'At Crafts Banaras, Prince handled e-commerce management, daily operations, team coordination, customer service, digital marketing, social media, orders, inventory and website work.'],
+    [/education|bhu|degree|study|college|school/i,'Prince studied BA (Hons.) Economics at BHU and completed Class 12 in Commerce. His CUET Reasoning percentile was 99.43%. He also completed training in SEO, website building and social media marketing.'],
+    [/skill|stack|technology|tech|know/i,'His toolkit includes Google Sheets, Google Apps Script, JavaScript, HTML/CSS, APIs, SEO, social media marketing, e-commerce operations, inventory, fulfillment, website management, AI workflows and business automation.'],
+    [/project|system|build|portfolio/i,'His main systems include Multybyte automation, EyeNav → Doc, the private ME N U companion, and this portfolio/resume website.'],
+    [/multybyte.*automation|automation|sheet|apps script/i,'Prince builds practical automation with Google Sheets, Apps Script, JavaScript and APIs — especially for product, image, purchasing, inventory and vendor workflows.'],
+    [/eyenav|doc|voice|android/i,'EyeNav evolved into Doc, an Android voice-assistant experiment focused on voice commands and hands-free interaction.'],
+    [/me n u|relationship companion|spreadsheet/i,'ME N U is a private relationship companion system Prince built as a zero-cost personal project, with memories, tasks, coins, questions and an AI-style assistant.'],
+    [/ai|artificial intelligence|assistant|nova/i,'Prince is interested in practical AI and software experiments. Nova is the portfolio assistant built to explain his work, personality, skills, projects and background.'],
+    [/like|likes|favorite|hobby|interests|enjoy/i,'Prince likes technology, automation, AI experiments, building websites and useful systems, gaming, bikes and creative digital projects. He also enjoys Brawl Stars, Mortal Kombat and exploring games and anime-style entertainment.'],
+    [/bike|gt650|royal enfield/i,'One of Prince’s bike goals is a Royal Enfield GT 650. He has tied that goal to growing his monthly income and savings.'],
+    [/gaming|game|games/i,'Prince plays games including Brawl Stars and Mortal Kombat, and has also played Genshin Impact.'],
+    [/relationship|girlfriend|love|partner/i,'Prince values close relationships and has built personal digital projects around memories, tasks and shared experiences. Nova keeps personal relationship details intentionally general rather than exposing private conversations.'],
+    [/personality|kind of person|character/i,'Prince tends to be hands-on, ambitious and systems-focused. He likes turning an idea into something working instead of stopping at a concept.'],
     [/contact|email|hire|reach/i,'You can reach Prince at divinegamingblogspot@gmail.com or use the Contact section.'],
-    [/education|bhu|degree|study/i,'Prince studied BA (Hons.) Economics at BHU and completed Class 12 in Commerce.'],
-    [/hello|hi|hey|hii/i,'Heyyy ✦ I’m Nova. Click me, scroll around, or ask me anything about the portfolio!']
+    [/hello|hi|hey|hii/i,'Heyyy ✦ I’m Nova. Ask me about Prince, what he likes, what he builds, his work, education, skills, projects or goals.']
   ];
   function answer(q){
     for(const [re,ans] of replies) if(re.test(q)) return ans;

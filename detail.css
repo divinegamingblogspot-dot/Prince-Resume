@@ -30,3 +30,6 @@ body:after{
 .topbar{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 body:before{filter:blur(28px)!important}
 @media(prefers-reduced-motion:reduce){body:after{display:none}.topbar{backdrop-filter:none;-webkit-backdrop-filter:none}}
+
+/* ===== FINAL DETAIL ACCESSIBILITY PASS ===== */
+.skip-link{position:fixed;left:18px;top:10px;z-index:10001;transform:translateY(-180%);padding:10px 14px;background:#080a0f;color:#fff;border:1px solid #a855f7;border-radius:7px;font:700 10px "Space Grotesk";transition:transform .2s}.skip-link:focus{transform:none}body{overflow-x:hidden}a:focus-visible,.cta:focus-visible,button:focus-visible{outline:2px solid #b7ff52;outline-offset:4px}

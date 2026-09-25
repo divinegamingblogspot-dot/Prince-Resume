@@ -798,3 +798,28 @@ img{content-visibility:auto}img[loading="lazy"]{contain-intrinsic-size:320px 220
 #home3dCube>.cube-top,#home3dCube>.cube-top:hover{transform:rotateX(90deg) translateZ(110px)!important}
 #home3dCube>.cube-bottom,#home3dCube>.cube-bottom:hover{transform:rotateX(-90deg) translateZ(110px)!important}
 #home3dCube>.cube-face:hover{filter:brightness(1.18);border-color:#b7ff52}
+
+
+/* ===== NOVA MOBILE / ANDROID WEBVIEW CHAT FIX ===== */
+@media(max-width:700px){
+  .page-bot .bot-chat,.page-bot.nova-at-top .bot-chat,.page-bot.nova-at-bottom .bot-chat{
+    position:fixed!important;left:10px!important;right:10px!important;bottom:10px!important;
+    width:auto!important;max-width:none!important;height:min(560px,calc(100dvh - 78px))!important;
+    max-height:calc(100dvh - 78px)!important;min-height:430px!important;border-radius:18px!important;
+    transform-origin:bottom center!important;
+  }
+  .page-bot .bot-chat-body{height:calc(100% - 96px)!important;min-height:0!important;padding:14px!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .page-bot .bot-chat-head{height:46px!important;min-height:46px!important;padding:0 14px!important}
+  .page-bot .bot-chat-head button{width:40px!important;height:40px!important;display:grid!important;place-items:center!important;font-size:24px!important}
+  .page-bot .bot-chat-input{height:50px!important;min-height:50px!important;padding:7px!important;gap:7px!important;background:#090b10!important}
+  .page-bot .bot-chat-input input{min-width:0!important;width:100%!important;height:36px!important;font-size:16px!important;line-height:36px!important;padding:0 12px!important}
+  .page-bot .bot-chat-input button{flex:0 0 42px!important;width:42px!important;height:36px!important;min-width:42px!important}
+  .page-bot .bot-suggestions{gap:7px!important;margin-top:10px!important}
+  .page-bot .bot-suggestions button{min-height:36px!important;padding:8px 11px!important;font-size:10px!important}
+  .page-bot .bot-msg{max-width:92%!important;font-size:13px!important;line-height:1.55!important;padding:10px 12px!important}
+}
+@media(max-width:380px){
+  .page-bot .bot-chat,.page-bot.nova-at-top .bot-chat,.page-bot.nova-at-bottom .bot-chat{
+    left:7px!important;right:7px!important;bottom:7px!important;height:min(540px,calc(100dvh - 60px))!important;min-height:400px!important;
+  }
+}

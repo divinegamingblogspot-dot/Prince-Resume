@@ -156,13 +156,24 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';ask(q)});
   messages?.addEventListener('click',e=>{const b=e.target.closest('[data-bot-q]');if(b)ask(b.dataset.botQ)});
   let scrollTimer;
+  function positionNova(){
+    const max=document.documentElement.scrollHeight-innerHeight;
+    const p=max>0?Math.max(0,Math.min(1,scrollY/max)):0;
+    const edge=24,botWidth=104;
+    const x=edge+(innerWidth-botWidth-edge*2)*(1-p);
+    root.style.right='auto';
+    root.style.left=Math.max(8,x)+'px';
+    root.style.transition='left .7s cubic-bezier(.22,.7,.2,1)';
+    root.classList.toggle('nova-at-bottom',p>=.5);
+    root.classList.toggle('nova-at-top',p<.5);
+  }
   window.addEventListener('scroll',()=>{
     root.classList.add('walking');clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>root.classList.remove('walking'),180);
+    positionNova();
     const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
-    const x=10+Math.min(82,p*82);
-    root.style.right='auto';root.style.left=x+'vw';
-    root.style.transition='left .55s cubic-bezier(.22,.7,.2,1)';
     if(p>.93)mood('happy','We made it to the end! ✦');
   },{passive:true});
+  window.addEventListener('resize',positionNova,{passive:true});
+  positionNova();
   setTimeout(()=>mood('happy','Hi! I’m Nova ✦'),1200);
 })();

@@ -1053,7 +1053,7 @@ footer{color:#747d89;border-top-color:#2b323d}
   text-align:center;
   transform-origin:50% 58%;
   will-change:transform,filter,opacity,font-family;
-  animation:morphLetter 4.55s steps(1,end) infinite;
+  animation:morphLetter 7.2s steps(1,end) infinite;
 }
 .loader-name-morph .morph-p{animation-delay:-.02s}
 .loader-name-morph .morph-r{animation-delay:-.62s}
@@ -1138,4 +1138,20 @@ footer{color:#747d89;border-top-color:#2b323d}
   .loader-name-morph .morph-dot{animation:none!important}
   .loader-scan{animation:none!important;opacity:.35}
   .loader-bar i{animation:none!important}
+}
+
+
+/* ===== PRINCE INTRO — SLOWER TYPOGRAPHIC PHASES ===== */
+#loader .loader-name-morph .morph-letter{animation-duration:7.2s!important}
+#loader .loader-name-morph .morph-p{animation-delay:-.02s!important}
+#loader .loader-name-morph .morph-r{animation-delay:-1.05s!important}
+#loader .loader-name-morph .morph-i{animation-delay:-2.10s!important}
+#loader .loader-name-morph .morph-n{animation-delay:-3.15s!important}
+#loader .loader-name-morph .morph-c{animation-delay:-4.20s!important}
+#loader .loader-name-morph .morph-e{animation-delay:-5.25s!important}
+#loader .loader-name-morph .morph-letter{
+  animation-timing-function:cubic-bezier(.45,0,.55,1)!important;
+}
+#loader.loader-audio-active .loader-name-morph{
+  text-shadow:0 0 18px rgba(255,255,255,.15),0 0 75px rgba(183,255,82,.11);
 }

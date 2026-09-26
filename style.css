@@ -1934,3 +1934,54 @@ button{font:inherit}
 @media(max-width:700px){
   .page-bot{right:10px!important;bottom:10px!important;width:88px!important;height:116px!important}
 }
+
+/* CLASSIC BIOLOGICAL DNA - visual geometry */
+.skill-dna-lab .skill-dna{
+  width:190px!important;height:330px!important;
+  position:relative!important;
+  transform-style:preserve-3d!important;
+  animation:none!important;
+  filter:drop-shadow(0 0 12px rgba(255,35,65,.34)) drop-shadow(0 0 16px rgba(20,110,255,.34));
+}
+.skill-dna-lab .dna-strand{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+}
+.skill-dna-lab .dna-node{
+  position:absolute;
+  left:50%;top:var(--y);
+  width:15px;height:15px;
+  margin:-7.5px;
+  border-radius:50%;
+  transform:translateX(var(--x)) translateZ(var(--z));
+}
+.skill-dna-lab .dna-node-red{
+  background:radial-gradient(circle at 30% 25%,#ffd1d8 0 7%,#ff3658 30%,#c40030 70%,#650014 100%);
+  box-shadow:0 0 9px #ff3153,0 0 24px rgba(255,30,65,.55);
+}
+.skill-dna-lab .dna-node-blue{
+  background:radial-gradient(circle at 30% 25%,#d4ecff 0 7%,#2995ff 30%,#0756ce 70%,#03275f 100%);
+  box-shadow:0 0 9px #238cff,0 0 24px rgba(20,115,255,.55);
+}
+.skill-dna-lab .dna-pairs{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+}
+.skill-dna-lab .dna-pair{
+  position:absolute;
+  left:50%;top:var(--y);
+  width:136px;height:4px;
+  margin-left:-68px;
+  transform:translateX(var(--x)) translateZ(var(--z)) rotateZ(var(--angle));
+  border-radius:99px;
+  background:linear-gradient(90deg,#ff3153 0%,#ff8194 25%,#f4f6ff 50%,#68b5ff 75%,#1681ff 100%);
+  box-shadow:0 0 7px rgba(130,180,255,.5);
+  opacity:.88;
+}
+.skill-dna-lab .skill-dna:after{
+  content:"";
+  position:absolute;inset:0;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,transparent 42%,rgba(255,30,65,.025) 55%,transparent 70%);
+  pointer-events:none;
+}

@@ -183,15 +183,14 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     if(novaPositionRaf)return;
     novaPositionRaf=requestAnimationFrame(()=>{
       novaPositionRaf=0;
-      const max=document.documentElement.scrollHeight-innerHeight;
-      const p=max>0?Math.max(0,Math.min(1,scrollY/max)):0;
-      const edge=24,botWidth=104;
-      /* p=0 => right edge, p=1 => left edge. Keep Nova fully inside viewport. */
-      const travel=Math.max(0,innerWidth-botWidth-(edge*2));
-      const right=edge+(travel*p);
-      root.style.left='auto';
-      root.style.right=Math.max(8,right)+'px';
-      root.style.transition='right .7s cubic-bezier(.22,.7,.2,1)';
+      const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+      const p=Math.max(0,Math.min(1,scrollY/max));
+      /* Fixed at the viewport edge, travelling right → left as the page scrolls. */
+      const edge=18, travel=Math.max(0,innerWidth-140);
+      root.style.left=(edge+travel*(1-p))+'px';
+      root.style.right='auto';
+      root.style.transform='translateX(0)';
+      root.style.transition='left .65s cubic-bezier(.22,.7,.2,1)';
       root.classList.toggle('nova-at-bottom',p>=.5);
       root.classList.toggle('nova-at-top',p<.5);
     });
@@ -199,7 +198,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   window.addEventListener('scroll',()=>{
     root.classList.add('walking');clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>root.classList.remove('walking'),180);
     positionNova();
-    const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
+    const max=Math.max(1,document.documentElement.scrollHeight-innerHeight),p=scrollY/max;
     if(p>.93)mood('happy','We made it to the end! ✦');
   },{passive:true});
   window.addEventListener('resize',positionNova,{passive:true});
@@ -806,24 +805,6 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
   draw();
 })();
 
-/* ===== NOVA PRESENCE / VISIBILITY FAILSAFE ===== */
-(()=>{
-  const root=document.getElementById('pageBot');
-  if(!root)return;
-  /* The walking Nova is intentionally inside the viewport; keep her fully visible at every scroll position. */
-  const keepVisible=()=>{
-    const rect=root.getBoundingClientRect();
-    if(rect.right<0||rect.left>innerWidth||rect.bottom<0||rect.top>innerHeight){
-      root.style.left=Math.max(8,innerWidth-128)+'px';
-      root.style.right='auto';
-    }
-  };
-  addEventListener('resize',keepVisible,{passive:true});
-  addEventListener('scroll',keepVisible,{passive:true});
-  setTimeout(keepVisible,50);
-})();
-
-
 /* ===== 3D SKILL DNA / INTERACTIVE ===== */
 (()=>{
   'use strict';
@@ -832,58 +813,43 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
   if(!section||document.querySelector('.skill-dna-lab'))return;
   const lab=document.createElement('div');
   lab.className='skill-dna-lab';
-  lab.setAttribute('aria-label','Interactive 3D skill DNA');
-  lab.innerHTML='<div class="skill-dna-head"><small>SKILL DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · AUTO ROTATES</span></div>'+
-  '<div class="skill-dna-stage" id="skillDnaStage"><div class="skill-dna" id="skillDna"></div><div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations, automation, web, marketing and AI connected into one practical skill system.</span></div></div>'+
-  '<div class="skill-dna-foot"><span><b>07 LAYERS</b> · connected capabilities</span><span>ROTATE THE HELIX</span></div>';
+  lab.setAttribute('aria-label','Interactive 3D red and blue DNA helix');
+  lab.innerHTML='<div class="skill-dna-head"><small>DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · MOVIE ROTATION</span></div>'+
+    '<div class="skill-dna-stage" id="skillDnaStage"><div class="skill-dna" id="skillDna"></div><div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations × automation × web × marketing × AI.</span></div></div>'+
+    '<div class="skill-dna-foot"><span><b>07 LAYERS</b> · connected capabilities</span><span>RED / BLUE · DOUBLE HELIX</span></div>';
   section.insertBefore(lab,section.firstElementChild);
   const dna=lab.querySelector('#skillDna'),stage=lab.querySelector('#skillDnaStage');
-  const labels=['OPERATIONS','SHEETS','APPS SCRIPT','JAVASCRIPT','SEO','MARKETING','AI / VOICE'];
-  const count=17;
+  const count=23;
   for(let i=0;i<count;i++){
     const y=(i/(count-1))*100;
-    const angle=i*.62;
-    const x=Math.sin(angle)*56;
-    const z=Math.cos(angle)*38;
-    const a=document.createElement('span');a.className='dna-bead';a.style.setProperty('--y',y+'%');a.style.setProperty('--x',x+'px');a.style.setProperty('--z',z+'px');dna.appendChild(a);
-    const b=document.createElement('span');b.className='dna-bead alt';b.style.setProperty('--y',y+'%');b.style.setProperty('--x',(-x)+'px');b.style.setProperty('--z',(-z)+'px');dna.appendChild(b);
-    const rung=document.createElement('span');rung.className='dna-rung';rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+16)+'px');rung.style.setProperty('--ry',angle+'rad');dna.appendChild(rung);
+    const t=i/(count-1)*Math.PI*4.4;
+    const x=Math.sin(t)*52,z=Math.cos(t)*38;
+    const red=document.createElement('span');red.className='dna-bead dna-red';
+    red.style.setProperty('--y',y+'%');red.style.setProperty('--x',x+'px');red.style.setProperty('--z',z+'px');dna.appendChild(red);
+    const blue=document.createElement('span');blue.className='dna-bead dna-blue';
+    blue.style.setProperty('--y',y+'%');blue.style.setProperty('--x',(-x)+'px');blue.style.setProperty('--z',(-z)+'px');dna.appendChild(blue);
+    const rung=document.createElement('span');rung.className='dna-rung';
+    rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+22)+'px');rung.style.setProperty('--ry',t+'rad');dna.appendChild(rung);
   }
+  const labels=['OPERATIONS','SHEETS','APPS SCRIPT','JAVASCRIPT','SEO','MARKETING','AI / VOICE'];
   labels.forEach((label,i)=>{
-    const mark=document.createElement('span');
-    mark.textContent=label;
-    mark.style.position='absolute';mark.style.left='50%';mark.style.top=(10+i*13)+'%';
-    mark.style.transform='translateX(75px)';
-    mark.style.color=i%2?'#b86cff':'#b7ff52';
-    mark.style.font='800 7px "Space Grotesk"';
-    mark.style.letterSpacing='.08em';
-    mark.style.opacity='.72';
-    mark.style.pointerEvents='none';
-    dna.appendChild(mark);
+    const mark=document.createElement('span');mark.className='dna-label';mark.textContent=label;
+    mark.style.setProperty('--label-y',(8+i*14)+'%');dna.appendChild(mark);
   });
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  let rx=0,ry=-18,lastX=0,lastY=0,drag=false,raf=0,last=performance.now();
-  const draw=now=>{
-    raf=0;
-    if(!drag&&!reduce)ry+=(now-last)*.018;
-    last=now;
-    dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';
-    if(!reduce)raf=requestAnimationFrame(draw);
-  };
-  const schedule=()=>{if(!raf)raf=requestAnimationFrame(draw)};
-  const move=(x,y)=>{
-    if(!drag)return;
-    ry+=(x-lastX)*.52;rx-=(y-lastY)*.34;
-    rx=Math.max(-30,Math.min(30,rx));
-    lastX=x;lastY=y;schedule();
-  };
+  let rx=0,ry=0,lastX=0,lastY=0,drag=false,raf=0;
+  const apply=()=>{raf=0;dna.style.animationPlayState='paused';dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';};
   stage.addEventListener('pointerdown',e=>{
     if(e.target.closest('.skill-dna-label'))return;
-    drag=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);
+    drag=true;lastX=e.clientX;lastY=e.clientY;dna.style.animationPlayState='paused';
+    stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);
   });
-  stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY),{passive:true});
-  const release=()=>{drag=false;stage.classList.remove('dragging')};
+  stage.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    ry+=(e.clientX-lastX)*.65;rx-=(e.clientY-lastY)*.42;
+    rx=Math.max(-34,Math.min(34,rx));lastX=e.clientX;lastY=e.clientY;
+    if(!raf)raf=requestAnimationFrame(apply);
+  },{passive:true});
+  const release=()=>{if(!drag)return;drag=false;stage.classList.remove('dragging');dna.style.transform='';dna.style.animationPlayState='running';};
   stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
-  stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.16;schedule()},{passive:false});
-  draw(performance.now());
+  stage.addEventListener('wheel',e=>{e.preventDefault();dna.style.animationPlayState='paused';ry+=e.deltaY*.22;dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';clearTimeout(stage._dnaWheel);stage._dnaWheel=setTimeout(()=>{dna.style.transform='';dna.style.animationPlayState='running'},180)},{passive:false});
 })();

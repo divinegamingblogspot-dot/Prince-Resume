@@ -822,3 +822,68 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
   addEventListener('scroll',keepVisible,{passive:true});
   setTimeout(keepVisible,50);
 })();
+
+
+/* ===== 3D SKILL DNA / INTERACTIVE ===== */
+(()=>{
+  'use strict';
+  if(document.body?.dataset?.page!=='skills')return;
+  const section=document.querySelector('.inner-page .inner-section');
+  if(!section||document.querySelector('.skill-dna-lab'))return;
+  const lab=document.createElement('div');
+  lab.className='skill-dna-lab';
+  lab.setAttribute('aria-label','Interactive 3D skill DNA');
+  lab.innerHTML='<div class="skill-dna-head"><small>SKILL DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · AUTO ROTATES</span></div>'+
+  '<div class="skill-dna-stage" id="skillDnaStage"><div class="skill-dna" id="skillDna"></div><div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations, automation, web, marketing and AI connected into one practical skill system.</span></div></div>'+
+  '<div class="skill-dna-foot"><span><b>07 LAYERS</b> · connected capabilities</span><span>ROTATE THE HELIX</span></div>';
+  section.insertBefore(lab,section.firstElementChild);
+  const dna=lab.querySelector('#skillDna'),stage=lab.querySelector('#skillDnaStage');
+  const labels=['OPERATIONS','SHEETS','APPS SCRIPT','JAVASCRIPT','SEO','MARKETING','AI / VOICE'];
+  const count=17;
+  for(let i=0;i<count;i++){
+    const y=(i/(count-1))*100;
+    const angle=i*.62;
+    const x=Math.sin(angle)*56;
+    const z=Math.cos(angle)*38;
+    const a=document.createElement('span');a.className='dna-bead';a.style.setProperty('--y',y+'%');a.style.setProperty('--x',x+'px');a.style.setProperty('--z',z+'px');dna.appendChild(a);
+    const b=document.createElement('span');b.className='dna-bead alt';b.style.setProperty('--y',y+'%');b.style.setProperty('--x',(-x)+'px');b.style.setProperty('--z',(-z)+'px');dna.appendChild(b);
+    const rung=document.createElement('span');rung.className='dna-rung';rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+16)+'px');rung.style.setProperty('--ry',angle+'rad');dna.appendChild(rung);
+  }
+  labels.forEach((label,i)=>{
+    const mark=document.createElement('span');
+    mark.textContent=label;
+    mark.style.position='absolute';mark.style.left='50%';mark.style.top=(10+i*13)+'%';
+    mark.style.transform='translateX(75px)';
+    mark.style.color=i%2?'#b86cff':'#b7ff52';
+    mark.style.font='800 7px "Space Grotesk"';
+    mark.style.letterSpacing='.08em';
+    mark.style.opacity='.72';
+    mark.style.pointerEvents='none';
+    dna.appendChild(mark);
+  });
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let rx=0,ry=-18,lastX=0,lastY=0,drag=false,raf=0,last=performance.now();
+  const draw=now=>{
+    raf=0;
+    if(!drag&&!reduce)ry+=(now-last)*.018;
+    last=now;
+    dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';
+    if(!reduce)raf=requestAnimationFrame(draw);
+  };
+  const schedule=()=>{if(!raf)raf=requestAnimationFrame(draw)};
+  const move=(x,y)=>{
+    if(!drag)return;
+    ry+=(x-lastX)*.52;rx-=(y-lastY)*.34;
+    rx=Math.max(-30,Math.min(30,rx));
+    lastX=x;lastY=y;schedule();
+  };
+  stage.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.skill-dna-label'))return;
+    drag=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);
+  });
+  stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY),{passive:true});
+  const release=()=>{drag=false;stage.classList.remove('dragging')};
+  stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
+  stage.addEventListener('wheel',e=>{e.preventDefault();ry+=e.deltaY*.16;schedule()},{passive:false});
+  draw(performance.now());
+})();

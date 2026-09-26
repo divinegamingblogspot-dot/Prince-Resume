@@ -158,7 +158,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   function answer(q){
     const s=String(q||'').trim().toLowerCase().replace(/^(?:and|also|okay|ok|so|hey|hi|hello)\\s+/i,'').replace(/\\s+/g,' ').trim();
     // Nova self-identity must be checked before Prince/topic rules.
-    if(/(?:who are you|who r u|what are you|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|who is nova|who's nova|whos nova|what is nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai)/i.test(s) && (/\\bnova\\b/i.test(s)||/^(?:who are you|what are you|who r u|what is your identity|tell me about yourself|introduce yourself|about yourself)[?!., ]*$/i.test(s))){
+    if(/^(?:who are you|who r u|what are you|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|who is nova|who's nova|whos nova|what is nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai)(?:\\s+nova)?[?!., ]*$/i.test(s)){
       return 'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My name is Nova, and my role is to help visitors understand Prince, his resume, experience, skills, systems, projects and this website through conversation. You can also ask me about my own identity, purpose, capabilities and how I work.';
     }
     if(/^(are you an ai|are you real|are you a bot|are you conscious|are you sentient)$/i.test(s)){
@@ -178,26 +178,21 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';ask(q)});
   messages?.addEventListener('click',e=>{const b=e.target.closest('[data-bot-q]');if(b)ask(b.dataset.botQ)});
   let scrollTimer;
-  let novaPositionRaf=0;
   function positionNova(){
-    if(novaPositionRaf)return;
-    novaPositionRaf=requestAnimationFrame(()=>{
-      novaPositionRaf=0;
-      const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-      const p=Math.max(0,Math.min(1,scrollY/max));
-      const edge=18, travel=Math.max(0,innerWidth-140);
-      root.style.left=(edge+travel*(1-p))+'px';
-      root.style.right='auto';
-      root.style.transform='translateX(0)';
-      root.style.transition='left .65s cubic-bezier(.22,.7,.2,1)';
-      root.classList.toggle('nova-at-bottom',p>=.5);
-      root.classList.toggle('nova-at-top',p<.5);
-    });
+    const max=document.documentElement.scrollHeight-innerHeight;
+    const p=max>0?Math.max(0,Math.min(1,scrollY/max)):0;
+    const edge=24,botWidth=104;
+    const x=edge+(innerWidth-botWidth-edge*2)*(1-p);
+    root.style.right='auto';
+    root.style.left=Math.max(8,x)+'px';
+    root.style.transition='left .7s cubic-bezier(.22,.7,.2,1)';
+    root.classList.toggle('nova-at-bottom',p>=.5);
+    root.classList.toggle('nova-at-top',p<.5);
   }
   window.addEventListener('scroll',()=>{
     root.classList.add('walking');clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>root.classList.remove('walking'),180);
     positionNova();
-    const max=Math.max(1,document.documentElement.scrollHeight-innerHeight),p=scrollY/max;
+    const max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
     if(p>.93)mood('happy','We made it to the end! ✦');
   },{passive:true});
   window.addEventListener('resize',positionNova,{passive:true});
@@ -691,211 +686,4 @@ const canonical=document.querySelector('link[rel="canonical"]');
 if(canonical&&!document.querySelector('script[data-dynamic-schema]')){const path=location.pathname.split('/').pop()||'index.html',title=document.title,desc=document.querySelector('meta[name="description"]')?.content||'';const schema={'@context':'https://schema.org','@type':'WebPage','name':title,'description':desc,'url':canonical.href,'isPartOf':{'@type':'WebSite','name':'Prince Dixit Portfolio','url':canonical.href.replace(/[^/]+$/,'')}};const s=document.createElement('script');s.type='application/ld+json';s.dataset.dynamicSchema='true';s.textContent=JSON.stringify(schema);document.head.appendChild(s);}
 /* Make external project/profile links explicit for search/accessibility without changing destinations. */
 document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopener');
-})();
-
-
-/* ===== UI POLISH INTERACTIONS — lightweight / defensive ===== */
-(()=>{
-  'use strict';
-  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const fine=window.matchMedia?.('(pointer:fine)').matches;
-  const header=document.querySelector('header, .inner-top');
-
-  /* Header state: one passive scroll listener, no animation loop. */
-  if(header){
-    const syncHeader=()=>header.classList.toggle('nav-scrolled',window.scrollY>18);
-    syncHeader();
-    window.addEventListener('scroll',syncHeader,{passive:true});
-  }
-
-  /* Mark the current page in desktop navigation without changing destinations. */
-  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
-  document.querySelectorAll('nav a,.inner-nav a').forEach(a=>{
-    const href=(a.getAttribute('href')||'').split('#')[0].split('?')[0].toLowerCase();
-    if(href&&href!=='#'&&href===current)a.classList.add('active');
-    if((current==='index.html'||current==='')&&href==='#home')a.classList.add('active');
-  });
-
-  /* Subtle magnetic response only on capable desktop pointers. */
-  if(!reduce&&fine){
-    const items=document.querySelectorAll('.btn,.inner-cta,.hero-meta-link');
-    items.forEach(el=>{
-      let raf=0;
-      const reset=()=>{
-        if(raf)cancelAnimationFrame(raf);
-        raf=requestAnimationFrame(()=>{el.style.transform='';raf=0});
-      };
-      el.addEventListener('pointermove',e=>{
-        const r=el.getBoundingClientRect(),dx=(e.clientX-(r.left+r.width/2))/r.width,dy=(e.clientY-(r.top+r.height/2))/r.height;
-        if(raf)cancelAnimationFrame(raf);
-        raf=requestAnimationFrame(()=>{el.style.transform='translate3d('+Math.max(-3,Math.min(3,dx*6))+'px,'+Math.max(-3,Math.min(3,dy*6))+'px,0)';raf=0});
-      },{passive:true});
-      el.addEventListener('pointerleave',reset,{passive:true});
-    });
-  }
-})();
-
-
-/* ===== 3D SYSTEM ARCHITECTURE / INTERACTIVE MAP ===== */
-(()=>{
-  'use strict';
-  const page=document.body?.dataset?.page;
-  if(page!=='systems') return;
-  const anchor=document.querySelector('.inner-page .inner-section');
-  if(!anchor||document.querySelector('.system-3d-lab')) return;
-  const lab=document.createElement('section');
-  lab.className='system-3d-lab';
-  lab.setAttribute('aria-label','Interactive 3D system architecture');
-  lab.innerHTML=
-    '<div class="system-3d-head"><div><small>LIVE SYSTEM MAP</small></div><span>DRAG / TOUCH TO ROTATE</span></div>'+
-    '<div class="system-3d-stage" id="system3dStage">'+
-      '<div class="system-3d-world" id="system3dWorld">'+
-        '<span class="system-3d-link l1"></span><span class="system-3d-link l2"></span><span class="system-3d-link l3"></span><span class="system-3d-link l4"></span><span class="system-3d-link l5"></span><span class="system-3d-link l6"></span>'+
-        '<button class="system-3d-node n1" type="button" data-target="architecture">PRODUCT DATA<small>INPUT</small></button>'+
-        '<button class="system-3d-node n2" type="button" data-target="architecture">SKU + URL<small>IDENTITY</small></button>'+
-        '<button class="system-3d-node n3" type="button" data-target="before-after">VALIDATE / RETRY<small>CONTROL</small></button>'+
-        '<button class="system-3d-node n4" type="button" data-target="before-after">CACHE / BACKUP<small>RECOVERY</small></button>'+
-        '<button class="system-3d-node n5" type="button" data-target="architecture">APPS SCRIPT<small>ENGINE</small></button>'+
-        '<button class="system-3d-node n6" type="button" data-target="build-catalog">OUTPUT SYSTEM<small>BUSINESS VALUE</small></button>'+
-        '<div class="system-3d-core"><b>MULTYBYTE<br>SYSTEM</b></div>'+
-      '</div>'+
-    '</div>'+
-    '<div class="system-3d-foot"><span><b>06 NODES</b> · controlled data flow</span><span>CLICK A NODE TO INSPECT</span></div>';
-  anchor.parentNode.insertBefore(lab,anchor);
-  const stage=lab.querySelector('#system3dStage'),world=lab.querySelector('#system3dWorld');
-  let rx=8,ry=-12,lastX=0,lastY=0,drag=false,raf=0;
-  const draw=()=>{
-    raf=0;
-    world.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
-  };
-  const schedule=()=>{
-    if(!raf)raf=requestAnimationFrame(draw);
-  };
-  const move=(x,y)=>{
-    if(!drag)return;
-    const dx=x-lastX,dy=y-lastY;
-    ry+=dx*.42;rx-=dy*.34;
-    rx=Math.max(-38,Math.min(38,rx));
-    schedule();
-    lastX=x;lastY=y;
-  };
-  stage.addEventListener('pointerdown',e=>{
-    if(e.target.closest('.system-3d-node'))return;
-    drag=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');
-    stage.setPointerCapture?.(e.pointerId);
-  });
-  stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY),{passive:true});
-  const release=()=>{drag=false;stage.classList.remove('dragging')};
-  stage.addEventListener('pointerup',release);
-  stage.addEventListener('pointercancel',release);
-  stage.addEventListener('wheel',e=>{
-    e.preventDefault();ry+=e.deltaY*.16;ry=Math.max(-75,Math.min(75,ry));schedule();
-  },{passive:false});
-  lab.querySelectorAll('.system-3d-node').forEach(node=>{
-    node.addEventListener('click',()=>{
-      const key=node.dataset.target;
-      const sections=[...document.querySelectorAll('.inner-section')];
-      const target=key==='architecture'?sections[0]:key==='before-after'?sections[1]:sections[2];
-      target?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
-      target?.classList.add('hero-focus');
-      setTimeout(()=>target?.classList.remove('hero-focus'),850);
-    });
-  });
-  draw();
-})();
-
-/* ===== CLASSIC BIOLOGICAL DNA HELIX ===== */
-(()=>{
-  'use strict';
-  if(document.body?.dataset?.page!=='skills')return;
-  const section=document.querySelector('.inner-page .inner-section');
-  if(!section||document.querySelector('.skill-dna-lab'))return;
-
-  const lab=document.createElement('div');
-  lab.className='skill-dna-lab';
-  lab.setAttribute('aria-label','Interactive classic biological DNA double helix');
-  lab.innerHTML=
-    '<div class="skill-dna-head"><small>DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · ROTATE</span></div>'+
-    '<div class="skill-dna-stage" id="skillDnaStage">'+
-      '<div class="skill-dna" id="skillDna">'+
-        '<div class="dna-strand dna-strand-a"></div><div class="dna-strand dna-strand-b"></div>'+
-        '<div class="dna-pairs"></div>'+
-      '</div>'+
-      '<div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations × automation × web × marketing × AI.</span></div>'+
-    '</div>'+
-    '<div class="skill-dna-foot"><span><b>07 LAYERS</b> · connected capabilities</span><span>RED / BLUE · DOUBLE HELIX</span></div>';
-
-  section.insertBefore(lab,section.firstElementChild);
-
-  const dna=lab.querySelector('#skillDna');
-  const pairs=lab.querySelector('.dna-pairs');
-  const count=27;
-  for(let i=0;i<count;i++){
-    const p=i/(count-1);
-    const y=4+p*92;
-    const theta=p*Math.PI*4.25;
-    const x=Math.sin(theta)*68;
-    const z=Math.cos(theta)*34;
-
-    const a=document.createElement('i');
-    a.className='dna-node dna-node-red';
-    a.style.setProperty('--y',y+'%');
-    a.style.setProperty('--x',x+'px');
-    a.style.setProperty('--z',z+'px');
-    a.style.setProperty('--theta',theta+'rad');
-    dna.querySelector('.dna-strand-a').appendChild(a);
-
-    const b=document.createElement('i');
-    b.className='dna-node dna-node-blue';
-    b.style.setProperty('--y',y+'%');
-    b.style.setProperty('--x',(-x)+'px');
-    b.style.setProperty('--z',(-z)+'px');
-    b.style.setProperty('--theta',theta+'rad');
-    dna.querySelector('.dna-strand-b').appendChild(b);
-
-    const rung=document.createElement('i');
-    rung.className='dna-pair';
-    rung.style.setProperty('--y',y+'%');
-    rung.style.setProperty('--x',x+'px');
-    rung.style.setProperty('--z',z+'px');
-    rung.style.setProperty('--angle',(-Math.sin(theta)*18)+'deg');
-    pairs.appendChild(rung);
-  }
-
-  let yaw=0,pitch=7,lastX=0,lastY=0,drag=false,raf=0,last=performance.now();
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-
-  function draw(now){
-    raf=0;
-    const dt=Math.min(40,now-last);last=now;
-    if(!drag&&!reduce)yaw+=dt*.025;
-    dna.style.transform='rotateX('+pitch+'deg) rotateY('+yaw+'deg)';
-    if(!reduce)raf=requestAnimationFrame(draw);
-  }
-  function schedule(){
-    if(!raf)raf=requestAnimationFrame(draw);
-  }
-  stagePointer();
-  function stagePointer(){
-    const stage=lab.querySelector('#skillDnaStage');
-    stage.addEventListener('pointerdown',e=>{
-      if(e.target.closest('.skill-dna-label'))return;
-      drag=true;lastX=e.clientX;lastY=e.clientY;
-      stage.classList.add('dragging');
-      stage.setPointerCapture?.(e.pointerId);
-    });
-    stage.addEventListener('pointermove',e=>{
-      if(!drag)return;
-      yaw+=(e.clientX-lastX)*.7;
-      pitch=Math.max(-35,Math.min(35,pitch-(e.clientY-lastY)*.42));
-      lastX=e.clientX;lastY=e.clientY;schedule();
-    },{passive:true});
-    const up=()=>{drag=false;stage.classList.remove('dragging');};
-    stage.addEventListener('pointerup',up);
-    stage.addEventListener('pointercancel',up);
-    stage.addEventListener('wheel',e=>{
-      e.preventDefault();yaw+=e.deltaY*.25;schedule();
-    },{passive:false});
-  }
-  draw(performance.now());
 })();

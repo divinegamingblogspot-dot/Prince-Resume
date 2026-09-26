@@ -687,3 +687,49 @@ if(canonical&&!document.querySelector('script[data-dynamic-schema]')){const path
 /* Make external project/profile links explicit for search/accessibility without changing destinations. */
 document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopener');
 })();
+
+
+/* ===== CINEMATIC CORE ENGINE — additive / defensive ===== */
+(()=>{
+ 'use strict';
+ const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ const fine=matchMedia('(pointer:fine)').matches;
+ if(!reduce){
+   /* 2 — orbital environment around the existing 3D cube */
+   const core=document.querySelector('.home-3d-wrap');
+   if(core&&!core.querySelector('.cinematic-orbit-system')){
+     const o=document.createElement('div');o.className='cinematic-orbit-system';o.setAttribute('aria-hidden','true');
+     o.innerHTML='<div class="cinematic-orbit-ring"></div><div class="cinematic-orbit-ring r2"></div><i class="cinematic-orbit-node"></i><i class="cinematic-orbit-node"></i><i class="cinematic-orbit-node"></i>';
+     core.prepend(o);
+   }
+   /* 3 — lightweight depth particles, generated once */
+   if(!document.querySelector('.cinematic-particles')){
+     const p=document.createElement('div');p.className='cinematic-particles';p.setAttribute('aria-hidden','true');
+     for(let i=0;i<26;i++){const s=document.createElement('i');s.className='cinematic-particle';s.style.setProperty('--px',(4+Math.random()*92)+'%');s.style.setProperty('--py',(18+Math.random()*82)+'%');s.style.setProperty('--dx',(-40+Math.random()*80)+'px');s.style.setProperty('--pd',(9+Math.random()*10)+'s');s.style.setProperty('--delay',(-Math.random()*12)+'s');p.appendChild(s)}
+     document.body.appendChild(p);
+   }
+   /* 5 — safe page transitions: View Transitions when supported, native fallback otherwise */
+   if(document.startViewTransition){
+     document.addEventListener('click',e=>{
+       const a=e.target.closest('a[href]'); if(!a||e.defaultPrevented||a.target==='_blank'||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+       const href=a.getAttribute('href')||''; if(!href||href[0]==='#'||href.startsWith('mailto:')||href.startsWith('tel:')||href.startsWith('javascript:')||href.startsWith('http'))return;
+       const u=new URL(href,location.href); if(u.origin!==location.origin)return;
+       e.preventDefault(); document.startViewTransition(()=>{location.href=u.href});
+     },{capture:true});
+   }
+   /* 10 — magnetic controls, deliberately subtle */
+   if(fine){document.querySelectorAll('.btn,.hero-meta-link,.home-link-grid>a,.home-final-actions a,.text-link').forEach(el=>{
+     el.classList.add('magnetic');el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/r.width,y=(e.clientY-(r.top+r.height/2))/r.height;el.style.transform='translate3d('+(x*7)+'px,'+(y*5)+'px,0)'});el.addEventListener('pointerleave',()=>el.style.transform='');
+   })}
+   /* 11 — cursor light, reusing the existing cursor rather than replacing it */
+   if(fine&&!document.querySelector('.cinematic-cursor-light')){const l=document.createElement('div');l.className='cinematic-cursor-light';document.body.appendChild(l);let raf=0,x=innerWidth/2,y=innerHeight/2;addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;if(raf)return;raf=requestAnimationFrame(()=>{l.style.left=x+'px';l.style.top=y+'px';raf=0})},{passive:true})}
+   /* 12 — scroll camera: the cube/environment subtly recedes with scroll, never blocking scrolling */
+   const stage=document.getElementById('home3dStage');
+   if(stage){let raf=0;addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{const y=Math.min(700,scrollY),d=Math.min(22,y*.035);document.documentElement.style.setProperty('--scroll-depth',d.toFixed(2));document.documentElement.style.setProperty('--scroll-scale',(-Math.min(.035,y/20000)).toFixed(4));raf=0})},{passive:true})}
+ }
+ /* 9 — Nova presence: make the existing assistant feel connected to the cinematic system */
+ const orb=document.getElementById('botOrb'),chat=document.getElementById('botChat'),input=document.getElementById('botInput');
+ if(orb){const sync=()=>orb.classList.toggle('nova-active',!!chat?.classList.contains('open')||document.activeElement===input);new MutationObserver(sync).observe(chat||orb,{attributes:true,attributeFilter:['class']});input?.addEventListener('focus',sync);input?.addEventListener('blur',sync);sync()}
+ /* Add a cinematic wipe only for the browser back/forward cache restore, not normal navigation. */
+ if(!document.querySelector('.cinematic-page-wipe')){const w=document.createElement('div');w.className='cinematic-page-wipe';w.setAttribute('aria-hidden','true');document.body.appendChild(w);addEventListener('pageshow',()=>w.classList.remove('active'));}
+})();

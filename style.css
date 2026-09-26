@@ -1731,3 +1731,94 @@ button{font:inherit}
 .bot-head,.bot-body,.bot-neck,.bot-arm,.bot-leg{transform-style:preserve-3d}
 .bot-core{transform:translateZ(8px)}
 @media(prefers-reduced-motion:reduce){.bot-orb:before,.bot-orb:after{display:none}}
+
+
+/* ===== 3D SKILL DNA ===== */
+.skill-dna-lab{
+  position:relative;
+  margin:0 0 48px;
+  min-height:430px;
+  padding:30px 24px;
+  border:1px solid #2c333d;
+  border-radius:18px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(183,255,82,.075),transparent 24%),
+    radial-gradient(circle at 75% 25%,rgba(184,108,255,.07),transparent 26%),
+    #090c11;
+  box-shadow:0 24px 70px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.025);
+}
+.skill-dna-lab:before{
+  content:"";
+  position:absolute;inset:0;pointer-events:none;opacity:.2;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at 50% 50%,black,transparent 75%);
+}
+.skill-dna-head{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.skill-dna-head small{color:#b7ff52;font:800 9px "Space Grotesk";letter-spacing:.17em}
+.skill-dna-head span{color:#737c88;font:600 9px "Space Grotesk";letter-spacing:.11em}
+.skill-dna-stage{
+  height:345px;
+  position:relative;
+  perspective:900px;
+  display:grid;place-items:center;
+  touch-action:none;
+  user-select:none;
+  cursor:grab;
+}
+.skill-dna-stage.dragging{cursor:grabbing}
+.skill-dna{
+  position:relative;
+  width:180px;height:300px;
+  transform-style:preserve-3d;
+  transform:rotateY(-18deg) rotateZ(-2deg);
+  will-change:transform;
+}
+.dna-strand{
+  position:absolute;left:50%;top:0;
+  width:4px;height:100%;
+  transform-style:preserve-3d;
+}
+.dna-bead{
+  position:absolute;left:0;top:var(--y);
+  width:13px;height:13px;
+  margin:-6px;
+  border-radius:50%;
+  background:#b7ff52;
+  box-shadow:0 0 16px rgba(183,255,82,.34);
+  transform:translateX(var(--x)) translateZ(var(--z));
+}
+.dna-bead.alt{background:#b86cff;box-shadow:0 0 16px rgba(184,108,255,.3)}
+.dna-rung{
+  position:absolute;left:50%;top:var(--y);
+  width:var(--w);height:2px;
+  transform:translate(-50%,-1px) rotateY(var(--ry));
+  transform-origin:center;
+  background:linear-gradient(90deg,rgba(183,255,82,.8),rgba(184,108,255,.72));
+  box-shadow:0 0 10px rgba(183,255,82,.13);
+}
+.skill-dna-label{
+  position:absolute;right:8%;top:50%;
+  width:145px;padding:11px 13px;
+  border:1px solid #343c47;border-radius:10px;
+  background:rgba(10,14,19,.9);
+  transform:translateY(-50%) translateZ(20px);
+  box-shadow:0 14px 30px rgba(0,0,0,.3);
+}
+.skill-dna-label b{display:block;color:#fff;font:800 9px "Space Grotesk";letter-spacing:.1em}
+.skill-dna-label span{display:block;margin-top:5px;color:#7e8792;font-size:9px;line-height:1.5}
+.skill-dna-foot{position:relative;z-index:2;display:flex;justify-content:space-between;color:#707985;font-size:9px}
+.skill-dna-foot b{color:#b7ff52;font:800 9px "Space Grotesk";letter-spacing:.1em}
+@media(max-width:700px){
+  .skill-dna-lab{min-height:390px;padding:24px 14px}
+  .skill-dna-stage{height:305px}
+  .skill-dna{transform:scale(.8) rotateY(-18deg)}
+  .skill-dna-label{right:1%;top:77%;width:125px;transform:translateY(-50%)}
+  .skill-dna-foot{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .skill-dna{will-change:auto}
+}

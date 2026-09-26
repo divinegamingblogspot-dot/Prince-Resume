@@ -1339,3 +1339,107 @@ body:not([data-page]) #loader{animation:homeLoaderFailsafe 5.25s forwards}
 .home-3d-stage.dragging,.home-3d-stage.dragging *{cursor:grabbing}
 .home-cube{pointer-events:auto}
 .cube-face{touch-action:none;-webkit-tap-highlight-color:transparent}
+
+
+/* ===== CINEMATIC TYPOGRAPHIC INTRO v2 — SLOW / FLUID / RANDOM LIGHT =====
+   Homepage loader only. Deliberately calmer than the previous rapid morph pass. */
+body:not([data-page]) #loader .loader-name-morph .morph-letter{
+  animation-duration:9.6s!important;
+  animation-timing-function:cubic-bezier(.22,1,.36,1)!important;
+}
+body:not([data-page]) #loader .loader-name-morph .morph-p{animation-delay:-.15s!important}
+body:not([data-page]) #loader .loader-name-morph .morph-r{animation-delay:-1.72s!important}
+body:not([data-page]) #loader .loader-name-morph .morph-i{animation-delay:-3.29s!important}
+body:not([data-page]) #loader .loader-name-morph .morph-n{animation-delay:-4.86s!important}
+body:not([data-page]) #loader .loader-name-morph .morph-c{animation-delay:-6.43s!important}
+body:not([data-page]) #loader .loader-name-morph .morph-e{animation-delay:-8.00s!important}
+
+@keyframes morphLetterCinematic{
+  0%,12%{
+    font-family:"Space Grotesk",sans-serif;font-weight:800;
+    transform:translate3d(0,0,0) scaleX(1) scaleY(1) skewX(0) rotate(0);
+    filter:blur(0);opacity:1;
+  }
+  18%{
+    font-family:"Space Grotesk",sans-serif;font-weight:700;
+    transform:translate3d(0,-.5px,0) scaleX(.99) scaleY(1) skewX(-.5deg);
+    filter:blur(.18px);opacity:.97;
+  }
+  28%{
+    font-family:Georgia,serif;font-weight:700;
+    transform:translate3d(0,.5px,0) scaleX(.975) skewX(-.8deg);
+    filter:blur(.7px);opacity:.88;
+  }
+  38%{
+    font-family:Georgia,serif;font-weight:700;
+    transform:translate3d(0,0,0) scaleX(1) skewX(0);
+    filter:blur(.08px);opacity:1;
+  }
+  48%{
+    font-family:"Times New Roman",serif;font-weight:700;
+    transform:translate3d(0,-.5px,0) scaleX(1.015) skewX(.55deg);
+    filter:blur(.55px);opacity:.91;
+  }
+  58%{
+    font-family:"Arial Black",Impact,sans-serif;font-weight:800;
+    transform:translate3d(0,.5px,0) scaleX(.99) skewX(.45deg);
+    filter:blur(.7px) contrast(1.04);opacity:.9;
+  }
+  68%{
+    font-family:"Arial Black",Impact,sans-serif;font-weight:800;
+    transform:translate3d(0,0,0) scaleX(1) skewX(0);
+    filter:blur(.05px);opacity:1;
+  }
+  78%{
+    font-family:"Courier New",monospace;font-weight:700;
+    transform:translate3d(0,-.5px,0) scaleX(1.01) skewX(-.35deg);
+    filter:blur(.55px);opacity:.92;
+  }
+  88%{
+    font-family:"Space Grotesk",sans-serif;font-weight:800;
+    transform:translate3d(0,.35px,0) scaleX(.995) skewX(.25deg);
+    filter:blur(.35px);opacity:.96;
+  }
+  94%,100%{
+    font-family:"Space Grotesk",sans-serif;font-weight:800;
+    transform:translate3d(0,0,0) scaleX(1) skewX(0) rotate(0);
+    filter:blur(0);opacity:1;
+  }
+}
+body:not([data-page]) #loader .loader-name-morph .morph-letter{
+  animation-name:morphLetterCinematic!important;
+  transition:text-shadow .9s cubic-bezier(.22,1,.36,1);
+}
+
+/* Sparse, non-repeating-looking letter glints: individual letters breathe at different moments. */
+body:not([data-page]) #loader .morph-p{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) infinite,letterGlintA 7.7s ease-in-out infinite!important}
+body:not([data-page]) #loader .morph-r{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) -1.72s infinite,letterGlintB 11.3s ease-in-out 1.1s infinite!important}
+body:not([data-page]) #loader .morph-i{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) -3.29s infinite,letterGlintC 8.9s ease-in-out 2.7s infinite!important}
+body:not([data-page]) #loader .morph-n{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) -4.86s infinite,letterGlintA 12.7s ease-in-out 4.2s infinite!important}
+body:not([data-page]) #loader .morph-c{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) -6.43s infinite,letterGlintB 9.8s ease-in-out .8s infinite!important}
+body:not([data-page]) #loader .morph-e{animation:morphLetterCinematic 9.6s cubic-bezier(.22,1,.36,1) -8s infinite,letterGlintC 13.1s ease-in-out 3.6s infinite!important}
+
+@keyframes letterGlintA{
+  0%,31%,100%{text-shadow:0 0 10px rgba(255,255,255,.08),0 0 28px rgba(183,255,82,.04)}
+  36%{text-shadow:0 0 8px rgba(255,255,255,.25),0 0 18px rgba(255,255,255,.28),0 0 54px rgba(183,255,82,.28)}
+  41%{text-shadow:0 0 10px rgba(255,255,255,.12),0 0 32px rgba(183,255,82,.08)}
+}
+@keyframes letterGlintB{
+  0%,47%,100%{text-shadow:0 0 10px rgba(255,255,255,.07),0 0 24px rgba(99,136,255,.03)}
+  52%{text-shadow:0 0 7px rgba(255,255,255,.3),0 0 20px rgba(255,255,255,.25),0 0 58px rgba(99,136,255,.24)}
+  57%{text-shadow:0 0 10px rgba(255,255,255,.1),0 0 30px rgba(99,136,255,.07)}
+}
+@keyframes letterGlintC{
+  0%,58%,100%{text-shadow:0 0 10px rgba(255,255,255,.06),0 0 26px rgba(184,108,255,.03)}
+  63%{text-shadow:0 0 7px rgba(255,255,255,.28),0 0 19px rgba(255,255,255,.23),0 0 56px rgba(184,108,255,.25)}
+  68%{text-shadow:0 0 10px rgba(255,255,255,.1),0 0 31px rgba(184,108,255,.06)}
+}
+
+/* More cinematic pacing: progress/status also breathe rather than race. */
+body:not([data-page]) #loader .loader-bar i{animation-duration:7.8s!important}
+body:not([data-page]) #loader .loader-scan{animation-duration:4.8s!important;opacity:.42}
+@media(prefers-reduced-motion:reduce){
+  body:not([data-page]) #loader .loader-name-morph .morph-letter{
+    animation:none!important;text-shadow:none!important
+  }
+}

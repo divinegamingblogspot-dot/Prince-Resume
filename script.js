@@ -804,35 +804,98 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
   draw();
 })();
 
-/* ===== 3D SKILL DNA / INTERACTIVE ===== */
+/* ===== CLASSIC BIOLOGICAL DNA HELIX ===== */
 (()=>{
   'use strict';
   if(document.body?.dataset?.page!=='skills')return;
   const section=document.querySelector('.inner-page .inner-section');
   if(!section||document.querySelector('.skill-dna-lab'))return;
+
   const lab=document.createElement('div');
   lab.className='skill-dna-lab';
-  lab.setAttribute('aria-label','Interactive 3D red and blue DNA helix');
-  lab.innerHTML='<div class="skill-dna-head"><small>DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · MOVIE ROTATION</span></div>'+
-    '<div class="skill-dna-stage" id="skillDnaStage"><div class="skill-dna" id="skillDna"></div><div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations × automation × web × marketing × AI.</span></div></div>'+
+  lab.setAttribute('aria-label','Interactive classic biological DNA double helix');
+  lab.innerHTML=
+    '<div class="skill-dna-head"><small>DNA / CAPABILITY HELIX</small><span>DRAG / TOUCH · ROTATE</span></div>'+
+    '<div class="skill-dna-stage" id="skillDnaStage">'+
+      '<div class="skill-dna" id="skillDna">'+
+        '<div class="dna-strand dna-strand-a"></div><div class="dna-strand dna-strand-b"></div>'+
+        '<div class="dna-pairs"></div>'+
+      '</div>'+
+      '<div class="skill-dna-label"><b>CAPABILITY DNA</b><span>Operations × automation × web × marketing × AI.</span></div>'+
+    '</div>'+
     '<div class="skill-dna-foot"><span><b>07 LAYERS</b> · connected capabilities</span><span>RED / BLUE · DOUBLE HELIX</span></div>';
-  section.insertBefore(lab,section.firstElementChild);
-  const dna=lab.querySelector('#skillDna'),stage=lab.querySelector('#skillDnaStage');
-  const count=23;
-  for(let i=0;i<count;i++){
-    const y=(i/(count-1))*100,t=i/(count-1)*Math.PI*4.4,x=Math.sin(t)*52,z=Math.cos(t)*38;
-    const red=document.createElement('span');red.className='dna-bead dna-red';red.style.setProperty('--y',y+'%');red.style.setProperty('--x',x+'px');red.style.setProperty('--z',z+'px');dna.appendChild(red);
-    const blue=document.createElement('span');blue.className='dna-bead dna-blue';blue.style.setProperty('--y',y+'%');blue.style.setProperty('--x',(-x)+'px');blue.style.setProperty('--z',(-z)+'px');dna.appendChild(blue);
-    const rung=document.createElement('span');rung.className='dna-rung';rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+22)+'px');rung.style.setProperty('--ry',t+'rad');dna.appendChild(rung);
-  }
-  const labels=['OPERATIONS','SHEETS','APPS SCRIPT','JAVASCRIPT','SEO','MARKETING','AI / VOICE'];
-  labels.forEach((label,i)=>{const mark=document.createElement('span');mark.className='dna-label';mark.textContent=label;mark.style.setProperty('--label-y',(8+i*14)+'%');dna.appendChild(mark)});
-  let rx=0,ry=0,lastX=0,lastY=0,drag=false,raf=0;
-  const apply=()=>{raf=0;dna.style.animationPlayState='paused';dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)'};
-  stage.addEventListener('pointerdown',e=>{if(e.target.closest('.skill-dna-label'))return;drag=true;lastX=e.clientX;lastY=e.clientY;dna.style.animationPlayState='paused';stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)});
-  stage.addEventListener('pointermove',e=>{if(!drag)return;ry+=(e.clientX-lastX)*.65;rx-=(e.clientY-lastY)*.42;rx=Math.max(-34,Math.min(34,rx));lastX=e.clientX;lastY=e.clientY;if(!raf)raf=requestAnimationFrame(apply)},{passive:true});
-  const release=()=>{if(!drag)return;drag=false;stage.classList.remove('dragging');dna.style.transform='';dna.style.animationPlayState='running'};
-  stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
-  stage.addEventListener('wheel',e=>{e.preventDefault();dna.style.animationPlayState='paused';ry+=e.deltaY*.22;dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';clearTimeout(stage._dnaWheel);stage._dnaWheel=setTimeout(()=>{dna.style.transform='';dna.style.animationPlayState='running'},180)},{passive:false});
-})();
 
+  section.insertBefore(lab,section.firstElementChild);
+
+  const dna=lab.querySelector('#skillDna');
+  const pairs=lab.querySelector('.dna-pairs');
+  const count=27;
+  for(let i=0;i<count;i++){
+    const p=i/(count-1);
+    const y=4+p*92;
+    const theta=p*Math.PI*4.25;
+    const x=Math.sin(theta)*68;
+    const z=Math.cos(theta)*34;
+
+    const a=document.createElement('i');
+    a.className='dna-node dna-node-red';
+    a.style.setProperty('--y',y+'%');
+    a.style.setProperty('--x',x+'px');
+    a.style.setProperty('--z',z+'px');
+    a.style.setProperty('--theta',theta+'rad');
+    dna.querySelector('.dna-strand-a').appendChild(a);
+
+    const b=document.createElement('i');
+    b.className='dna-node dna-node-blue';
+    b.style.setProperty('--y',y+'%');
+    b.style.setProperty('--x',(-x)+'px');
+    b.style.setProperty('--z',(-z)+'px');
+    b.style.setProperty('--theta',theta+'rad');
+    dna.querySelector('.dna-strand-b').appendChild(b);
+
+    const rung=document.createElement('i');
+    rung.className='dna-pair';
+    rung.style.setProperty('--y',y+'%');
+    rung.style.setProperty('--x',x+'px');
+    rung.style.setProperty('--z',z+'px');
+    rung.style.setProperty('--angle',(-Math.sin(theta)*18)+'deg');
+    pairs.appendChild(rung);
+  }
+
+  let yaw=0,pitch=7,lastX=0,lastY=0,drag=false,raf=0,last=performance.now();
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function draw(now){
+    raf=0;
+    const dt=Math.min(40,now-last);last=now;
+    if(!drag&&!reduce)yaw+=dt*.025;
+    dna.style.transform='rotateX('+pitch+'deg) rotateY('+yaw+'deg)';
+    if(!reduce)raf=requestAnimationFrame(draw);
+  }
+  function schedule(){
+    if(!raf)raf=requestAnimationFrame(draw);
+  }
+  stagePointer();
+  function stagePointer(){
+    const stage=lab.querySelector('#skillDnaStage');
+    stage.addEventListener('pointerdown',e=>{
+      if(e.target.closest('.skill-dna-label'))return;
+      drag=true;lastX=e.clientX;lastY=e.clientY;
+      stage.classList.add('dragging');
+      stage.setPointerCapture?.(e.pointerId);
+    });
+    stage.addEventListener('pointermove',e=>{
+      if(!drag)return;
+      yaw+=(e.clientX-lastX)*.7;
+      pitch=Math.max(-35,Math.min(35,pitch-(e.clientY-lastY)*.42));
+      lastX=e.clientX;lastY=e.clientY;schedule();
+    },{passive:true});
+    const up=()=>{drag=false;stage.classList.remove('dragging');};
+    stage.addEventListener('pointerup',up);
+    stage.addEventListener('pointercancel',up);
+    stage.addEventListener('wheel',e=>{
+      e.preventDefault();yaw+=e.deltaY*.25;schedule();
+    },{passive:false});
+  }
+  draw(performance.now());
+})();

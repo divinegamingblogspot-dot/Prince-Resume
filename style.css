@@ -1904,3 +1904,33 @@ button{font:inherit}
   pointer-events:none;
 }
 .page-bot .bot-orb{pointer-events:auto}
+
+/* FINAL DNA + NOVA VISIBILITY */
+.skill-dna-lab .skill-dna-stage{perspective:1200px!important}
+.skill-dna-lab .skill-dna{
+  width:210px!important;height:330px!important;
+  position:relative!important;
+  transform-style:preserve-3d!important;
+  animation:dnaTrueHelix 5.8s linear infinite!important;
+  transform-origin:50% 50%!important;
+  filter:drop-shadow(0 0 12px rgba(255,20,55,.28)) drop-shadow(0 0 16px rgba(20,120,255,.24));
+}
+@keyframes dnaTrueHelix{
+  0%{transform:rotateX(4deg) rotateY(0deg)}
+  100%{transform:rotateX(4deg) rotateY(360deg)}
+}
+.page-bot{
+  position:fixed!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:99999!important;
+  right:18px!important;
+  bottom:22px!important;
+  width:104px!important;
+  height:136px!important;
+}
+.page-bot .bot-orb{display:block!important;visibility:visible!important;opacity:1!important}
+@media(max-width:700px){
+  .page-bot{right:10px!important;bottom:10px!important;width:88px!important;height:116px!important}
+}

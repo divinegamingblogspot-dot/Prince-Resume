@@ -583,7 +583,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
         const AC=window.AudioContext||window.webkitAudioContext;
         if(!AC)return;
         const ac=new AC();
-        const master=ac.createGain(); master.gain.setValueAtTime(0.0001,ac.currentTime); master.gain.exponentialRampToValueAtTime(.055,ac.currentTime+.65); master.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+4.8); master.connect(ac.destination);
+        const master=ac.createGain(); master.gain.setValueAtTime(0.0001,ac.currentTime); master.gain.exponentialRampToValueAtTime(.055,ac.currentTime+.65); master.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+7.2); master.connect(ac.destination);
         const now=ac.currentTime;
         const osc=(type,freq,start,dur,gain)=>{
           const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(freq,now+start);o.frequency.exponentialRampToValueAtTime(Math.max(30,freq*.72),now+start+dur);g.gain.setValueAtTime(.0001,now+start);g.gain.exponentialRampToValueAtTime(gain,now+start+.18);g.gain.exponentialRampToValueAtTime(.0001,now+start+dur);o.connect(g).connect(master);o.start(now+start);o.stop(now+start+dur+.08);
@@ -594,7 +594,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
         osc('triangle',98,.95,3.2,.055);
         osc('sine',196,2.45,1.9,.035);
         [0.35,1.22,2.08,2.94,3.80,4.48].forEach((t,i)=>osc('square',82.4+(i%3)*9.2,t,.12,.012));
-        setTimeout(()=>{try{ac.close()}catch(e){}},7600);
+        setTimeout(()=>{try{ac.close()}catch(e){}},8200);
         loader.classList.add('loader-audio-active');
       }catch(e){}
     };

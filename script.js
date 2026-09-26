@@ -185,7 +185,6 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
       novaPositionRaf=0;
       const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
       const p=Math.max(0,Math.min(1,scrollY/max));
-      /* Fixed at the viewport edge, travelling right → left as the page scrolls. */
       const edge=18, travel=Math.max(0,innerWidth-140);
       root.style.left=(edge+travel*(1-p))+'px';
       root.style.right='auto';
@@ -821,35 +820,19 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
   const dna=lab.querySelector('#skillDna'),stage=lab.querySelector('#skillDnaStage');
   const count=23;
   for(let i=0;i<count;i++){
-    const y=(i/(count-1))*100;
-    const t=i/(count-1)*Math.PI*4.4;
-    const x=Math.sin(t)*52,z=Math.cos(t)*38;
-    const red=document.createElement('span');red.className='dna-bead dna-red';
-    red.style.setProperty('--y',y+'%');red.style.setProperty('--x',x+'px');red.style.setProperty('--z',z+'px');dna.appendChild(red);
-    const blue=document.createElement('span');blue.className='dna-bead dna-blue';
-    blue.style.setProperty('--y',y+'%');blue.style.setProperty('--x',(-x)+'px');blue.style.setProperty('--z',(-z)+'px');dna.appendChild(blue);
-    const rung=document.createElement('span');rung.className='dna-rung';
-    rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+22)+'px');rung.style.setProperty('--ry',t+'rad');dna.appendChild(rung);
+    const y=(i/(count-1))*100,t=i/(count-1)*Math.PI*4.4,x=Math.sin(t)*52,z=Math.cos(t)*38;
+    const red=document.createElement('span');red.className='dna-bead dna-red';red.style.setProperty('--y',y+'%');red.style.setProperty('--x',x+'px');red.style.setProperty('--z',z+'px');dna.appendChild(red);
+    const blue=document.createElement('span');blue.className='dna-bead dna-blue';blue.style.setProperty('--y',y+'%');blue.style.setProperty('--x',(-x)+'px');blue.style.setProperty('--z',(-z)+'px');dna.appendChild(blue);
+    const rung=document.createElement('span');rung.className='dna-rung';rung.style.setProperty('--y',y+'%');rung.style.setProperty('--w',(Math.abs(x)*2+22)+'px');rung.style.setProperty('--ry',t+'rad');dna.appendChild(rung);
   }
   const labels=['OPERATIONS','SHEETS','APPS SCRIPT','JAVASCRIPT','SEO','MARKETING','AI / VOICE'];
-  labels.forEach((label,i)=>{
-    const mark=document.createElement('span');mark.className='dna-label';mark.textContent=label;
-    mark.style.setProperty('--label-y',(8+i*14)+'%');dna.appendChild(mark);
-  });
+  labels.forEach((label,i)=>{const mark=document.createElement('span');mark.className='dna-label';mark.textContent=label;mark.style.setProperty('--label-y',(8+i*14)+'%');dna.appendChild(mark)});
   let rx=0,ry=0,lastX=0,lastY=0,drag=false,raf=0;
-  const apply=()=>{raf=0;dna.style.animationPlayState='paused';dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';};
-  stage.addEventListener('pointerdown',e=>{
-    if(e.target.closest('.skill-dna-label'))return;
-    drag=true;lastX=e.clientX;lastY=e.clientY;dna.style.animationPlayState='paused';
-    stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId);
-  });
-  stage.addEventListener('pointermove',e=>{
-    if(!drag)return;
-    ry+=(e.clientX-lastX)*.65;rx-=(e.clientY-lastY)*.42;
-    rx=Math.max(-34,Math.min(34,rx));lastX=e.clientX;lastY=e.clientY;
-    if(!raf)raf=requestAnimationFrame(apply);
-  },{passive:true});
-  const release=()=>{if(!drag)return;drag=false;stage.classList.remove('dragging');dna.style.transform='';dna.style.animationPlayState='running';};
+  const apply=()=>{raf=0;dna.style.animationPlayState='paused';dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)'};
+  stage.addEventListener('pointerdown',e=>{if(e.target.closest('.skill-dna-label'))return;drag=true;lastX=e.clientX;lastY=e.clientY;dna.style.animationPlayState='paused';stage.classList.add('dragging');stage.setPointerCapture?.(e.pointerId)});
+  stage.addEventListener('pointermove',e=>{if(!drag)return;ry+=(e.clientX-lastX)*.65;rx-=(e.clientY-lastY)*.42;rx=Math.max(-34,Math.min(34,rx));lastX=e.clientX;lastY=e.clientY;if(!raf)raf=requestAnimationFrame(apply)},{passive:true});
+  const release=()=>{if(!drag)return;drag=false;stage.classList.remove('dragging');dna.style.transform='';dna.style.animationPlayState='running'};
   stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
   stage.addEventListener('wheel',e=>{e.preventDefault();dna.style.animationPlayState='paused';ry+=e.deltaY*.22;dna.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg) rotateZ(-2deg)';clearTimeout(stage._dnaWheel);stage._dnaWheel=setTimeout(()=>{dna.style.transform='';dna.style.animationPlayState='running'},180)},{passive:false});
 })();
+

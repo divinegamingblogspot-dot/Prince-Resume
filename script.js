@@ -182,7 +182,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     const max=document.documentElement.scrollHeight-innerHeight;
     const p=max>0?Math.max(0,Math.min(1,scrollY/max)):0;
     const edge=24,botWidth=104;
-    const x=edge+(innerWidth-botWidth-edge*2)*(1-p);
+    const x=edge+(innerWidth-botWidth-edge*2)*(1-p)-botWidth;
     root.style.right='auto';
     root.style.left=Math.max(8,x)+'px';
     root.style.transition='left .7s cubic-bezier(.22,.7,.2,1)';
@@ -728,4 +728,90 @@ document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopen
       el.addEventListener('pointerleave',reset,{passive:true});
     });
   }
+})();
+
+
+/* ===== 3D SYSTEM ARCHITECTURE / INTERACTIVE MAP ===== */
+(()=>{
+  'use strict';
+  const page=document.body?.dataset?.page;
+  if(page!=='systems') return;
+  const anchor=document.querySelector('.inner-page .inner-section');
+  if(!anchor||document.querySelector('.system-3d-lab')) return;
+  const lab=document.createElement('section');
+  lab.className='system-3d-lab';
+  lab.setAttribute('aria-label','Interactive 3D system architecture');
+  lab.innerHTML=
+    '<div class="system-3d-head"><div><small>LIVE SYSTEM MAP</small></div><span>DRAG / TOUCH TO ROTATE</span></div>'+
+    '<div class="system-3d-stage" id="system3dStage">'+
+      '<div class="system-3d-world" id="system3dWorld">'+
+        '<span class="system-3d-link l1"></span><span class="system-3d-link l2"></span><span class="system-3d-link l3"></span><span class="system-3d-link l4"></span><span class="system-3d-link l5"></span><span class="system-3d-link l6"></span>'+
+        '<button class="system-3d-node n1" type="button" data-target="architecture">PRODUCT DATA<small>INPUT</small></button>'+
+        '<button class="system-3d-node n2" type="button" data-target="architecture">SKU + URL<small>IDENTITY</small></button>'+
+        '<button class="system-3d-node n3" type="button" data-target="before-after">VALIDATE / RETRY<small>CONTROL</small></button>'+
+        '<button class="system-3d-node n4" type="button" data-target="before-after">CACHE / BACKUP<small>RECOVERY</small></button>'+
+        '<button class="system-3d-node n5" type="button" data-target="architecture">APPS SCRIPT<small>ENGINE</small></button>'+
+        '<button class="system-3d-node n6" type="button" data-target="build-catalog">OUTPUT SYSTEM<small>BUSINESS VALUE</small></button>'+
+        '<div class="system-3d-core"><b>MULTYBYTE<br>SYSTEM</b></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="system-3d-foot"><span><b>06 NODES</b> · controlled data flow</span><span>CLICK A NODE TO INSPECT</span></div>';
+  anchor.parentNode.insertBefore(lab,anchor);
+  const stage=lab.querySelector('#system3dStage'),world=lab.querySelector('#system3dWorld');
+  let rx=8,ry=-12,lastX=0,lastY=0,drag=false,raf=0;
+  const draw=()=>{
+    raf=0;
+    world.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+  };
+  const schedule=()=>{
+    if(!raf)raf=requestAnimationFrame(draw);
+  };
+  const move=(x,y)=>{
+    if(!drag)return;
+    const dx=x-lastX,dy=y-lastY;
+    ry+=dx*.42;rx-=dy*.34;
+    rx=Math.max(-38,Math.min(38,rx));
+    schedule();
+    lastX=x;lastY=y;
+  };
+  stage.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.system-3d-node'))return;
+    drag=true;lastX=e.clientX;lastY=e.clientY;stage.classList.add('dragging');
+    stage.setPointerCapture?.(e.pointerId);
+  });
+  stage.addEventListener('pointermove',e=>move(e.clientX,e.clientY),{passive:true});
+  const release=()=>{drag=false;stage.classList.remove('dragging')};
+  stage.addEventListener('pointerup',release);
+  stage.addEventListener('pointercancel',release);
+  stage.addEventListener('wheel',e=>{
+    e.preventDefault();ry+=e.deltaY*.16;ry=Math.max(-75,Math.min(75,ry));schedule();
+  },{passive:false});
+  lab.querySelectorAll('.system-3d-node').forEach(node=>{
+    node.addEventListener('click',()=>{
+      const key=node.dataset.target;
+      const sections=[...document.querySelectorAll('.inner-section')];
+      const target=key==='architecture'?sections[0]:key==='before-after'?sections[1]:sections[2];
+      target?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
+      target?.classList.add('hero-focus');
+      setTimeout(()=>target?.classList.remove('hero-focus'),850);
+    });
+  });
+  draw();
+})();
+
+/* ===== NOVA PRESENCE / VISIBILITY FAILSAFE ===== */
+(()=>{
+  const root=document.getElementById('pageBot');
+  if(!root)return;
+  /* The walking Nova is intentionally inside the viewport; keep her fully visible at every scroll position. */
+  const keepVisible=()=>{
+    const rect=root.getBoundingClientRect();
+    if(rect.right<0||rect.left>innerWidth||rect.bottom<0||rect.top>innerHeight){
+      root.style.left=Math.max(8,innerWidth-128)+'px';
+      root.style.right='auto';
+    }
+  };
+  addEventListener('resize',keepVisible,{passive:true});
+  addEventListener('scroll',keepVisible,{passive:true});
+  setTimeout(keepVisible,50);
 })();

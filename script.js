@@ -600,7 +600,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     };
     document.addEventListener('pointerdown',startAudio,{once:true,passive:true});
     document.addEventListener('keydown',startAudio,{once:true});
-    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=reduce?500:5000;
+    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=reduce?500:7600;
     const frame=now=>{const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.round(e*100);if(bar)bar.style.width=v+'%';if(pct)pct.textContent=String(v).padStart(2,'0')+'%';if(status)status.textContent=stages[Math.min(4,Math.floor(p*5))];if(p<1)requestAnimationFrame(frame)};requestAnimationFrame(frame);
     addEventListener('load',()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent='SYSTEM READY'},{once:true});
   }
@@ -626,7 +626,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
 
 
 /* ===== PERFORMANCE PASS ===== */
-(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};const innerPage=!!document.body?.dataset?.page;window.addEventListener('load',()=>setTimeout(hide,reduce?180:(innerPage?220:5000)),{once:true});setTimeout(hide,reduce?900:(innerPage?1200:5050))}})();
+(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};const innerPage=!!document.body?.dataset?.page;window.addEventListener('load',()=>setTimeout(hide,reduce?180:(innerPage?220:7600)),{once:true});setTimeout(hide,reduce?900:(innerPage?1200:7650))}})();
 
 
 /* ===== UI UPGRADE JS — ADDITIVE / DEFENSIVE ===== */

@@ -1375,3 +1375,10 @@ body:not([data-page]) #loader{animation:homeLoaderFailsafe 5.25s forwards}
 .cinematic-page-wipe.active{opacity:1;transform:scaleY(1);transform-origin:bottom}
 @media(max-width:700px){.cinematic-orbit-ring{width:330px;height:330px}.cinematic-orbit-ring.r2{width:270px;height:270px}.cinematic-orbit-node:nth-child(2){--orbit-x:155px}.cinematic-orbit-node:nth-child(3){--orbit-x:-135px;--orbit-y:45px}.cinematic-orbit-node:nth-child(4){--orbit-x:55px;--orbit-y:140px}.cinematic-particles{opacity:.25}.cinematic-cursor-light{display:none}}
 @media(prefers-reduced-motion:reduce){.cinematic-particles,.cinematic-orbit-system,.cinematic-cursor-light{display:none}.hero:before,.hero:after,.bot-orb{animation:none}.cinematic-page-wipe{display:none}.home-3d-stage{transform:none!important}}
+
+
+/* ===== PERFORMANCE GOVERNOR — preserve visuals, reduce idle work ===== */
+.tab-hidden .cinematic-particle,.tab-hidden .cinematic-orbit-ring,.tab-hidden .cinematic-orbit-node,.tab-hidden .bot-orb,.tab-hidden .hero:before,.tab-hidden .hero:after{animation-play-state:paused!important}
+.home-explore-section,.home-path-section,.home-final-cta{content-visibility:auto;contain-intrinsic-size:720px}
+@media(max-width:900px){header{backdrop-filter:blur(10px)}.cinematic-orbit-ring{animation-duration:34s!important}.cinematic-orbit-ring.r2{animation-duration:42s!important}}
+@media(max-width:700px){header{backdrop-filter:none;background:rgba(8,9,13,.94)}.cinematic-particles{display:none}.cinematic-orbit-system{opacity:.62}}

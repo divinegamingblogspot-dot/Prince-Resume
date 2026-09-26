@@ -1339,3 +1339,231 @@ body:not([data-page]) #loader{animation:homeLoaderFailsafe 5.25s forwards}
 .home-3d-stage.dragging,.home-3d-stage.dragging *{cursor:grabbing}
 .home-cube{pointer-events:auto}
 .cube-face{touch-action:none;-webkit-tap-highlight-color:transparent}
+
+
+/* ===== UI POLISH PASS — visual only, performance-safe =====
+   Enhances navigation, 3D core, system/project cards, Nova, typography,
+   micro-interactions and mobile presentation without changing page behavior.
+*/
+:root{
+  --ui-lime:#b7ff52;
+  --ui-violet:#a96cff;
+  --ui-cyan:#52e6ff;
+  --ui-panel:#0d1015;
+  --ui-line:rgba(255,255,255,.075);
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+main,header,footer,#pageBot{position:relative;z-index:1}
+
+/* 2 — navigation: cleaner active state + restrained glass depth */
+header,.inner-top{
+  transition:background .22s ease,border-color .22s ease,box-shadow .22s ease,transform .22s ease;
+}
+header.nav-scrolled,.inner-top.nav-scrolled{
+  background:rgba(8,9,13,.88);
+  border-bottom-color:rgba(183,255,82,.13);
+  box-shadow:0 10px 35px rgba(0,0,0,.18);
+}
+nav a,.inner-nav a{position:relative}
+nav a:before,.inner-nav a:before{
+  content:"";position:absolute;left:0;bottom:-8px;width:5px;height:2px;
+  background:var(--ui-lime);opacity:0;transform:scaleX(0);
+  transform-origin:left;transition:transform .2s ease,opacity .2s ease;
+}
+nav a:hover:before,nav a.active:before,.inner-nav a:hover:before,.inner-nav a.active:before{
+  opacity:1;transform:scaleX(1);
+}
+
+/* 3 — existing cube: richer depth without adding another animation loop */
+.home-3d-stage{
+  filter:drop-shadow(0 28px 55px rgba(0,0,0,.28));
+}
+.home-3d-scene:before{
+  content:"";position:absolute;left:50%;top:50%;width:270px;height:270px;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(183,255,82,.075),rgba(169,108,255,.035) 35%,transparent 70%);
+  pointer-events:none;
+}
+.cube-face{
+  transition:background .22s ease,border-color .22s ease,box-shadow .22s ease,filter .22s ease;
+  box-shadow:inset 0 0 45px rgba(183,255,82,.035),0 0 38px rgba(169,108,255,.055);
+}
+.cube-face:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.055),transparent 28%,transparent 72%,rgba(183,255,82,.025));
+}
+.cube-face:hover{
+  box-shadow:inset 0 0 55px rgba(183,255,82,.065),0 0 55px rgba(183,255,82,.10);
+  filter:brightness(1.06);
+}
+.home-3d-label{
+  letter-spacing:.12em;
+}
+.home-3d-hint{
+  color:#777b86;
+  transition:color .2s ease;
+}
+.home-3d-wrap:hover .home-3d-hint{color:#aeb2bc}
+
+/* 6 — systems / build surfaces: visual hierarchy, no layout change */
+.project,.inner-card,.system-card,.build-grid>div,.process-card,.training-card,.job-card{
+  border-color:var(--ui-line);
+  background:
+    linear-gradient(145deg,rgba(17,20,26,.96),rgba(9,11,15,.96));
+  box-shadow:0 12px 35px rgba(0,0,0,.12);
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease,background .24s ease;
+}
+.project:hover,.inner-card:hover,.system-card:hover,.build-grid>div:hover,.process-card:hover,.training-card:hover,.job-card:hover{
+  border-color:rgba(183,255,82,.22);
+  box-shadow:0 18px 45px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.project h3,.inner-card h3,.system-card h3{letter-spacing:-.025em}
+.project-top,.inner-card small,.system-card small{
+  color:#777c87;
+}
+.project-type,.inner-card small,.system-card small{
+  text-shadow:0 0 14px rgba(183,255,82,.08);
+}
+
+/* 7 — Nova: cleaner assistant shell, readable hierarchy */
+.bot-orb{
+  transition:transform .22s ease,filter .22s ease;
+}
+.bot-orb:hover{
+  filter:drop-shadow(0 20px 30px rgba(183,255,82,.20));
+}
+.bot-orb:focus-visible{
+  outline:2px solid var(--ui-lime);outline-offset:7px;border-radius:50%;
+}
+.bot-chat{
+  border-color:rgba(183,255,82,.14);
+  box-shadow:0 28px 80px rgba(0,0,0,.42),0 0 0 1px rgba(183,255,82,.025);
+}
+.bot-chat-head{
+  background:linear-gradient(90deg,rgba(183,255,82,.045),transparent 55%);
+}
+.bot-chat-body{
+  scrollbar-width:thin;
+  scrollbar-color:#343a45 transparent;
+}
+.bot-msg{
+  border:1px solid rgba(255,255,255,.045);
+  line-height:1.55;
+}
+.bot-msg.user{
+  border-color:rgba(183,255,82,.16);
+}
+.bot-suggestions button,.bot-chat-input button{
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.bot-suggestions button:hover,.bot-chat-input button:hover{
+  transform:translateY(-2px);
+  border-color:rgba(183,255,82,.3);
+  box-shadow:0 8px 22px rgba(183,255,82,.07);
+}
+
+/* 8 — ambient page depth: static gradients, deliberately no particle engine */
+.hero,.inner-page{
+  background-image:
+    radial-gradient(circle at 82% 18%,rgba(183,255,82,.055),transparent 24%),
+    radial-gradient(circle at 8% 78%,rgba(169,108,255,.045),transparent 22%);
+}
+.section,.inner-section{
+  position:relative;
+}
+.section:before,.inner-section:before{
+  content:"";position:absolute;left:9vw;right:9vw;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(183,255,82,.13),transparent);
+  pointer-events:none;
+}
+
+/* 10 — unified CTA language */
+.btn,.inner-cta,.source-link,.demo-run{
+  position:relative;
+  overflow:hidden;
+}
+.btn:after,.inner-cta:after,.source-link:after,.demo-run:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.12) 50%,transparent 75%);
+  transform:translateX(-120%);
+  transition:transform .5s ease;
+  pointer-events:none;
+}
+.btn:hover:after,.inner-cta:hover:after,.source-link:hover:after,.demo-run:hover:after{
+  transform:translateX(120%);
+}
+.btn:active,.inner-cta:active,.source-link:active,.demo-run:active{
+  transform:translateY(1px);
+}
+.btn:focus-visible,.inner-cta:focus-visible,.source-link:focus-visible,.demo-run:focus-visible{
+  outline:2px solid var(--ui-lime);outline-offset:3px;
+}
+
+/* 11 — typography refinement */
+h1,h2,h3,.hero h1,.inner-hero h1{
+  text-wrap:balance;
+}
+.hero h1,.inner-hero h1{
+  text-shadow:0 1px 30px rgba(255,255,255,.025);
+}
+.eyebrow,.section-label,.inner-kicker,.inner-label,.home-section-kicker{
+  font-family:"Space Grotesk",Inter,sans-serif;
+  font-weight:700;
+  letter-spacing:.16em;
+}
+p,.inner-lead,.hero-copy{
+  text-wrap:pretty;
+}
+
+/* 12 — lightweight micro-interactions */
+.hero-meta-link,.home-link-grid>a,.home-path>a{
+  transition:transform .2s ease,color .2s ease,border-color .2s ease,background .2s ease;
+}
+.hero-meta-link:hover{transform:translateY(-2px)}
+.home-link-grid>a:hover,.home-path>a:hover{transform:translateX(4px)}
+.tags span,.chips span,.project-foot span{
+  transition:border-color .18s ease,color .18s ease,background .18s ease,transform .18s ease;
+}
+.tags span:hover,.chips span:hover,.project-foot span:hover{
+  color:#dfffb8;border-color:rgba(183,255,82,.24);background:rgba(183,255,82,.035);transform:translateY(-1px);
+}
+a,button{ -webkit-tap-highlight-color:transparent }
+button{font:inherit}
+
+/* 14 — mobile-first visual tuning */
+@media(max-width:700px){
+  body:after{opacity:.11;background-size:58px 58px}
+  header{height:68px;background:rgba(8,9,13,.92);backdrop-filter:blur(10px)}
+  .hero{padding-top:145px}
+  .hero h1{font-size:clamp(46px,13vw,72px);line-height:.94}
+  .hero-copy{font-size:16px}
+  .hero-actions{flex-wrap:wrap}
+  .btn{min-height:46px;padding:12px 16px}
+  .hero-meta{gap:18px;margin-top:48px;flex-wrap:wrap}
+  .home-3d-wrap{margin-top:12px}
+  .home-3d-scene:before{width:210px;height:210px}
+  .cube-face{backdrop-filter:none}
+  .project,.inner-card,.system-card,.build-grid>div,.process-card,.training-card,.job-card{
+    box-shadow:0 10px 28px rgba(0,0,0,.16);
+  }
+  .bot-chat{backdrop-filter:none}
+  .section:before,.inner-section:before{left:6vw;right:6vw}
+}
+@media(max-width:420px){
+  .hero-actions .btn{flex:1 1 100%;text-align:center}
+  .hero-meta-link{min-width:44%}
+  .bot-chat{width:calc(100vw - 18px);right:9px;left:9px}
+}
+
+/* Never run decorative hover polish when reduced motion is requested. */
+@media(prefers-reduced-motion:reduce){
+  .btn:after,.inner-cta:after,.source-link:after,.demo-run:after{display:none}
+  .hero-meta-link,.home-link-grid>a,.home-path>a,.btn,.inner-cta{transition:none}
+}

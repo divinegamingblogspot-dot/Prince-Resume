@@ -687,3 +687,45 @@ if(canonical&&!document.querySelector('script[data-dynamic-schema]')){const path
 /* Make external project/profile links explicit for search/accessibility without changing destinations. */
 document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopener');
 })();
+
+
+/* ===== UI POLISH INTERACTIONS — lightweight / defensive ===== */
+(()=>{
+  'use strict';
+  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const fine=window.matchMedia?.('(pointer:fine)').matches;
+  const header=document.querySelector('header, .inner-top');
+
+  /* Header state: one passive scroll listener, no animation loop. */
+  if(header){
+    const syncHeader=()=>header.classList.toggle('nav-scrolled',window.scrollY>18);
+    syncHeader();
+    window.addEventListener('scroll',syncHeader,{passive:true});
+  }
+
+  /* Mark the current page in desktop navigation without changing destinations. */
+  const current=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+  document.querySelectorAll('nav a,.inner-nav a').forEach(a=>{
+    const href=(a.getAttribute('href')||'').split('#')[0].split('?')[0].toLowerCase();
+    if(href&&href!=='#'&&href===current)a.classList.add('active');
+    if((current==='index.html'||current==='')&&href==='#home')a.classList.add('active');
+  });
+
+  /* Subtle magnetic response only on capable desktop pointers. */
+  if(!reduce&&fine){
+    const items=document.querySelectorAll('.btn,.inner-cta,.hero-meta-link');
+    items.forEach(el=>{
+      let raf=0;
+      const reset=()=>{
+        if(raf)cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(()=>{el.style.transform='';raf=0});
+      };
+      el.addEventListener('pointermove',e=>{
+        const r=el.getBoundingClientRect(),dx=(e.clientX-(r.left+r.width/2))/r.width,dy=(e.clientY-(r.top+r.height/2))/r.height;
+        if(raf)cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(()=>{el.style.transform='translate3d('+Math.max(-3,Math.min(3,dx*6))+'px,'+Math.max(-3,Math.min(3,dy*6))+'px,0)';raf=0});
+      },{passive:true});
+      el.addEventListener('pointerleave',reset,{passive:true});
+    });
+  }
+})();

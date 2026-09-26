@@ -1,7 +1,7 @@
 const spotlight=document.createElement('div');spotlight.className='spotlight';document.body.appendChild(spotlight);
 let spotlightRaf=0,spotX=innerWidth*.5,spotY=innerHeight*.5;
 window.addEventListener('pointermove',e=>{spotX=e.clientX;spotY=e.clientY;if(!spotlightRaf)spotlightRaf=requestAnimationFrame(()=>{spotlight.style.setProperty('--mx',spotX+'px');spotlight.style.setProperty('--my',spotY+'px');spotlightRaf=0})},{passive:true});
-const loader=document.getElementById('loader');window.addEventListener('load',()=>setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'},1800));
+const loader=document.getElementById('loader');window.addEventListener('load',()=>setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'},5000));
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
 const menu=document.querySelector('.menu'),nav=document.querySelector('nav');menu?.addEventListener('click',()=>nav.classList.toggle('open'));document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
 const c=document.querySelector('.cursor'),d=document.querySelector('.cursor-dot');
@@ -626,7 +626,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
 
 
 /* ===== PERFORMANCE PASS ===== */
-(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};const innerPage=!!document.body?.dataset?.page;window.addEventListener('load',()=>setTimeout(hide,reduce?120:(innerPage?180:1800)),{once:true});setTimeout(hide,reduce?600:(innerPage?700:2100))}})();
+(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};const innerPage=!!document.body?.dataset?.page;window.addEventListener('load',()=>setTimeout(hide,reduce?180:(innerPage?220:5000)),{once:true});setTimeout(hide,reduce?900:(innerPage?1200:5050))}})();
 
 
 /* ===== UI UPGRADE JS — ADDITIVE / DEFENSIVE ===== */
@@ -686,70 +686,4 @@ const canonical=document.querySelector('link[rel="canonical"]');
 if(canonical&&!document.querySelector('script[data-dynamic-schema]')){const path=location.pathname.split('/').pop()||'index.html',title=document.title,desc=document.querySelector('meta[name="description"]')?.content||'';const schema={'@context':'https://schema.org','@type':'WebPage','name':title,'description':desc,'url':canonical.href,'isPartOf':{'@type':'WebSite','name':'Prince Dixit Portfolio','url':canonical.href.replace(/[^/]+$/,'')}};const s=document.createElement('script');s.type='application/ld+json';s.dataset.dynamicSchema='true';s.textContent=JSON.stringify(schema);document.head.appendChild(s);}
 /* Make external project/profile links explicit for search/accessibility without changing destinations. */
 document.querySelectorAll('a[href^="http"]:not([rel])').forEach(a=>a.rel='noopener');
-})();
-
-
-/* ===== CINEMATIC CORE ENGINE — additive / defensive ===== */
-(()=>{
- 'use strict';
- const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
- const fine=matchMedia('(pointer:fine)').matches;
- if(!reduce){
-   /* 2 — orbital environment around the existing 3D cube */
-   const core=document.querySelector('.home-3d-wrap');
-   if(core&&!core.querySelector('.cinematic-orbit-system')){
-     const o=document.createElement('div');o.className='cinematic-orbit-system';o.setAttribute('aria-hidden','true');
-     o.innerHTML='<div class="cinematic-orbit-ring"></div><div class="cinematic-orbit-ring r2"></div><i class="cinematic-orbit-node"></i><i class="cinematic-orbit-node"></i><i class="cinematic-orbit-node"></i>';
-     core.prepend(o);
-   }
-   /* 3 — lightweight depth particles, generated once */
-   if(!document.querySelector('.cinematic-particles')){
-     const p=document.createElement('div');p.className='cinematic-particles';p.setAttribute('aria-hidden','true');
-     for(let i=0;i<26;i++){const s=document.createElement('i');s.className='cinematic-particle';s.style.setProperty('--px',(4+Math.random()*92)+'%');s.style.setProperty('--py',(18+Math.random()*82)+'%');s.style.setProperty('--dx',(-40+Math.random()*80)+'px');s.style.setProperty('--pd',(9+Math.random()*10)+'s');s.style.setProperty('--delay',(-Math.random()*12)+'s');p.appendChild(s)}
-     document.body.appendChild(p);
-   }
-   /* 5 — safe page transitions: View Transitions when supported, native fallback otherwise */
-   if(document.startViewTransition){
-     document.addEventListener('click',e=>{
-       const a=e.target.closest('a[href]'); if(!a||e.defaultPrevented||a.target==='_blank'||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-       const href=a.getAttribute('href')||''; if(!href||href[0]==='#'||href.startsWith('mailto:')||href.startsWith('tel:')||href.startsWith('javascript:')||href.startsWith('http'))return;
-       const u=new URL(href,location.href); if(u.origin!==location.origin)return;
-       e.preventDefault(); document.startViewTransition(()=>{location.href=u.href});
-     },{capture:true});
-   }
-   /* 10 — magnetic controls, deliberately subtle */
-   if(fine){document.querySelectorAll('.btn,.hero-meta-link,.home-link-grid>a,.home-final-actions a,.text-link').forEach(el=>{
-     el.classList.add('magnetic');el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/r.width,y=(e.clientY-(r.top+r.height/2))/r.height;el.style.transform='translate3d('+(x*7)+'px,'+(y*5)+'px,0)'});el.addEventListener('pointerleave',()=>el.style.transform='');
-   })}
-   /* 11 — cursor light, reusing the existing cursor rather than replacing it */
-   if(fine&&!document.querySelector('.cinematic-cursor-light')){const l=document.createElement('div');l.className='cinematic-cursor-light';document.body.appendChild(l);let raf=0,x=innerWidth/2,y=innerHeight/2;addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;if(raf)return;raf=requestAnimationFrame(()=>{l.style.left=x+'px';l.style.top=y+'px';raf=0})},{passive:true})}
-   /* 12 — scroll camera: the cube/environment subtly recedes with scroll, never blocking scrolling */
-   const stage=document.getElementById('home3dStage');
-   if(stage){let raf=0;addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{const y=Math.min(700,scrollY),d=Math.min(22,y*.035);document.documentElement.style.setProperty('--scroll-depth',d.toFixed(2));document.documentElement.style.setProperty('--scroll-scale',(-Math.min(.035,y/20000)).toFixed(4));raf=0})},{passive:true})}
- }
- /* 9 — Nova presence: make the existing assistant feel connected to the cinematic system */
- const orb=document.getElementById('botOrb'),chat=document.getElementById('botChat'),input=document.getElementById('botInput');
- if(orb){const sync=()=>orb.classList.toggle('nova-active',!!chat?.classList.contains('open')||document.activeElement===input);new MutationObserver(sync).observe(chat||orb,{attributes:true,attributeFilter:['class']});input?.addEventListener('focus',sync);input?.addEventListener('blur',sync);sync()}
- /* Add a cinematic wipe only for the browser back/forward cache restore, not normal navigation. */
- if(!document.querySelector('.cinematic-page-wipe')){const w=document.createElement('div');w.className='cinematic-page-wipe';w.setAttribute('aria-hidden','true');document.body.appendChild(w);addEventListener('pageshow',()=>w.classList.remove('active'));}
-})();
-
-
-/* ===== SMOOTH / FAST RUNTIME GUARD ===== */
-(()=>{
-  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const coarse=matchMedia('(pointer:coarse)').matches;
-  /* Keep decorative work paused when the tab is hidden. */
-  const sync=()=>document.documentElement.classList.toggle('tab-hidden',document.hidden);
-  document.addEventListener('visibilitychange',sync,{passive:true}); sync();
-  /* Do not run expensive cursor/magnetic effects during rapid scrolling. */
-  let scrolling=false,timer=0;
-  addEventListener('scroll',()=>{scrolling=true;clearTimeout(timer);timer=setTimeout(()=>scrolling=false,120)},{passive:true});
-  if(!reduce&&!coarse){
-    document.addEventListener('pointermove',e=>{if(scrolling)return;}, {passive:true});
-  }
-  /* Defer non-critical visual DOM additions until the browser is idle. */
-  const idle=window.requestIdleCallback||function(cb){return setTimeout(cb,120)};
-  document.querySelectorAll('img').forEach((img,i)=>{if(i>0){img.loading='lazy';img.decoding='async'}});
-  idle(()=>{document.body.classList.add('noncritical-ready')},{timeout:900});
 })();

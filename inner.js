@@ -179,3 +179,37 @@ window.NovaAI={answer,knowledge:KNOW,version:'5.0-local-domain-cognitive'};
 
 /* ===== NOVA 2.0 PROGRESSIVE UI ===== */
 (()=>{const form=document.getElementById('botForm'),input=document.getElementById('botInput'),chat=document.getElementById('botChat');if(!form||!input||!chat)return;const body=chat.querySelector('.bot-chat-body');if(body&&!body.querySelector('.nova-context-strip')){const strip=document.createElement('div');strip.className='nova-context-strip';strip.innerHTML='<span>CONTEXT</span><b>'+(document.body.dataset.page||'portfolio').toUpperCase()+'</b><i>LOCAL MODE</i>';body.prepend(strip)}if(body&&!body.querySelector('.nova-suggest-plus')){const s=document.createElement('div');s.className='nova-suggest-plus';s.innerHTML='<button data-nq="Summarize this page">Summarize page</button><button data-nq="Explain this technically">Technical</button><button data-nq="Explain this like a recruiter">Recruiter</button>';body.appendChild(s);s.addEventListener('click',e=>{const b=e.target.closest('[data-nq]');if(!b)return;input.value=b.dataset.nq;form.requestSubmit()})}if(!chat.querySelector('.nova-voice')&&('SpeechRecognition' in window||'webkitSpeechRecognition' in window)){const b=document.createElement('button');b.type='button';b.className='nova-voice';b.title='Voice input';b.setAttribute('aria-label','Use voice input');b.textContent='◉';form.insertBefore(b,form.querySelector('button'));b.addEventListener('click',()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;const rec=new R();rec.lang=(navigator.language||'en-IN').toLowerCase().startsWith('hi')?'hi-IN':'en-IN';rec.interimResults=false;rec.maxAlternatives=1;b.classList.add('listening');rec.onresult=e=>{input.value=e.results[0][0].transcript;input.focus()};rec.onend=()=>b.classList.remove('listening');rec.onerror=()=>b.classList.remove('listening');rec.start()})}})();
+
+/* Mobile inner-page navigation: same 3-line menu behavior as the homepage */
+(function(){
+  function initInnerMenu(){
+    const menu=document.querySelector('.inner-menu');
+    const nav=document.querySelector('.inner-nav');
+    if(!menu||!nav||menu.dataset.bound==='1') return;
+    menu.dataset.bound='1';
+    menu.addEventListener('click',function(){
+      const open=nav.classList.toggle('open');
+      menu.classList.toggle('open',open);
+      menu.setAttribute('aria-expanded',open?'true':'false');
+      menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+    });
+    nav.addEventListener('click',function(e){
+      if(e.target.closest('a')){
+        nav.classList.remove('open');
+        menu.classList.remove('open');
+        menu.setAttribute('aria-expanded','false');
+        menu.setAttribute('aria-label','Open navigation');
+      }
+    });
+    document.addEventListener('click',function(e){
+      if(!nav.contains(e.target)&&!menu.contains(e.target)){
+        nav.classList.remove('open');
+        menu.classList.remove('open');
+        menu.setAttribute('aria-expanded','false');
+        menu.setAttribute('aria-label','Open navigation');
+      }
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initInnerMenu,{once:true});
+  else initInnerMenu();
+})();

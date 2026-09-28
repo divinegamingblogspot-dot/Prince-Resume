@@ -708,4 +708,3 @@ apply(false);if(document.readyState==='loading')document.addEventListener('DOMCo
 })();
 
 
-/* Defensive layer: theme rendering must not depend on stylesheet load order. */

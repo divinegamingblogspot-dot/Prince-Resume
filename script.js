@@ -175,7 +175,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   function ask(q){
     if(!q.trim())return;
     addMsg(q.trim(),'user');mood(q.length>28?'surprised':'happy');
-    setTimeout(()=>{const novaReply=window.NovaAI&&typeof window.NovaAI.answer==='function'?window.NovaAI.answer(q):answer(q);addMsg(novaReply,'bot');mood(['happy','wink','love'][Math.floor(Math.random()*3)],'There you go ✦')},350);
+    setTimeout(()=>{const directNovaGreeting=/^(?:hi|hello|hey|hii|heyy)\\s+nova[?!., ]*$/i.test(String(q||'').trim());const novaReply=directNovaGreeting?'Hey! I’m Nova ✦ My name is Nova, and I’m the AI assistant built into Prince Dixit’s portfolio. I’m here with you — you can talk to me directly, ask about me, what I can do, how I work, or anything about Prince’s portfolio.':(window.NovaAI&&typeof window.NovaAI.answer==='function'?window.NovaAI.answer(q):answer(q));addMsg(novaReply,'bot');mood(['happy','wink','love'][Math.floor(Math.random()*3)],'There you go ✦')},350);
   }
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';ask(q)});
   messages?.addEventListener('click',e=>{const b=e.target.closest('[data-bot-q]');if(b)ask(b.dataset.botQ)});

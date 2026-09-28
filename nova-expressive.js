@@ -110,14 +110,14 @@
   let thinkingTimer=0;
   let lastBotCount=messages.querySelectorAll('.bot-msg.bot').length;
 
-  function setExpression(name,duration){
+  let setExpression=function(name,duration){
     const allowed=labels[name]?name:'idle';
     root.dataset.expression=allowed;
     root.dataset.mood=allowed;
     badge.textContent=labels[allowed].toUpperCase();
     clearTimeout(stateTimer);
     if(duration) stateTimer=setTimeout(()=>setExpression('idle'),duration);
-  }
+  };
 
   function showThinking(){
     clearTimeout(thinkingTimer);

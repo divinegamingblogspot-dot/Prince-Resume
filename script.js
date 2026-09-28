@@ -173,7 +173,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
   function ask(q){
     if(!q.trim())return;
     addMsg(q.trim(),'user');mood(q.length>28?'surprised':'happy');
-    setTimeout(()=>{addMsg(answer(q),'bot');mood(['happy','wink','love'][Math.floor(Math.random()*3)],'There you go ✦')},350);
+    setTimeout(()=>{const novaReply=window.NovaAI&&typeof window.NovaAI.answer==='function'?window.NovaAI.answer(q):answer(q);addMsg(novaReply,'bot');mood(['happy','wink','love'][Math.floor(Math.random()*3)],'There you go ✦')},350);
   }
   form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value;input.value='';ask(q)});
   messages?.addEventListener('click',e=>{const b=e.target.closest('[data-bot-q]');if(b)ask(b.dataset.botQ)});

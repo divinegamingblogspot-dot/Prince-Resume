@@ -156,7 +156,9 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     [/hello|hi|hey|hii/i,'Heyyy ✦ I’m Nova. Ask me about Prince, what he likes, what he builds, his work, education, skills, projects or goals.']
   ];
   function answer(q){
-    const s=String(q||'').trim().toLowerCase().replace(/^(?:and|also|okay|ok|so|hey|hi|hello)\\s+/i,'').replace(/\\s+/g,' ').trim();
+    const raw=String(q||'').trim();
+    if(/^(?:hi|hello|hey|hii|heyy)\\s+nova[?!., ]*$/i.test(raw)) return 'Hey! I’m Nova ✦ My name is Nova, I’m the AI assistant built into Prince Dixit’s portfolio, and I’m here with you. You can talk to me directly — ask about me, what I can do, how I work, or anything about Prince’s portfolio.';
+    const s=raw.toLowerCase().replace(/^(?:and|also|okay|ok|so|hey|hi|hello)\\s+/i,'').replace(/\\s+/g,' ').trim();
     // Nova self-identity must be checked before Prince/topic rules.
     if(/^(?:who are you|who r u|what are you|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|who is nova|who's nova|whos nova|what is nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai)(?:\\s+nova)?[?!., ]*$/i.test(s)){
       return 'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My name is Nova, and my role is to help visitors understand Prince, his resume, experience, skills, systems, projects and this website through conversation. You can also ask me about my own identity, purpose, capabilities and how I work.';

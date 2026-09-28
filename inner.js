@@ -76,7 +76,7 @@ function calc(q){const m=norm(q).match(/(?:calculate|solve|what is|how much is|k
 function intent(q){
  const s=norm(q);const prev=session.filter(x=>x.role==='user').slice(-3).map(x=>x.text).join(' ');const combined=s+' '+norm(prev);
  // Identity questions are classified first so Nova cannot route them to Prince answers.
- const directSelf=/^(who are you|who r u|who r you|what are you|what r u|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|your identity|your name|your role|about nova|who is nova|whos nova|who's nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai|apna introduction|apne baare me|apne bare me|are you an ai|are you real|are you a bot)$/i.test(s);
+ const directSelf=/^(hi nova|hello nova|hey nova|who are you|who r u|who r you|what are you|what r u|what is your identity|what's your identity|whats your identity|tell me about yourself|introduce yourself|about yourself|your identity|your name|your role|about nova|who is nova|whos nova|who's nova|nova identity|nova kaun|nova kon|nova kya|tum kaun ho|tum kon ho|aap kaun ho|aap kon ho|tumhara naam kya hai|tumhari identity kya hai|tumhara role kya hai|apna introduction|apne baare me|apne bare me|are you an ai|are you real|are you a bot)$/i.test(s);
  const directPurpose=/^(why do you exist|why were you created|why were you made|your purpose|tumhe kyu banaya|tumhe kyun banaya|tumhara purpose)$/i.test(s);
  // Natural follow-ups often contain a prefix such as "and", "also", or "okay".
  // Strip those conversational wrappers before classifying Nova's identity.

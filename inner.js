@@ -199,7 +199,7 @@ async function askOpenAI(q){
 
 const originalSubmitHandlers=form.cloneNode(true);
 let busy=false;
-form.addEventListener('submit',async e=>{
+document.addEventListener('submit',async e=>{
  if(e.defaultPrevented)return;
  const q=input.value.trim();if(!q)return;
  e.preventDefault();e.stopImmediatePropagation();

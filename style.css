@@ -1391,3 +1391,12 @@ header nav a.home-header-link{
   text-transform:inherit;
 }
 header nav a.home-header-link:hover{transform:none;background:none;box-shadow:none;}
+
+
+/* ===== NOVA MOBILE VISIBILITY POSITION — 10% ABOVE BOTTOM ===== */
+@media(max-width:700px){
+  /* Keep Nova visibly above the bottom edge while preserving her existing horizontal walking behavior. */
+  .page-bot{
+    bottom:10vh!important;
+  }
+}

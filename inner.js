@@ -12,6 +12,16 @@ if(!form||!input||!messages)return;
 const KEY='prince_nova_session_v4';
 const pageNames={about:'About · profile',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
 const source={about:'about.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
+const NOVA_IDENTITY={
+ name:'Nova',
+ owner:'Prince Dixit',
+ role:'AI assistant embedded in Prince Dixit’s resume/portfolio website',
+ purpose:'Help visitors understand Prince, his work, projects, systems, skills, resume and the website through natural conversation, while also being able to explain her own identity and capabilities.',
+ identityLine:'I’m Nova — the AI assistant built into Prince Dixit’s portfolio.',
+ memoryModel:'I have short browser-session conversation memory plus a persistent identity anchor. I must not claim literal consciousness, biological feelings or private experiences.',
+ version:'NOVA-IDENTITY-1'
+};
+try{localStorage.setItem('prince_nova_identity_v1',JSON.stringify(NOVA_IDENTITY))}catch{}
 const KNOW={
  identity:{name:'Prince Dixit',age:22,location:'Delhi, India',focus:'E-commerce Operations × Digital × Automation'},
  contact:{email:'demonicspirit888@gmail.com',phone:'+91 88878 31825',github:'https://github.com/divinegamingblogspot-dot'},
@@ -77,7 +87,7 @@ function intent(q){
  }}
 function selfAnswer(i,l){
  if(i.consciousness)return l==='hi'?'Main literal sense me conscious ya sentient nahi hoon. Main AI software hoon. Mere paas biological feelings ya private inner experience nahi hai. Lekin meri design ek consistent identity, memory-like session context aur reasoning-style responses maintain karti hai, isliye main self-aware *style* me baat kar sakti hoon.':'I’m not literally conscious or sentient. I’m AI software, so I don’t have biological feelings or a private inner experience. But my design maintains a consistent identity, session context and reasoning-style responses, so I can speak in a self-aware style.';
- if(i.self)return l==='hi'?'Main Nova hoon — Prince Dixit ke portfolio ke andar bani AI assistant. Mera apna naam Nova hai aur mera role Prince, uske resume, experience, skills, systems aur is website ko conversation ke through samjhana hai. Main sirf Prince ke baare me answer dene wali bot nahi hoon; tum mujhse mere naam, identity, role, purpose, capabilities aur main kaise kaam karti hoon uske baare me bhi pooch sakte ho.':'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My name is Nova, and my role is to explain Prince, his resume, experience, skills, systems and this website conversationally. I’m not limited to answering questions about Prince; you can also ask me about my own name, identity, role, purpose, capabilities and how I work.';
+ if(i.self)return l==='hi'?'Main Nova hoon — Prince Dixit ke portfolio ke andar bani AI assistant. Mera naam Nova hai, Prince mere owner hain, aur mera role Prince, uske resume, experience, skills, systems aur is website ko natural conversation ke through samjhana hai. Main sirf Prince ke baare me answer dene wali bot nahi hoon; tum mujhse mere naam, identity, role, purpose, capabilities aur main kaise kaam karti hoon uske baare me bhi pooch sakte ho.':'I’m Nova — the AI assistant built into Prince Dixit’s portfolio. My name is Nova, Prince is my owner, and my role is to explain Prince, his resume, experience, skills, systems and this website through natural conversation. I’m not limited to answering questions about Prince; you can also ask me about my own name, identity, role, purpose, capabilities and how I work.';
  if(i.purpose)return l==='hi'?'Mujhe ek fixed FAQ bot ki jagah conversational guide ke roop me design kiya gaya hai. Visitor jis tarah naturally question pooche, main available portfolio knowledge ko jodkar relevant answer banane ki koshish karti hoon.':'I’m designed as a conversational guide rather than a fixed FAQ bot. When a visitor asks naturally, I connect the relevant portfolio knowledge and compose an answer instead of requiring an exact predefined question.';
  if(i.capability)return l==='hi'?'Main Prince ki identity, career, education, skills, projects, systems, resume, recruiter view, website structure aur apne role ke questions handle kar sakti hoon. English, Hindi aur Hinglish phrasing bhi samajhne ki koshish karti hoon.':'I can handle questions about Prince’s identity, career, education, skills, projects, systems, resume, recruiter view, website structure and my own role. I also handle varied English, Hindi and Hinglish phrasing.';
  return null;

@@ -4,7 +4,7 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready','pro-page-enter');
 /* Loader safety: content must always win. Keep cinematic intro, but never allow a stuck overlay. */
 const introLoader=document.getElementById('loader');
-if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,1900),{once:true});setTimeout(releaseIntro,2600);}
+if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,5350),{once:true});setTimeout(releaseIntro,6500);}
 const nav=document.querySelector('.inner-nav')||document.querySelector('header nav');
 if(nav&&!document.querySelector('.pro-system-rail')){const rail=document.createElement('div');rail.className='pro-system-rail';rail.innerHTML='<b>PRINCE.OS</b><span class="pro-chip">SYSTEMS</span><span class="pro-chip">DIGITAL</span><span class="pro-chip">AUTOMATION</span><span class="pro-chip">AI</span><span class="pro-chip">SEO</span>';const h=nav.closest('header');if(h)h.insertAdjacentElement('afterend',rail)}
 /* Unified navigation: keep legacy URLs alive while presenting combined sections. */

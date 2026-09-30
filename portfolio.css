@@ -27,3 +27,138 @@
 @media(max-width:800px){.portfolio-command{grid-template-columns:1fr;padding:20px;margin-bottom:34px}.portfolio-map{grid-template-columns:1fr 1fr;margin-bottom:38px}.portfolio-proof{grid-template-columns:1fr;margin-bottom:42px}.portfolio-facts{grid-template-columns:1fr 1fr}.portfolio-insights{grid-template-columns:1fr}}
 @media(max-width:520px){.portfolio-system{width:90vw}.portfolio-map{grid-template-columns:1fr}.portfolio-facts{grid-template-columns:1fr}.portfolio-command h2{font-size:34px}.portfolio-breadcrumb{margin-bottom:18px}}
 @media(prefers-reduced-motion:reduce){.portfolio-map a{transition:none}}
+
+
+/* ===== 2026 PORTFOLIO STRUCTURE / THEME-REACTIVE INTRO ===== */
+:root{
+  --p-intro-accent:var(--theme-accent,#b7ff52);
+  --p-intro-bg:var(--theme-bg,#07090d);
+  --p-intro-surface:var(--theme-surface,#0c1016);
+  --p-intro-text:var(--theme-text,#f4f6f8);
+  --p-intro-muted:var(--theme-muted,#8b929e);
+  --p-intro-line:var(--theme-line,#202630);
+}
+/* The theme controller owns these variables, so the intro follows every theme/day-night change automatically. */
+body[data-prince-theme] #loader{
+  background:
+    radial-gradient(circle at 72% 32%,color-mix(in srgb,var(--theme-accent) 13%,transparent),transparent 30%),
+    radial-gradient(circle at 18% 75%,color-mix(in srgb,var(--theme-accent) 7%,transparent),transparent 28%),
+    var(--theme-bg)!important;
+  color:var(--theme-text)!important;
+}
+body[data-prince-theme] #loader .loader-grid{
+  opacity:.28;
+  background-image:linear-gradient(color-mix(in srgb,var(--theme-accent) 10%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--theme-accent) 10%,transparent) 1px,transparent 1px);
+}
+body[data-prince-theme] #loader .loader-name span,
+body[data-prince-theme] #loader .loader-status,
+body[data-prince-theme] #loader .loader-top span:first-child{color:var(--theme-accent)!important}
+body[data-prince-theme] #loader .loader-bar{background:color-mix(in srgb,var(--theme-line) 85%,transparent)!important}
+body[data-prince-theme] #loader .loader-bar i{background:var(--theme-accent)!important;box-shadow:0 0 18px color-mix(in srgb,var(--theme-accent) 45%,transparent)}
+body[data-prince-theme] #loader .loader-status i{background:var(--theme-accent)!important;box-shadow:0 0 14px var(--theme-accent)!important}
+body[data-prince-theme] .portfolio-command{
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--theme-surface) 96%,transparent),color-mix(in srgb,var(--theme-bg) 92%,transparent))!important;
+  border-color:var(--theme-line)!important;
+  color:var(--theme-text)!important;
+}
+body[data-prince-theme] .portfolio-command:after{
+  background:color-mix(in srgb,var(--theme-accent) 9%,transparent)!important;
+}
+body[data-prince-theme] .portfolio-command-kicker,
+body[data-prince-theme] .portfolio-command h2 em,
+body[data-prince-theme] .portfolio-index a:hover,
+body[data-prince-theme] .portfolio-entity-note strong{color:var(--theme-accent)!important}
+body[data-prince-theme] .portfolio-command h2{color:var(--theme-text)!important}
+body[data-prince-theme] .portfolio-command p{color:var(--theme-muted)!important}
+body[data-prince-theme] .portfolio-signal{border-color:var(--theme-line)!important;color:var(--theme-muted)!important}
+body[data-prince-theme] .portfolio-signal b{color:var(--theme-text)!important}
+body[data-prince-theme] .portfolio-map a,
+body[data-prince-theme] .portfolio-proof article,
+body[data-prince-theme] .portfolio-insights a{
+  background:var(--theme-surface)!important;
+  border-color:var(--theme-line)!important;
+}
+body[data-prince-theme] .portfolio-map a:hover,
+body[data-prince-theme] .portfolio-map a.current{
+  border-color:color-mix(in srgb,var(--theme-accent) 55%,var(--theme-line))!important;
+  box-shadow:0 14px 34px color-mix(in srgb,var(--theme-accent) 10%,transparent);
+}
+body[data-prince-theme] .portfolio-map span,
+body[data-prince-theme] .portfolio-map small,
+body[data-prince-theme] .portfolio-proof p,
+body[data-prince-theme] .portfolio-insights span{color:var(--theme-muted)!important}
+body[data-prince-theme] .portfolio-map strong,
+body[data-prince-theme] .portfolio-proof h3,
+body[data-prince-theme] .portfolio-insights b{color:var(--theme-text)!important}
+body[data-prince-theme] .portfolio-proof small,
+body[data-prince-theme] .portfolio-index a,
+body[data-prince-theme] .portfolio-cta a.primary{color:var(--theme-accent)!important}
+body[data-prince-theme] .portfolio-facts{background:var(--theme-line)!important;border-color:var(--theme-line)!important}
+body[data-prince-theme] .portfolio-facts div{background:var(--theme-surface)!important}
+body[data-prince-theme] .portfolio-facts b{color:var(--theme-text)!important}
+body[data-prince-theme] .portfolio-facts span{color:var(--theme-muted)!important}
+body[data-prince-theme] .portfolio-entity-note{border-color:var(--theme-accent)!important;background:linear-gradient(90deg,color-mix(in srgb,var(--theme-accent) 6%,transparent),transparent)!important;color:var(--theme-muted)!important}
+body[data-prince-theme] .portfolio-cta a{border-color:var(--theme-line)!important;color:var(--theme-text)!important}
+
+/* New page rhythm: command intro → navigation map → proof/facts → page content.
+   This changes visual structure without changing links, JS hooks or existing HTML functions. */
+.portfolio-system{padding-top:28px}
+.portfolio-command{
+  grid-template-columns:minmax(0,1.65fr) minmax(240px,.7fr);
+  min-height:260px;
+  align-items:stretch;
+  padding:32px 34px;
+}
+.portfolio-command-side{
+  border-left:1px solid var(--p-intro-line);
+  padding-left:28px;
+}
+.portfolio-map{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:0;
+  border:1px solid var(--p-intro-line);
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--p-intro-line);
+}
+.portfolio-map a{
+  min-height:104px;
+  border:0;
+  border-radius:0;
+  border-right:1px solid var(--p-intro-line);
+  background:var(--p-intro-surface);
+  position:relative;
+}
+.portfolio-map a:last-child{border-right:0}
+.portfolio-map a:before{
+  content:"";
+  position:absolute;left:13px;top:0;width:28px;height:2px;
+  background:var(--p-intro-accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+}
+.portfolio-map a:hover:before,.portfolio-map a.current:before{transform:scaleX(1)}
+.portfolio-proof{grid-template-columns:1.15fr 1fr 1fr;align-items:stretch}
+.portfolio-proof article:first-child{border-radius:16px 8px 8px 16px}
+.portfolio-proof article:last-child{border-radius:8px 16px 16px 8px}
+@media(max-width:900px){
+  .portfolio-map{grid-template-columns:repeat(3,1fr)}
+  .portfolio-map a:nth-child(3){border-right:0}
+  .portfolio-map a:nth-child(n+4){border-top:1px solid var(--p-intro-line)}
+  .portfolio-command{grid-template-columns:1fr}
+  .portfolio-command-side{border-left:0;border-top:1px solid var(--p-intro-line);padding:18px 0 0}
+}
+@media(max-width:600px){
+  .portfolio-system{padding-top:18px}
+  .portfolio-command{padding:24px 20px;min-height:0;border-radius:15px}
+  .portfolio-command h2{font-size:clamp(32px,11vw,48px)}
+  .portfolio-map{grid-template-columns:1fr 1fr}
+  .portfolio-map a:nth-child(3){border-right:1px solid var(--p-intro-line)}
+  .portfolio-map a:nth-child(n+3){border-top:1px solid var(--p-intro-line)}
+  .portfolio-map a:nth-child(even){border-right:0}
+  .portfolio-proof{grid-template-columns:1fr}
+  .portfolio-proof article:first-child,.portfolio-proof article:last-child{border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .portfolio-map a:before{transition:none}
+}

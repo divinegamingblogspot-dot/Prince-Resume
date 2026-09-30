@@ -10,8 +10,8 @@ document.querySelectorAll('.skill-node').forEach(n=>n.addEventListener('click',(
 const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');
 if(!form||!input||!messages)return;
 const KEY='prince_nova_session_v4';
-const pageNames={about:'About · profile',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
-const source={about:'about.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
+const pageNames={about:'About · profile',projects:'Projects · portfolio builds',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
+const source={about:'about.html',projects:'projects.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
 const NOVA_IDENTITY={
  name:'Nova',
  canonicalName:'Nova',
@@ -55,6 +55,12 @@ const KNOW={
   {company:'Unique Threads Sarees',role:'Orders & Inventory Manager',period:'May–October 2024',detail:'order handling, fulfillment and dispatch, stock availability, inventory movement and accurate order/stock information.'}
  ],
  skills:['E-commerce Operations','Google Sheets','Apps Script','JavaScript','HTML/CSS','APIs','SEO','Digital Marketing','AI Workflows','Business Automation'],
+ projects:[
+  {name:'Multybyte Purchase System',detail:'E-commerce purchasing and operations automation around SKU data, supplier workflows, inventory, image synchronization and Google Sheets + Apps Script.'},
+  {name:'Nova',detail:'A portfolio-native AI interface that explains Prince, his work and the website while maintaining a distinct Nova identity.'},
+  {name:'EyeNav / Doc',detail:'An Android accessibility experiment evolving from eye-navigation toward voice-first, hands-free interaction.'},
+  {name:'Prince.OS',detail:'The portfolio itself: responsive UI, themes, navigation, SEO, recruiter views and an interactive AI layer.'}
+ ],
  systems:[
   {name:'Multybyte Automation',detail:'A practical operations system around SKU/product workflows, purchasing, vendor workflows, spreadsheets, warehouse execution and Apps Script automation.'},
   {name:'Operational Spreadsheet Systems',detail:'Structured spreadsheet workflows designed to reduce repetitive manual operations and keep business data controlled.'},
@@ -127,6 +133,7 @@ function princeAnswer(i,l){
 }
 function systemAnswer(i,l){
  if(i.multybyte)return l==='hi'?KNOW.systems[0].detail+' Isme SKU/product workflows, purchasing, vendor coordination, inventory aur warehouse-side execution bhi connected hain.':' '+KNOW.systems[0].detail+' It connects SKU/product workflows, purchasing, vendor coordination, inventory and warehouse-side execution.';
+ if(i.projects)return l==='hi'?'Prince ke main portfolio builds hain: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' '):'Prince’s main portfolio builds are: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' ');
  if(i.doc)return KNOW.systems[4].detail;
  if(i.menu)return KNOW.systems[3].detail;
  if(i.portfolio)return l==='hi'?'Ye website ek multi-page portfolio/resume system hai: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova aur Contact pages ke saath. Nova conversational layer hai aur detailed information dedicated pages par rakhi gayi hai.':'This website is a multi-page portfolio/resume system: Home, About, Experience, Systems, Skills, Recruiter, Resume, Nova and Contact pages. Nova is the conversational layer, while detailed information lives on dedicated pages.';

@@ -1331,8 +1331,8 @@ body.page-exit{opacity:0!important;transition:opacity .04s linear!important}
    JS must never be able to leave the loading layer permanently blocking the site. */
 @keyframes innerLoaderFailsafe{0%,70%{opacity:1;visibility:visible;pointer-events:auto}100%{opacity:0;visibility:hidden;pointer-events:none}}
 @keyframes homeLoaderFailsafe{0%,92%{opacity:1;visibility:visible;pointer-events:auto}100%{opacity:0;visibility:hidden;pointer-events:none}}
-body[data-page] #loader{animation:innerLoaderFailsafe 1.25s forwards}
-body:not([data-page]) #loader{animation:homeLoaderFailsafe 5.25s forwards}
+body[data-page] #loader{animation:innerLoaderFailsafe 5.6s forwards}
+body:not([data-page]) #loader{animation:homeLoaderFailsafe 5.6s forwards}
 
 /* Touch-first 3D core: keep the interaction surface responsive and generous. */
 .home-3d-stage{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}

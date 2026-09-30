@@ -1,7 +1,7 @@
 const spotlight=document.createElement('div');spotlight.className='spotlight';document.body.appendChild(spotlight);
 let spotlightRaf=0,spotX=innerWidth*.5,spotY=innerHeight*.5;
 if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){window.addEventListener('pointermove',e=>{spotX=e.clientX;spotY=e.clientY;if(!spotlightRaf)spotlightRaf=requestAnimationFrame(()=>{spotlight.style.setProperty('--mx',spotX+'px');spotlight.style.setProperty('--my',spotY+'px');spotlightRaf=0})},{passive:true});}
-const loader=document.getElementById('loader');window.addEventListener('load',()=>setTimeout(()=>{if(loader){loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'}},1800));
+/* Loader timing is controlled by the FINAL PORTFOLIO SYSTEM block below. */
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>obs.observe(e));
 const menu=document.querySelector('.menu'),nav=document.querySelector('nav');if(menu&&nav){menu.setAttribute('aria-expanded','false');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close menu':'Open menu')});document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open menu')}));}
 const c=document.querySelector('.cursor'),d=document.querySelector('.cursor-dot');
@@ -602,9 +602,9 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     };
     document.addEventListener('pointerdown',startAudio,{once:true,passive:true});
     document.addEventListener('keydown',startAudio,{once:true});
-    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=reduce?500:5000;
+    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=5000;
     const frame=now=>{const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.round(e*100);if(bar)bar.style.width=v+'%';if(pct)pct.textContent=String(v).padStart(2,'0')+'%';if(status)status.textContent=stages[Math.min(4,Math.floor(p*5))];if(p<1)requestAnimationFrame(frame)};requestAnimationFrame(frame);
-    addEventListener('load',()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent='SYSTEM READY'},{once:true});
+    const finishIntro=()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent='SYSTEM READY';setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none';loader.setAttribute('aria-hidden','true')},260);};addEventListener('load',finishIntro,{once:true});setTimeout(finishIntro,5000);
   }
   window.princeProfile=window.princeProfile||{identity:{name:'Prince Dixit',location:'Delhi, India',focus:'E-commerce Operations × Digital × Automation'},contact:{phone:'+91 88878 31825',email:'demonicspirit888@gmail.com',github:'https://github.com/divinegamingblogspot-dot'},experience:[{company:'Multybyte Marketing India',role:'E-commerce Operations',period:'May 2026 — Present'},{company:'Crafts Banaras',role:'E-commerce Manager',period:'March 2025 — 2026'},{company:'Paraxion Management & Consultant Pvt. Ltd.',role:'Telesales Executive',period:'November 2024 — February 2025'},{company:'Unique Threads Sarees',role:'Orders & Inventory Manager',period:'May — October 2024'}],skills:['E-commerce Operations','Google Sheets','Apps Script','JavaScript','SEO','Digital Marketing','AI Workflows','HTML/CSS','APIs'],systems:['Multybyte Automation','Operational Spreadsheet Systems','AI / Software Experiments','ME N U','EyeNav / Doc','Portfolio / Resume System']};
   const hero=document.querySelector('.hero');
@@ -628,7 +628,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
 
 
 /* ===== PERFORMANCE PASS ===== */
-(()=>{const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});const loader=document.getElementById('loader');if(loader){const hide=()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none'};const innerPage=!!document.body?.dataset?.page;window.addEventListener('load',()=>setTimeout(hide,reduce?120:(innerPage?180:420)),{once:true});setTimeout(hide,reduce?500:(innerPage?700:1000))}})();
+(()=>{const coarse=matchMedia('(pointer:coarse)').matches;if(coarse){document.querySelector('.cursor')?.remove();document.querySelector('.cursor-dot')?.remove()}document.querySelectorAll('img').forEach((img,i)=>{if(i>1&&!img.loading)img.loading='lazy';if(!img.decoding)img.decoding='async'});})();
 
 
 /* ===== UI UPGRADE JS — ADDITIVE / DEFENSIVE ===== */

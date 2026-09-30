@@ -1,7 +1,7 @@
 /* PRINCE.OS PRO INTERACTION LAYER — additive and defensive. */
 (()=>{if(window.__princeProLayer)return;window.__princeProLayer=true;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.body.classList.add('pro-ready','pro-page-enter');
+document.body.classList.add('pro-ready');
 /* Loader safety: content must always win. Keep cinematic intro, but never allow a stuck overlay. */
 const introLoader=document.getElementById('loader');
 if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,5350),{once:true});setTimeout(releaseIntro,6500);}

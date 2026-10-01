@@ -8,3 +8,185 @@
 .blog-feature{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin:30px 0}.blog-feature article{padding:28px;border:1px solid rgba(183,255,82,.14);border-radius:16px;background:rgba(183,255,82,.025)}.blog-feature h3{font-size:28px;margin:8px 0}.blog-feature p{color:#b8bec8;line-height:1.7}
 .article-shell{max-width:920px;margin:0 auto}.article-hero{margin:34px 0 38px}.article-hero img{width:100%;aspect-ratio:16/7;object-fit:cover;border-radius:18px;border:1px solid rgba(183,255,82,.16)}.article-kicker{color:#b7ff52;font-size:11px;letter-spacing:.16em;text-transform:uppercase}.article-hero h1{font-size:clamp(38px,6vw,72px);line-height:1.02;margin:14px 0}.article-deck{font-size:19px;line-height:1.75;color:#b8bec8;max-width:800px}.article-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.article-body{font-size:17px;line-height:1.85;color:#c9ced6}.article-body h2{font-size:30px;color:#f5f7fa;margin:44px 0 12px}.article-body h3{font-size:22px;color:#f5f7fa;margin:30px 0 8px}.article-body p{margin:0 0 18px}.article-body ul{padding-left:22px}.article-body li{margin:8px 0}.article-note{padding:20px 22px;border-left:2px solid #b7ff52;background:rgba(183,255,82,.045);margin:28px 0}.article-back{display:inline-flex;margin-top:34px;color:#b7ff52;text-decoration:none}
 @media(max-width:760px){.blog-grid,.blog-feature{grid-template-columns:1fr}.blog-card-body{padding:20px}.article-body{font-size:16px}.article-hero h1{font-size:40px}}
+
+
+/* ==========================================================
+   BLOG ARTICLE ISOLATION
+   Articles live inside .inner-page for shared navigation, but
+   must NOT inherit any of the visual geometry of inner hero /
+   portfolio content structures.
+   ========================================================== */
+.article-shell{
+  display:block!important;
+  width:100%!important;
+  max-width:920px!important;
+  margin:0 auto!important;
+  padding:0!important;
+  position:relative!important;
+  float:none!important;
+  clear:both!important;
+  transform:none!important;
+}
+.article-hero{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:34px 0 38px!important;
+  padding:0!important;
+  position:relative!important;
+  float:none!important;
+  clear:both!important;
+  align-items:initial!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  transform:none!important;
+}
+.article-hero .article-kicker{
+  display:inline-block!important;
+  position:static!important;
+}
+.article-hero h1{
+  display:block!important;
+  position:static!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:14px 0!important;
+  padding:0!important;
+  font-family:"Space Grotesk",Inter,system-ui,sans-serif!important;
+  font-size:clamp(42px,6vw,72px)!important;
+  font-weight:700!important;
+  line-height:1.02!important;
+  letter-spacing:-.045em!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  color:var(--theme-text,#f5f7fa)!important;
+  transform:none!important;
+  float:none!important;
+}
+.article-hero .article-deck{
+  display:block!important;
+  position:static!important;
+  width:100%!important;
+  max-width:800px!important;
+  margin:0!important;
+  padding:0!important;
+  font-family:Inter,system-ui,sans-serif!important;
+  font-size:19px!important;
+  line-height:1.75!important;
+  color:var(--theme-muted,#b8bec8)!important;
+  transform:none!important;
+  float:none!important;
+}
+.article-hero .article-tags{
+  display:flex!important;
+  position:static!important;
+  width:100%!important;
+  margin:20px 0!important;
+  padding:0!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  gap:8px!important;
+}
+.article-hero>img{
+  display:block!important;
+  position:static!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+  aspect-ratio:16/7!important;
+  object-fit:cover!important;
+  margin:26px 0 0!important;
+  padding:0!important;
+  border-radius:18px!important;
+  transform:none!important;
+  float:none!important;
+}
+.article-body{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  position:static!important;
+  float:none!important;
+  clear:both!important;
+  transform:none!important;
+  font-family:Inter,system-ui,sans-serif!important;
+  font-size:17px!important;
+  line-height:1.85!important;
+  color:var(--theme-text,#c9ced6)!important;
+}
+.article-body section{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:0!important;
+  margin:0 0 42px!important;
+  padding:0!important;
+  position:static!important;
+  float:none!important;
+  clear:both!important;
+  border:0!important;
+  background:none!important;
+  transform:none!important;
+}
+.article-body h2,.article-body h3{
+  display:block!important;
+  position:static!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin:44px 0 12px!important;
+  padding:0!important;
+  font-family:"Space Grotesk",Inter,system-ui,sans-serif!important;
+  color:var(--theme-text,#f5f7fa)!important;
+  transform:none!important;
+  float:none!important;
+}
+.article-body h2{font-size:30px!important;line-height:1.15!important}
+.article-body h3{font-size:22px!important;line-height:1.25!important}
+.article-body p{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin:0 0 18px!important;
+  padding:0!important;
+  color:var(--theme-muted,#c9ced6)!important;
+}
+.article-body ul,.article-body ol{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  margin:0 0 20px!important;
+  padding-left:22px!important;
+}
+.article-note{
+  display:block!important;
+  position:static!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:28px 0!important;
+  padding:20px 22px!important;
+  transform:none!important;
+  float:none!important;
+}
+.article-back{
+  display:inline-flex!important;
+  position:static!important;
+  margin:10px 0 0!important;
+  transform:none!important;
+  float:none!important;
+}
+/* Article pages intentionally do not use the generic inner hero geometry. */
+.inner-page.portfolio-system>.article-shell{display:block!important}
+@media(max-width:760px){
+  .article-shell{max-width:100%!important}
+  .article-hero h1{font-size:clamp(38px,11vw,56px)!important}
+  .article-hero .article-deck{font-size:16px!important}
+  .article-hero>img{aspect-ratio:16/9!important;border-radius:14px!important}
+  .article-body{font-size:16px!important}
+  .article-body h2{font-size:27px!important}
+}

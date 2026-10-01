@@ -10,8 +10,8 @@ document.querySelectorAll('.skill-node').forEach(n=>n.addEventListener('click',(
 const form=document.getElementById('botForm'),input=document.getElementById('botInput'),messages=document.getElementById('botMessages');
 if(!form||!input||!messages)return;
 const KEY='prince_nova_session_v4';
-const pageNames={about:'About · profile',projects:'Projects · portfolio builds',insights:'Insights · practical notes',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
-const source={about:'about.html',projects:'projects.html',insights:'insights.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
+const pageNames={about:'About · profile',projects:'Projects · portfolio builds',insights:'Insights · practical notes',blog:'Blog · knowledge articles',experience:'Experience · career history',systems:'Systems · build work',skills:'Skills · capability network',recruiter:'Recruiter · hiring view',resume:'Resume · ATS / visual',nova:'Nova · AI intelligence',contact:'Contact · reach Prince'};
+const source={about:'about.html',projects:'projects.html',insights:'insights.html',blog:'blog.html',experience:'experience.html',systems:'systems.html',skills:'skills.html',recruiter:'recruiter.html',resume:'resume.html',nova:'nova.html',contact:'contact.html'};
 const NOVA_IDENTITY={
  name:'Nova',
  canonicalName:'Nova',
@@ -60,6 +60,18 @@ const KNOW={
   {name:'Nova',detail:'A portfolio-native AI interface that explains Prince, his work and the website while maintaining a distinct Nova identity.'},
   {name:'EyeNav / Doc',detail:'An Android accessibility experiment evolving from eye-navigation toward voice-first, hands-free interaction.'},
   {name:'Prince.OS',detail:'The portfolio itself: responsive UI, themes, navigation, SEO, recruiter views and an interactive AI layer.'}
+ ],
+ blog:[
+  {name:'Automation Starts With the Workflow',slug:'automation-starts-with-the-workflow',topic:'Automation · Systems',summary:'Why reliable business automation begins by mapping people, inputs, decisions, failure states and outputs before writing code.'},
+  {name:'Designing Reliable Google Sheets Automation',slug:'reliable-google-sheets-automation',topic:'Sheets · Apps Script',summary:'Practical patterns for validation, controlled writes, retries, caching, locks and recovery in spreadsheet automation.'},
+  {name:'Turning Product Data Into an E-commerce System',slug:'ecommerce-product-data-system',topic:'E-commerce · Data',summary:'How SKU, supplier, quantity, links, images and pricing become a controlled operational system.'},
+  {name:'SEO Is Information Architecture',slug:'seo-is-information-architecture',topic:'SEO · Search',summary:'Why dedicated pages, useful content, internal links and accurate structured data make a site easier to understand.'},
+  {name:'What Makes a Portfolio AI Assistant Useful?',slug:'contextual-ai-on-a-portfolio',topic:'AI · Nova',summary:'A practical look at identity, page awareness, structured knowledge and safe conversational answers.'},
+  {name:'Performance Without Sacrificing Design',slug:'performance-without-sacrificing-design',topic:'Performance · Frontend',summary:'How to keep an animated portfolio responsive by limiting expensive work and protecting the content.'},
+  {name:'Protecting Data in Automated Workflows',slug:'protecting-data-in-automated-workflows',topic:'Data · Reliability',summary:'Practical principles for preventing automation from overwriting fields or creating silent inconsistencies.'},
+  {name:'Why Mobile-First Matters for Interactive Portfolios',slug:'mobile-first-portfolio-systems',topic:'Mobile · UX',summary:'Navigation, motion, content hierarchy and assistant interactions designed for phones as well as desktop.'},
+  {name:'Building a Portfolio as a System, Not a Single Page',slug:'building-a-portfolio-as-a-system',topic:'Portfolio · Product',summary:'Why a professional portfolio benefits from connected pages, consistent navigation and structured content.'},
+  {name:'Reliability Is a Feature',slug:'reliability-is-a-feature',topic:'Reliability · Engineering',summary:'Why retries, validation, fallbacks, backups and graceful degradation belong in everyday digital work.'}
  ],
  insights:[
   {name:'Automation Reliability',detail:'Designing spreadsheet and workflow automation with validation, retries, caching, locks and recovery paths.'},
@@ -113,6 +125,7 @@ function intent(q){
   doc:asks(['eyenav','eye nav','doc android','hey doc','voice assistant','android assistant']),
   menu:asks(['me n u','me nu','menu project','relationship sheet']),
   portfolio:asks(['portfolio','website','resume system','github portfolio','this website','this site']),
+  blog:asks(['blog','article','articles','field notes','knowledge article','read blog','blog post','latest article','this article','these articles']),
   systems:asks(['projects','systems','what did he build','what has he built','builds','what has prince made','automation','what did prince create','what does he build']),
   recruiter:asks(['recruiter','hiring','hire','candidate','job application']),resume:asks(['resume','cv','ats']),
   context:asks(['what section','where am i','current page','which page']),
@@ -138,6 +151,7 @@ function princeAnswer(i,l){
  return null;
 }
 function systemAnswer(i,l){
+ if(i.blog){const list=KNOW.blog.map((x,n)=>(n+1)+'. '+x.name+' — '+x.summary).join(' ');return l==='hi'?'Blog me 10 practical articles hain: '+list:'The Blog contains 10 practical articles: '+list;}
  if(i.multybyte)return l==='hi'?KNOW.systems[0].detail+' Isme SKU/product workflows, purchasing, vendor coordination, inventory aur warehouse-side execution bhi connected hain.':' '+KNOW.systems[0].detail+' It connects SKU/product workflows, purchasing, vendor coordination, inventory and warehouse-side execution.';
  if(i.insights)return l==='hi'?'Insights me automation reliability, e-commerce systems, search visibility aur AI portfolio UX jaise topics cover hote hain.': 'The Insights section covers automation reliability, e-commerce systems, search visibility and AI portfolio UX.';
  if(i.projects)return l==='hi'?'Prince ke main portfolio builds hain: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' '):'Prince’s main portfolio builds are: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' ');

@@ -2,6 +2,125 @@
 (()=>{if(window.__princeProLayer)return;window.__princeProLayer=true;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready');
+
+/* ===== SHORT PAGE LOADER + NAVIGATION TRANSITION =====
+   Home keeps the full 5s cinematic intro. Every other route gets a compact,
+   non-blocking loader so navigation feels intentional without delaying content. */
+const siteRoot='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
+const homeRoute=/\/Prince-Resume\/?(?:index\.html)?$/i.test(location.pathname);
+const shortLoaderHTML='<div class="short-loader-core"><span class="short-loader-ring"></span><span class="short-loader-dot"></span><b>PRINCE.OS</b><small>LOADING PAGE</small></div>';
+const makeShortLoader=()=>{
+  let el=document.getElementById('pageShortLoader');
+  if(el)return el;
+  el=document.createElement('div');
+  el.id='pageShortLoader';
+  el.className='page-short-loader';
+  el.setAttribute('role','status');
+  el.setAttribute('aria-label','Loading page');
+  el.innerHTML=shortLoaderHTML;
+  document.body.insertBefore(el,document.body.firstChild);
+  return el;
+};
+const releaseShortLoader=(el,delay=620)=>{
+  if(!el)return;
+  setTimeout(()=>{el.classList.add('is-done');setTimeout(()=>el.remove(),260)},delay);
+};
+if(!homeRoute){
+  const legacy=document.getElementById('loader');
+  if(legacy)legacy.classList.add('short-page-loader');
+  const pageLoader=makeShortLoader();
+  releaseShortLoader(pageLoader,620);
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href]');
+    if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.hasAttribute('download'))return;
+    const raw=a.getAttribute('href')||'';
+    if(!raw||raw.startsWith('#')||/^(mailto:|tel:|javascript:)/i.test(raw))return;
+    let u;try{u=new URL(raw,location.href)}catch(_){return}
+    if(u.origin!==location.origin)return;
+    const current=new URL(location.href);u.hash='';current.hash='';
+    if(u.href===current.href)return;
+    const next=makeShortLoader();next.classList.remove('is-done');
+  },true);
+}
+
+/* ===== SEO HARDENING — additive, canonical and content-aware =====
+   Existing authored metadata wins when valid; missing/incorrect technical
+   metadata is repaired so every indexable route exposes a consistent signal. */
+(()=>{
+  const robots=document.querySelector('meta[name="robots"]')?.content||'';
+  const noindex=/noindex/i.test(robots);
+  const path=location.pathname;
+  const canonicalPath=path.replace(/\/index\.html$/i,'/');
+  const canonical=siteRoot.replace(/\/$/,'')+(canonicalPath.startsWith('/Prince-Resume')?canonicalPath:'/'+canonicalPath.replace(/^\//,''));
+  const pageTitle=(document.querySelector('h1')?.textContent||document.title||'Prince Dixit Portfolio').replace(/\\s+/g,' ').trim();
+  const existingDesc=document.querySelector('meta[name="description"]')?.content?.trim();
+  const bodyText=(document.querySelector('main')?.innerText||document.body.innerText||'').replace(/\\s+/g,' ').trim();
+  const desc=(existingDesc&&existingDesc.length>=70&&existingDesc.length<=180)?existingDesc:bodyText.slice(0,155).replace(/\\s+\\S*$/,'')||'Prince Dixit portfolio covering e-commerce operations, digital marketing, SEO, automation, practical software systems and AI interfaces.';
+  const ensureMeta=(name,content)=>{
+    let m=document.querySelector('meta[name="'+name+'"]');
+    if(!m){m=document.createElement('meta');m.name=name;document.head.appendChild(m)}
+    if(content)m.content=content;
+  };
+  const ensureProp=(property,content)=>{
+    let m=document.querySelector('meta[property="'+property+'"]');
+    if(!m){m=document.createElement('meta');m.setAttribute('property',property);document.head.appendChild(m)}
+    if(content)m.content=content;
+  };
+  if(!noindex){
+    let c=document.querySelector('link[rel="canonical"]');
+    if(!c){c=document.createElement('link');c.rel='canonical';document.head.appendChild(c)}
+    c.href=canonical;
+  }
+  ensureMeta('description',desc);
+  ensureMeta('author','Prince Dixit');
+  ensureMeta('robots',noindex?'noindex,follow':'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');
+  ensureMeta('theme-color','#08090d');
+  const imageNode=document.querySelector('.article-hero img,main img[alt],img[alt]');
+  const image=imageNode?new URL(imageNode.getAttribute('src'),location.href).href:siteRoot+'images/automation.svg';
+  ensureProp('og:type',document.querySelector('.article-body')?'article':'website');
+  ensureProp('og:title',pageTitle);
+  ensureProp('og:description',desc);
+  ensureProp('og:url',canonical);
+  ensureProp('og:site_name','Prince Dixit Portfolio');
+  ensureProp('og:image',image);
+  ensureProp('og:image:alt',imageNode?.alt||'Prince Dixit portfolio');
+  ensureMeta('twitter:card','summary_large_image');
+  ensureMeta('twitter:title',pageTitle);
+  ensureMeta('twitter:description',desc);
+  ensureMeta('twitter:image',image);
+  ensureMeta('twitter:url',canonical);
+
+  document.documentElement.lang=document.documentElement.lang||'en';
+  document.querySelectorAll('img').forEach((img,i)=>{
+    if(!img.hasAttribute('alt'))img.alt='Prince Dixit portfolio visual';
+    if(!img.hasAttribute('decoding'))img.decoding='async';
+    if(i>0&&!img.hasAttribute('loading'))img.loading='lazy';
+  });
+  document.querySelectorAll('a').forEach(a=>{
+    if(a.target==='_blank'&&!a.rel.includes('noopener'))a.rel=(a.rel+' noopener').trim();
+    if(!a.getAttribute('aria-label')&&!a.textContent.trim()&&a.querySelector('img'))a.setAttribute('aria-label',a.querySelector('img').alt||'Open portfolio link');
+  });
+
+  const addJSON=(key,obj)=>{
+    if(document.querySelector('script[data-seo="'+key+'"]'))return;
+    const s=document.createElement('script');s.type='application/ld+json';s.dataset.seo=key;s.textContent=JSON.stringify(obj);document.head.appendChild(s);
+  };
+  addJSON('person',{
+    '@context':'https://schema.org','@type':'Person','@id':siteRoot+'#prince-dixit',
+    name:'Prince Dixit',url:siteRoot+'about.html',jobTitle:'E-commerce Operations & Digital Automation Professional',
+    description:'E-commerce operations, digital marketing, SEO, business automation and practical software systems.',
+    homeLocation:{'@type':'Place',name:'Delhi, India'},sameAs:['https://github.com/divinegamingblogspot-dot']
+  });
+  addJSON('webpage',{'@context':'https://schema.org','@type':'WebPage','@id':canonical+'#webpage',name:pageTitle,url:canonical,description:desc,isPartOf:{'@type':'WebSite','@id':siteRoot+'#website',name:'Prince Dixit Portfolio',url:siteRoot},about:{'@id':siteRoot+'#prince-dixit'}});
+  const crumbs=[...document.querySelectorAll('.portfolio-breadcrumb a,.portfolio-breadcrumb span')].map((el,i)=>({name:el.textContent.trim(),item:el.href||canonical,position:i+1})).filter(x=>x.name);
+  if(crumbs.length)addJSON('breadcrumbs',{'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':crumbs.map(x=>({'@type':'ListItem',position:x.position,name:x.name,item:x.item}))});
+  const article=document.querySelector('.article-shell');
+  if(article){
+    const headline=article.querySelector('h1')?.textContent.trim()||pageTitle;
+    const articleImage=article.querySelector('img')?new URL(article.querySelector('img').getAttribute('src'),location.href).href:image;
+    addJSON('article',{'@context':'https://schema.org','@type':'BlogPosting','headline':headline,image:[articleImage],author:{'@type':'Person','name':'Prince Dixit','url':siteRoot+'about.html'},mainEntityOfPage:{'@type':'WebPage','@id':canonical},description:desc});
+  }
+})();
 /* Remove an unintended/injected accessibility skip control from the visible Prince.OS UI. */
 const removeUnexpectedSkipControl=()=>{document.querySelectorAll('a,button').forEach(el=>{const t=(el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();if(t==='skip to content'||t==='skip to main content')el.remove()})};
 removeUnexpectedSkipControl();

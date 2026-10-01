@@ -91,3 +91,4 @@ html{scroll-behavior:smooth}.pro-ready{background:var(--pro-bg);color:var(--pro-
   .page-short-loader{transition:none}
   .short-loader-core,.short-loader-ring,.short-loader-dot{animation:none}
 }
+@media(prefers-reduced-motion:reduce){#loader.short-page-loader[aria-hidden="true"]{opacity:0!important;visibility:hidden!important}.page-short-loader.is-done{opacity:0!important;visibility:hidden!important}}

@@ -23,13 +23,13 @@ const makeShortLoader=()=>{
 };
 const releaseShortLoader=(el,delay=620)=>{
   if(!el)return;
-  setTimeout(()=>{el.classList.add('is-done');setTimeout(()=>el.remove(),260)},delay);
+  setTimeout(()=>{el.classList.add('is-done');setTimeout(()=>el.remove(),220)},delay);
 };
 if(!homeRoute){
   const legacy=document.getElementById('loader');
   if(legacy)legacy.classList.add('short-page-loader');
   const pageLoader=makeShortLoader();
-  releaseShortLoader(pageLoader,620);
+  releaseShortLoader(pageLoader,420);
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href]');
     if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.hasAttribute('download'))return;
@@ -135,8 +135,21 @@ if(nav){const links=[...nav.querySelectorAll('a')];const navBase=location.pathna
 /* 13: route transition is entrance-only so existing click handlers remain untouched. */
 const bar=document.createElement('div');bar.className='pro-scrollbar';bar.innerHTML='<i></i>';document.body.appendChild(bar);const fill=bar.firstElementChild;
 const sections=[...document.querySelectorAll('main section')].filter(s=>s.offsetHeight>40),index=document.createElement('div');index.className='pro-section-index';sections.slice(0,12).forEach(()=>index.appendChild(document.createElement('i')));if(sections.length>1)document.body.appendChild(index);const dots=[...index.children];
-const tick=()=>{const max=document.documentElement.scrollHeight-innerHeight;fill.style.width=(max>0?scrollY/max*100:0)+'%';let active=0;sections.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*.48)active=i});dots.forEach((d,i)=>d.classList.toggle('active',i===active))};addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick,{passive:true});tick();
-/* Lightweight 3D: CSS depth only. Existing Home 3D remains untouched; no per-pointer transforms on cards. */
+let ticking=false,activeIndex=-1;
+const tick=()=>{
+  ticking=false;
+  const max=document.documentElement.scrollHeight-innerHeight;
+  fill.style.width=(max>0?scrollY/max*100:0)+'%';
+  if(!sections.length)return;
+  let active=0;
+  const threshold=innerHeight*.48;
+  for(let i=0;i<sections.length;i++){if(sections[i].getBoundingClientRect().top<threshold)active=i;else break}
+  if(active!==activeIndex){activeIndex=active;dots.forEach((d,i)=>d.classList.toggle('active',i===active))}
+};
+const requestTick=()=>{if(!ticking){ticking=true;requestAnimationFrame(tick)}};
+addEventListener('scroll',requestTick,{passive:true});
+addEventListener('resize',requestTick,{passive:true});
+requestTick();
 if(!reduce&&matchMedia('(pointer:fine)').matches){[...document.querySelectorAll('.inner-card,.portfolio-proof article,.portfolio-insights a')].slice(0,8).forEach(el=>el.classList.add('pro-3d'))}
 const page=document.body.dataset.page||'',main=document.querySelector('main');
 if(page==='now'&&main&&!main.querySelector('.pro-now-grid')){const g=document.createElement('section');g.className='pro-now-grid';g.innerHTML='<article class="pro-now-card"><span class="pro-now-stamp">NOW / CURRENT FOCUS</span><h2>Building useful systems, not just pages.</h2><div class="pro-now-list"><div class="pro-now-item"><small>01</small><div><b>Portfolio</b><p>Refining Prince.OS into a clearer portfolio of projects, systems, insights and recruiter context.</p></div></div><div class="pro-now-item"><small>02</small><div><b>Automation</b><p>Exploring dependable e-commerce workflows, product data, image synchronization and operational tooling.</p></div></div><div class="pro-now-item"><small>03</small><div><b>AI</b><p>Developing Nova as a contextual portfolio interface rather than a generic chat box.</p></div></div><div class="pro-now-item"><small>04</small><div><b>Learning</b><p>Connecting digital marketing, SEO, JavaScript and business operations into practical systems.</p></div></div></div></article><aside class="pro-now-card"><span class="pro-now-stamp">STATUS</span><h3>Prince.OS / Online</h3><p>Last updated: September 30, 2026.</p><div class="pro-divider"></div><p>Focus areas</p><div class="pro-chip">E-commerce</div> <div class="pro-chip">Automation</div> <div class="pro-chip">SEO</div> <div class="pro-chip">AI UX</div></aside></section>';main.appendChild(g)}

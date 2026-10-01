@@ -602,9 +602,14 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     };
     document.addEventListener('pointerdown',startAudio,{once:true,passive:true});
     document.addEventListener('keydown',startAudio,{once:true});
-    const stages=['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE'],start=performance.now(),duration=5000;
-    const frame=now=>{const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.round(e*100);if(bar)bar.style.width=v+'%';if(pct)pct.textContent=String(v).padStart(2,'0')+'%';if(status)status.textContent=stages[Math.min(4,Math.floor(p*5))];if(p<1)requestAnimationFrame(frame)};requestAnimationFrame(frame);
-    const finishIntro=()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent='SYSTEM READY';setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none';loader.setAttribute('aria-hidden','true')},260);};setTimeout(finishIntro,5000);
+    const homeIntro=/\/(?:index\.html)?$/i.test(location.pathname);
+    const duration=homeIntro?5000:700;
+    if(!homeIntro)loader.classList.add('short-page-loader');
+    const stages=homeIntro?['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE']:['INITIALIZING PAGE','LOADING CONTENT','READY'];
+    const start=performance.now();
+    const frame=now=>{const p=Math.min(1,(now-start)/duration),e=1-Math.pow(1-p,3),v=Math.round(e*100),idx=Math.min(stages.length-1,Math.floor(p*stages.length));if(bar)bar.style.width=v+'%';if(pct)pct.textContent=String(v).padStart(2,'0')+'%';if(status)status.textContent=stages[idx];if(p<1)requestAnimationFrame(frame)};requestAnimationFrame(frame);
+    const finishIntro=()=>{if(bar)bar.style.width='100%';if(pct)pct.textContent='100%';if(status)status.textContent=homeIntro?'SYSTEM READY':'PAGE READY';setTimeout(()=>{loader.style.opacity='0';loader.style.visibility='hidden';loader.style.pointerEvents='none';loader.setAttribute('aria-hidden','true')},homeIntro?260:120);};
+    setTimeout(finishIntro,duration);
   }
   window.princeProfile=window.princeProfile||{identity:{name:'Prince Dixit',location:'Delhi, India',focus:'E-commerce Operations × Digital × Automation'},contact:{phone:'+91 88878 31825',email:'demonicspirit888@gmail.com',github:'https://github.com/divinegamingblogspot-dot'},experience:[{company:'Multybyte Marketing India',role:'E-commerce Operations',period:'May 2026 — Present'},{company:'Crafts Banaras',role:'E-commerce Manager',period:'March 2025 — 2026'},{company:'Paraxion Management & Consultant Pvt. Ltd.',role:'Telesales Executive',period:'November 2024 — February 2025'},{company:'Unique Threads Sarees',role:'Orders & Inventory Manager',period:'May — October 2024'}],skills:['E-commerce Operations','Google Sheets','Apps Script','JavaScript','SEO','Digital Marketing','AI Workflows','HTML/CSS','APIs'],systems:['Multybyte Automation','Operational Spreadsheet Systems','AI / Software Experiments','ME N U','EyeNav / Doc','Portfolio / Resume System']};
   const hero=document.querySelector('.hero');

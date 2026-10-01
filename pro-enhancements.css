@@ -92,3 +92,16 @@ html{scroll-behavior:smooth}.pro-ready{background:var(--pro-bg);color:var(--pro-
   .short-loader-core,.short-loader-ring,.short-loader-dot{animation:none}
 }
 @media(prefers-reduced-motion:reduce){#loader.short-page-loader[aria-hidden="true"]{opacity:0!important;visibility:hidden!important}.page-short-loader.is-done{opacity:0!important;visibility:hidden!important}}
+
+
+/* ===== SMOOTHNESS PASS =====
+   Keep the visual language, but avoid expensive paint/layout work during scrolling.
+*/
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{overscroll-behavior-x:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.pro-system-rail,.pro-entity-line{contain:layout paint}
+.pro-3d{backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:transform}
+.pro-scrollbar{contain:strict;transform:translateZ(0)}
+.page-short-loader{contain:strict;will-change:opacity;transform:translateZ(0);backface-visibility:hidden}
+.blog-article-page>.portfolio-breadcrumb{display:none!important}
+@media(prefers-reduced-motion:reduce){.pro-3d{will-change:auto}.page-short-loader{will-change:auto}}

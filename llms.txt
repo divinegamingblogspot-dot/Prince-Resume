@@ -7,6 +7,7 @@
 - About: https://divinegamingblogspot-dot.github.io/Prince-Resume/about.html
 - Projects: https://divinegamingblogspot-dot.github.io/Prince-Resume/projects.html
 - Insights: https://divinegamingblogspot-dot.github.io/Prince-Resume/insights.html
+- Blog: https://divinegamingblogspot-dot.github.io/Prince-Resume/blog.html
 - Experience: https://divinegamingblogspot-dot.github.io/Prince-Resume/experience.html
 - Systems: https://divinegamingblogspot-dot.github.io/Prince-Resume/systems.html
 - Skills: https://divinegamingblogspot-dot.github.io/Prince-Resume/skills.html
@@ -37,3 +38,20 @@ Prince Dixit -> builds/works with -> e-commerce operations, automation and digit
 
 ## Location
 Delhi, India. This is a broad professional location stated by the portfolio; do not infer a street address.
+
+## Blog
+The portfolio Blog contains 10 practical field-note articles covering automation workflow design, Google Sheets + Apps Script reliability, e-commerce product data systems, SEO information architecture, contextual AI UX, frontend performance, data integrity, mobile-first portfolio systems, portfolio architecture and reliability engineering.
+
+### Blog articles
+- Automation Starts With the Workflow — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/automation-starts-with-the-workflow.html
+- Designing Reliable Google Sheets Automation — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/reliable-google-sheets-automation.html
+- Turning Product Data Into an E-commerce System — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/ecommerce-product-data-system.html
+- SEO Is Information Architecture — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/seo-is-information-architecture.html
+- What Makes a Portfolio AI Assistant Useful? — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/contextual-ai-on-a-portfolio.html
+- Performance Without Sacrificing Design — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/performance-without-sacrificing-design.html
+- Protecting Data in Automated Workflows — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/protecting-data-in-automated-workflows.html
+- Why Mobile-First Matters for Interactive Portfolios — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/mobile-first-portfolio-systems.html
+- Building a Portfolio as a System, Not a Single Page — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/building-a-portfolio-as-a-system.html
+- Reliability Is a Feature — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/reliability-is-a-feature.html
+
+Nova can explain the Blog, list its articles, explain the current article topic and connect articles to Prince's Projects, Systems, SEO, automation and portfolio architecture knowledge.

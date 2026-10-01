@@ -190,3 +190,18 @@
   .article-body{font-size:16px!important}
   .article-body h2{font-size:27px!important}
 }
+
+
+/* Final article boundary: no shared portfolio/header geometry may leak into articles. */
+.blog-article-page{width:min(1200px,90vw)!important;max-width:1200px!important;margin:0 auto!important;padding:110px 0 90px!important}
+.blog-article-page>.portfolio-breadcrumb{width:100%!important;margin:18px 0 30px!important}
+.blog-article-page>.article-shell{width:min(920px,100%)!important;max-width:920px!important;margin:0 auto!important;padding:0!important}
+.blog-article-page .article-hero{display:block!important;position:relative!important;inset:auto!important;width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;margin:0 0 48px!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;overflow:visible!important;z-index:auto!important;transform:none!important}
+.blog-article-page .article-hero h1{width:100%!important;max-width:none!important;margin:14px 0 18px!important;padding:0!important;font-family:"Space Grotesk",Inter,system-ui,sans-serif!important;font-size:clamp(42px,6vw,72px)!important;line-height:1.02!important;letter-spacing:-.045em!important;font-weight:700!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;color:var(--theme-text,#f5f7fa)!important}
+.blog-article-page .article-hero .article-deck{width:100%!important;max-width:800px!important;margin:0!important;font-size:19px!important;line-height:1.75!important}
+.blog-article-page .article-hero>img{display:block!important;width:100%!important;height:auto!important;max-height:none!important;margin:26px 0 0!important;object-fit:cover!important}
+.blog-article-page .article-body{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;position:static!important;display:block!important;transform:none!important}
+.blog-article-page .article-body section{display:block!important;width:100%!important;max-width:none!important;position:static!important;transform:none!important;float:none!important;clear:both!important}
+/* Hide unintended accessibility skip links without changing the actual navigation. */
+a.skip-link,a.skip-to-content,a.skip-to-main,.skip-link,.skip-to-content,.skip-to-main,[class*="skip-to-content"],[id*="skip-to-content"]{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+@media(max-width:760px){.blog-article-page{width:90vw!important;padding:96px 0 70px!important}.blog-article-page .article-hero h1{font-size:clamp(38px,11vw,56px)!important}.blog-article-page .article-hero .article-deck{font-size:16px!important}}

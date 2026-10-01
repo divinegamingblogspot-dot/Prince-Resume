@@ -2,6 +2,10 @@
 (()=>{if(window.__princeProLayer)return;window.__princeProLayer=true;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready');
+/* Remove an unintended/injected accessibility skip control from the visible Prince.OS UI. */
+const removeUnexpectedSkipControl=()=>{document.querySelectorAll('a,button').forEach(el=>{const t=(el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();if(t==='skip to content'||t==='skip to main content')el.remove()})};
+removeUnexpectedSkipControl();
+new MutationObserver(removeUnexpectedSkipControl).observe(document.documentElement,{childList:true,subtree:true});
 /* Loader safety: content must always win. Keep cinematic intro, but never allow a stuck overlay. */
 const introLoader=document.getElementById('loader');
 if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,5350),{once:true});setTimeout(releaseIntro,6500);}

@@ -1,0 +1,32 @@
+/* Prince.OS 3D object suite — additive, isolated and performance-aware. */
+.os-3d-object{position:relative;margin:0 0 34px;padding:25px;border:1px solid var(--os-line);border-radius:20px;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--os-accent) 7%,transparent),transparent 60%),var(--os-surface);overflow:hidden;contain:layout paint}
+.os-3d-object-head{position:relative;z-index:3}.os-3d-object-head small{color:var(--os-accent);font:800 8px Inter,sans-serif;letter-spacing:.15em}.os-3d-object-head h2{margin:6px 0;color:var(--os-text)}.os-3d-object-head p{max-width:620px;color:var(--os-muted);font-size:11px;line-height:1.6}
+.os-3d-stage{height:330px;display:grid;place-items:center;perspective:1100px;position:relative;touch-action:none}
+.os-3d-stage:before{content:"";position:absolute;width:250px;height:70px;bottom:35px;border-radius:50%;background:radial-gradient(ellipse,color-mix(in srgb,var(--os-accent) 16%,transparent),transparent 70%);filter:blur(10px)}
+.os-3d-hint{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);font:700 8px Inter,sans-serif;letter-spacing:.12em;color:var(--os-muted);opacity:.7;white-space:nowrap}
+.os-dna{width:150px;height:270px;position:relative;transform-style:preserve-3d;animation:osDnaRotate 10s linear infinite}
+.os-dna-strand{position:absolute;inset:0;transform-style:preserve-3d}
+.os-dna-dot{position:absolute;width:9px;height:9px;margin:-4.5px;border-radius:50%;background:var(--os-accent);box-shadow:0 0 12px color-mix(in srgb,var(--os-accent) 55%,transparent);transform-style:preserve-3d}
+.os-dna-rung{position:absolute;height:2px;background:color-mix(in srgb,var(--os-accent) 55%,var(--os-line));transform-origin:left center;border-radius:3px}
+@keyframes osDnaRotate{to{transform:rotateY(360deg)}}
+.os-planet-system{width:290px;height:290px;position:relative;transform-style:preserve-3d;animation:osPlanetDrift 7s ease-in-out infinite}
+.os-planet{position:absolute;left:50%;top:50%;width:112px;height:112px;margin:-56px;border-radius:50%;background:radial-gradient(circle at 30% 27%,#fff, color-mix(in srgb,var(--os-accent) 55%,var(--os-surface-2)) 18%,var(--os-surface-2) 70%);box-shadow:inset -20px -16px 35px rgba(0,0,0,.35),0 0 42px color-mix(in srgb,var(--os-accent) 25%,transparent);transform:translateZ(18px)}
+.os-planet-ring{position:absolute;left:50%;top:50%;width:235px;height:72px;margin:-36px -117px;border:2px solid color-mix(in srgb,var(--os-accent) 65%,var(--os-line));border-radius:50%;transform:rotateX(70deg) rotateZ(-12deg);transform-style:preserve-3d}
+.os-moon-orbit{position:absolute;inset:0;transform-style:preserve-3d;animation:osMoonOrbit 5s linear infinite}
+.os-moon{position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px;border-radius:50%;background:var(--os-text);box-shadow:0 0 16px color-mix(in srgb,var(--os-accent) 45%,transparent);transform:translateX(135px)}
+.os-planet-label{position:absolute;left:50%;top:50%;transform:translate(-50%,92px) translateZ(50px);font:900 9px Inter,sans-serif;letter-spacing:.16em;color:var(--os-text)}
+@keyframes osMoonOrbit{to{transform:rotateY(360deg)}}
+@keyframes osPlanetDrift{50%{transform:translateY(-7px) rotateZ(1deg)}}
+.os-gyro{width:245px;height:245px;position:relative;transform-style:preserve-3d;cursor:grab}
+.os-gyro:active{cursor:grabbing}.os-gyro-core{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff,var(--os-accent) 22%,var(--os-surface-2) 70%);box-shadow:0 0 35px color-mix(in srgb,var(--os-accent) 35%,transparent);transform:translateZ(30px)}
+.os-gyro-ring{position:absolute;left:50%;top:50%;width:210px;height:110px;margin:-55px -105px;border:2px solid color-mix(in srgb,var(--os-accent) 60%,var(--os-line));border-radius:50%;transform-style:preserve-3d}
+.os-gyro-ring.r1{animation:osGyro1 5s linear infinite}.os-gyro-ring.r2{width:170px;height:170px;margin:-85px;animation:osGyro2 6.5s linear infinite;border-color:color-mix(in srgb,var(--os-text) 38%,var(--os-line))}.os-gyro-ring.r3{width:115px;height:210px;margin:-105px -57px;animation:osGyro3 4.3s linear infinite;border-color:color-mix(in srgb,var(--os-accent) 38%,var(--os-line))}
+@keyframes osGyro1{to{transform:rotateX(360deg) rotateZ(20deg)}}@keyframes osGyro2{to{transform:rotateY(360deg) rotateZ(-12deg)}}@keyframes osGyro3{to{transform:rotateZ(360deg) rotateX(18deg)}}
+.os-rubik-wrap{width:245px;height:245px;perspective:900px;display:grid;place-items:center;cursor:grab;touch-action:none}.os-rubik-wrap:active{cursor:grabbing}
+.os-rubik{width:150px;height:150px;position:relative;transform-style:preserve-3d;transform:rotateX(-25deg) rotateY(-35deg);transition:transform .15s ease}
+.os-rubik-face{position:absolute;width:150px;height:150px;padding:5px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border:2px solid #111;background:#111;box-sizing:border-box;backface-visibility:hidden}
+.os-rubik-face span{display:block;border-radius:3px;border:1px solid rgba(255,255,255,.25);background:var(--os-accent);cursor:pointer;transition:transform .2s,filter .2s}.os-rubik-face span:hover{transform:translateZ(5px);filter:brightness(1.2)}
+.os-rubik-face.front{transform:translateZ(75px)}.os-rubik-face.back{transform:rotateY(180deg) translateZ(75px)}.os-rubik-face.right{transform:rotateY(90deg) translateZ(75px)}.os-rubik-face.left{transform:rotateY(-90deg) translateZ(75px)}.os-rubik-face.top{transform:rotateX(90deg) translateZ(75px)}.os-rubik-face.bottom{transform:rotateX(-90deg) translateZ(75px)}
+.os-object-info{margin-top:12px;padding:14px 16px;border-left:2px solid var(--os-accent);background:color-mix(in srgb,var(--os-surface-2) 75%,transparent)}.os-object-info small{color:var(--os-accent);font:800 8px Inter,sans-serif;letter-spacing:.14em}.os-object-info p{margin:5px 0 0;color:var(--os-muted);font-size:11px;line-height:1.6}
+@media(max-width:600px){.os-3d-object{padding:18px}.os-3d-stage{height:300px}.os-dna{transform:scale(.88)}.os-planet-system{transform:scale(.88)}.os-gyro{transform:scale(.88)}.os-rubik-wrap{transform:scale(.9)}}
+@media(prefers-reduced-motion:reduce){.os-dna,.os-planet-system,.os-moon-orbit,.os-gyro-ring{animation:none}.os-rubik{transition:none}}

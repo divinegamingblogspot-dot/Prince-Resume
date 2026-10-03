@@ -394,3 +394,53 @@ body{
   .system-flow-card:hover,
   .system-3d-node:hover{transform:none}
 }
+
+/* Professional UI pass — hierarchy, restraint, consistency */
+:root{
+  --pro-content-width:1180px;
+  --pro-radius:12px;
+  --pro-radius-sm:9px;
+  --pro-shadow:0 8px 24px rgba(0,0,0,.055);
+  --pro-shadow-hover:0 12px 30px rgba(0,0,0,.08);
+}
+main{isolation:isolate}
+.inner-section{max-width:var(--pro-content-width);margin-left:auto;margin-right:auto}
+.inner-section>h2,
+.inner-section>h3{letter-spacing:-.025em}
+.inner-section p{max-width:72ch}
+.os-3d-object,.skill-proof-panel,.skill-constellation,.system-3d-lab{
+  border:1px solid color-mix(in srgb,var(--os-line) 88%,transparent);
+  border-radius:var(--pro-radius);
+  box-shadow:var(--pro-shadow);
+}
+.os-3d-object:hover,.skill-proof-panel:hover,.skill-constellation:hover,.system-3d-lab:hover{
+  box-shadow:var(--pro-shadow-hover);
+}
+.skill-proof-node,.system-flow-card,.system-3d-node{
+  border-radius:var(--pro-radius-sm);
+  transition:transform .2s ease,border-color .2s ease,background-color .2s ease;
+}
+.skill-proof-node:hover,.system-flow-card:hover,.system-3d-node:hover{
+  transform:translateY(-2px);
+}
+.os-3d-object-head small,.skill-proof-panel small,.system-flow-card small{
+  font-size:9px;
+  letter-spacing:.14em;
+}
+.os-3d-object-head h2{font-weight:650}
+.os-3d-object-head p,.skill-proof-panel p,.system-flow-card p{
+  line-height:1.7;
+  color:var(--os-muted);
+}
+.portfolio-entity-note{
+  max-width:var(--pro-content-width);
+  margin-left:auto;
+  margin-right:auto;
+}
+@media(max-width:760px){
+  .inner-section{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .skill-proof-node,.system-flow-card,.system-3d-node{transition:none}
+  .skill-proof-node:hover,.system-flow-card:hover,.system-3d-node:hover{transform:none}
+}

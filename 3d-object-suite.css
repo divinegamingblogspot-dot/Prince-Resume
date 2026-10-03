@@ -30,3 +30,6 @@
 .os-object-info{margin-top:12px;padding:14px 16px;border-left:2px solid var(--os-accent);background:color-mix(in srgb,var(--os-surface-2) 75%,transparent)}.os-object-info small{color:var(--os-accent);font:800 8px Inter,sans-serif;letter-spacing:.14em}.os-object-info p{margin:5px 0 0;color:var(--os-muted);font-size:11px;line-height:1.6}
 @media(max-width:600px){.os-3d-object{padding:18px}.os-3d-stage{height:300px}.os-dna{transform:scale(.88)}.os-planet-system{transform:scale(.88)}.os-gyro{transform:scale(.88)}.os-rubik-wrap{transform:scale(.9)}}
 @media(prefers-reduced-motion:reduce){.os-dna,.os-planet-system,.os-moon-orbit,.os-gyro-ring{animation:none}.os-rubik{transition:none}}
+
+/* Rubik-style face colors keep the object visually recognizable as a cube puzzle. */
+.os-rubik-face.front span{background:#f7f7f7}.os-rubik-face.back span{background:#f1d84b}.os-rubik-face.right span{background:#d93a35}.os-rubik-face.left span{background:#f28c28}.os-rubik-face.top span{background:#2f78d0}.os-rubik-face.bottom span{background:#35a95a}

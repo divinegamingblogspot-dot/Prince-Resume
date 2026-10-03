@@ -141,6 +141,6 @@ function rubik(){
 }
 function tiltPlanet(){const s=q('.os-planet-system');if(!s||reduce)return;let raf=0;s.parentElement.addEventListener('pointermove',e=>{const r=s.parentElement.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>s.style.transform='rotateX('+(-y*7)+'deg) rotateY('+(x*9)+'deg)')},{passive:true});s.parentElement.addEventListener('pointerleave',()=>s.style.transform='',{passive:true})}
 function dragGyro(){const root=q('.os-gyro'),stage=q('[data-gyro-stage]');if(!root||!stage)return;let down=false,sx=0,sy=0,rx=0,ry=0;stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;stage.setPointerCapture?.(e.pointerId)});stage.addEventListener('pointermove',e=>{if(!down)return;ry+=(e.clientX-sx)*.35;rx-=(e.clientY-sy)*.35;sx=e.clientX;sy=e.clientY;root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'});stage.addEventListener('pointerup',()=>down=false);stage.addEventListener('pointercancel',()=>down=false)}
-function init(){tiltPlanet();dragGyro();rubik()}
+function init(){try{tiltPlanet()}catch(e){}try{dragGyro()}catch(e){}try{rubik()}catch(e){document.documentElement.classList.add('rubik-init-fallback')}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

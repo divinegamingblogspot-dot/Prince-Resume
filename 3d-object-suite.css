@@ -25,11 +25,12 @@
 .os-rubik-wrap{width:245px;height:245px;perspective:900px;display:grid;place-items:center;cursor:grab;touch-action:none}.os-rubik-wrap:active{cursor:grabbing}
 .os-rubik{width:150px;height:150px;position:relative;transform-style:preserve-3d;transform:rotateX(-25deg) rotateY(-35deg);transition:transform .15s ease}
 .os-rubik-face{position:absolute;width:150px;height:150px;padding:5px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border:2px solid #111;background:#111;box-sizing:border-box;backface-visibility:hidden}
-.os-rubik-face span{display:block;border-radius:3px;border:1px solid rgba(255,255,255,.25);background:var(--os-accent);cursor:pointer;transition:transform .2s,filter .2s}.os-rubik-face span:hover{transform:translateZ(5px);filter:brightness(1.2)}
+.os-rubik-face span{display:block;border-radius:3px;border:1px solid rgba(255,255,255,.25);background:var(--os-accent);cursor:pointer;transition:filter .2s}.os-rubik-face span:hover{filter:brightness(1.2)}
 .os-rubik-face.front{transform:translateZ(75px)}.os-rubik-face.back{transform:rotateY(180deg) translateZ(75px)}.os-rubik-face.right{transform:rotateY(90deg) translateZ(75px)}.os-rubik-face.left{transform:rotateY(-90deg) translateZ(75px)}.os-rubik-face.top{transform:rotateX(90deg) translateZ(75px)}.os-rubik-face.bottom{transform:rotateX(-90deg) translateZ(75px)}
 .os-object-info{margin-top:12px;padding:14px 16px;border-left:2px solid var(--os-accent);background:color-mix(in srgb,var(--os-surface-2) 75%,transparent)}.os-object-info small{color:var(--os-accent);font:800 8px Inter,sans-serif;letter-spacing:.14em}.os-object-info p{margin:5px 0 0;color:var(--os-muted);font-size:11px;line-height:1.6}
 @media(max-width:600px){.os-3d-object{padding:18px}.os-3d-stage{height:300px}.os-dna{transform:scale(.88)}.os-planet-system{transform:scale(.88)}.os-gyro{transform:scale(.88)}.os-rubik-wrap{transform:scale(.9)}}
-@media(prefers-reduced-motion:reduce){.os-dna,.os-planet-system,.os-moon-orbit,.os-gyro-ring{animation:none}.os-rubik{transition:none}}
+@media(prefers-reduced-motion:reduce){.os-planet-system,.os-moon-orbit,.os-gyro-ring{animation:none}.os-rubik{transition:none}}
 
 /* Rubik-style face colors keep the object visually recognizable as a cube puzzle. */
 .os-rubik-face.front span{background:#f7f7f7}.os-rubik-face.back span{background:#f1d84b}.os-rubik-face.right span{background:#d93a35}.os-rubik-face.left span{background:#f28c28}.os-rubik-face.top span{background:#2f78d0}.os-rubik-face.bottom span{background:#35a95a}
+\n.os-rubik-controls{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px auto 0;max-width:360px}.os-rubik-controls button{min-width:31px;height:28px;padding:0 8px;border:1px solid var(--os-line);border-radius:8px;background:var(--os-surface-2);color:var(--os-text);font:800 9px Inter,sans-serif;cursor:pointer}.os-rubik-controls button:hover{border-color:var(--os-accent);color:var(--os-accent);transform:translateY(-1px)}\n

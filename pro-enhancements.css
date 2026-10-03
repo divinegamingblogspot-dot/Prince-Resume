@@ -274,3 +274,66 @@ html,body{max-width:100%;overflow-x:hidden}
   .pro-upgrade-magnetic{transition:none!important}
   .pro-article-progress{box-shadow:none}
 }
+
+/* Shared component theme bridge — keeps existing layouts intact while making the selected theme global. */
+body[data-prince-theme] .inner-card,
+body[data-prince-theme] .job,
+body[data-prince-theme] .project,
+body[data-prince-theme] .skill,
+body[data-prince-theme] .system-card,
+body[data-prince-theme] .range-card,
+body[data-prince-theme] .training-card,
+body[data-prince-theme] .build-grid>div,
+body[data-prince-theme] .edu-grid>div,
+body[data-prince-theme] .resume-sheet,
+body[data-prince-theme] .resume-quickbar,
+body[data-prince-theme] .article-note,
+body[data-prince-theme] .article-body blockquote{
+  background:var(--os-surface)!important;
+  border-color:var(--os-line)!important;
+  color:var(--os-text)!important;
+}
+body[data-prince-theme] .inner-card p,
+body[data-prince-theme] .job p,
+body[data-prince-theme] .project p,
+body[data-prince-theme] .skill p,
+body[data-prince-theme] .system-card p,
+body[data-prince-theme] .range-card p,
+body[data-prince-theme] .training-card p,
+body[data-prince-theme] .edu-grid>div p,
+body[data-prince-theme] .article-note,
+body[data-prince-theme] .article-body blockquote{
+  color:var(--os-muted)!important;
+}
+body[data-prince-theme] .inner-top,
+body[data-prince-theme] header,
+body[data-prince-theme] footer,
+body[data-prince-theme] .page-footer{
+  border-color:var(--os-line)!important;
+}
+body[data-prince-theme] .inner-nav a,
+body[data-prince-theme] header nav a,
+body[data-prince-theme] .inner-logo,
+body[data-prince-theme] .logo,
+body[data-prince-theme] footer,
+body[data-prince-theme] .page-footer{
+  color:var(--os-text);
+}
+body[data-prince-theme] .inner-nav a:hover,
+body[data-prince-theme] header nav a:hover,
+body[data-prince-theme] .source-link,
+body[data-prince-theme] .inner-cta,
+body[data-prince-theme] .btn{
+  color:var(--os-accent)!important;
+}
+body[data-prince-theme] .bot-chat,
+body[data-prince-theme] .bot-chat-head,
+body[data-prince-theme] .bot-chat-input{
+  background:var(--os-surface)!important;
+  border-color:var(--os-line)!important;
+  color:var(--os-text)!important;
+}
+body[data-prince-theme] .bot-msg.bot{background:var(--os-surface-2)!important;color:var(--os-text)!important}
+body[data-prince-theme] .bot-msg.user{background:var(--os-accent)!important;color:var(--os-bg)!important}
+body[data-prince-theme] .bot-chat-input input{background:var(--os-surface-2)!important;color:var(--os-text)!important;border-color:var(--os-line)!important}
+body[data-page] .spotlight{display:none!important}

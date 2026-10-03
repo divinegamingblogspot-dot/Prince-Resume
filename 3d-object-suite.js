@@ -18,7 +18,11 @@ function dna(){
  void main(){vec3 N=normalize(vN),L=normalize(vec3(-.48,.72,.96)),V=normalize(-vP);float d=max(dot(N,L),0.0);float rim=pow(1.0-max(dot(N,V),0.0),2.0);float spec=pow(max(dot(reflect(-L,N),V),0.0),42.0);vec3 c=uColor*(.22+.78*d)+vec3(1.0)*(.10*rim+.28*spec);gl_FragColor=vec4(c,1.0);}
  `;
  const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s};
- const prog=gl.createProgram();gl.attachShader(prog,compile(gl.VERTEX_SHADER,vs));gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);gl.useProgram(prog);
+ const vert=compile(gl.VERTEX_SHADER,vs),frag=compile(gl.FRAGMENT_SHADER,fs);
+ if(!gl.getShaderParameter(vert,gl.COMPILE_STATUS)||!gl.getShaderParameter(frag,gl.COMPILE_STATUS)){host.classList.add('dna-fallback');host.innerHTML='<div class="dna-fallback-model" aria-hidden="true"><span class="dna-fb-strand blue"></span><span class="dna-fb-strand red"></span><span class="dna-fb-rungs"></span></div>';return}
+ const prog=gl.createProgram();gl.attachShader(prog,vert);gl.attachShader(prog,frag);gl.linkProgram(prog);
+ if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){host.classList.add('dna-fallback');host.innerHTML='<div class="dna-fallback-model" aria-hidden="true"><span class="dna-fb-strand blue"></span><span class="dna-fb-strand red"></span><span class="dna-fb-rungs"></span></div>';return}
+ gl.useProgram(prog);
  const ap=gl.getAttribLocation(prog,'aPos'),an=gl.getAttribLocation(prog,'aNormal'),um=gl.getUniformLocation(prog,'uM'),up=gl.getUniformLocation(prog,'uP'),uc=gl.getUniformLocation(prog,'uColor');
  const meshes=[];
  // Scientific proportions: B-DNA has ~10.5 base pairs/turn, ~3.4 Å rise/pair, ~20 Å diameter.

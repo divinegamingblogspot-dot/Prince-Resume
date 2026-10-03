@@ -5,7 +5,7 @@ const q=(s,r=document)=>r.querySelector(s);
 const qa=(s,r=document)=>[...r.querySelectorAll(s)];
 
 function dna(){
- const host=q('.os-dna');if(!host)return;host.innerHTML='';
+ const host=q('.os-dna');if(!host)return;const staticFallback=host.querySelector('.dna-static');if(staticFallback)staticFallback.style.display='none';host.querySelector('.os-dna-webgl')?.remove();
  const canvas=document.createElement('canvas');canvas.className='os-dna-webgl';canvas.setAttribute('aria-label','Interactive scientific 3D DNA double helix');host.appendChild(canvas);
  const gl=canvas.getContext('webgl',{antialias:true,alpha:true});
  if(!gl){host.classList.add('dna-fallback');return}

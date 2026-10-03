@@ -466,8 +466,8 @@ qsa('footer').forEach(footer=>{
 
 /* ---------- 19 / smarter image handling ---------- */
 qsa('img').forEach(img=>{
-  img.style.contentVisibility='auto';
-  if(img.closest('.article-hero'))img.style.contentVisibility='visible';
+  if(img.closest('.article-hero'))img.setAttribute('fetchpriority','high');
+  img.decoding='async';
 });
 
 /* ---------- 20 / connected portfolio graph ---------- */

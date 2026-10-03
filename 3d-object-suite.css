@@ -30,3 +30,8 @@
 
 to{transform:rotateY(360deg)}}
 
+
+/* Guaranteed visible Rubik fallback if the interaction script is delayed or unavailable. */
+.os-rubik-face{position:absolute;width:153px;height:153px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:4px;padding:4px;background:#111;border:2px solid #050505;border-radius:8px;backface-visibility:hidden}
+.os-rubik-face span{display:block;border-radius:4px;border:1px solid rgba(0,0,0,.28);box-shadow:inset 0 1px 2px rgba(255,255,255,.2)}
+.os-rubik-face.front{transform:translateZ(76.5px)}.os-rubik-face.back{transform:rotateY(180deg) translateZ(76.5px)}.os-rubik-face.right{transform:rotateY(90deg) translateZ(76.5px)}.os-rubik-face.left{transform:rotateY(-90deg) translateZ(76.5px)}.os-rubik-face.top{transform:rotateX(90deg) translateZ(76.5px)}.os-rubik-face.bottom{transform:rotateX(-90deg) translateZ(76.5px)}

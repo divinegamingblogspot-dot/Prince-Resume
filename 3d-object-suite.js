@@ -62,7 +62,7 @@ function dna(){
  const up=()=>S.down=false;canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
 }
 function dragDna(){
- const root=q('.os-dna'),stage=root?.parentElement;if(!root||!stage)return;
+ const root=q('.os-dna'),stage=root?.parentElement;if(!root||!stage||root.querySelector('.os-dna-webgl'))return;
  let down=false,sx=0,sy=0,ry=0,rx=0,vx=.004,vy=0,last=0;
  const apply=()=>root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'rad)';
  const tick=()=>{if(!down&&!reduce){ry+=.004+vx;vx*=.985;rx+=vy;vy*=.93;rx=Math.max(-.22,Math.min(.22,rx));apply()}requestAnimationFrame(tick)};requestAnimationFrame(tick);

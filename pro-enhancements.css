@@ -337,3 +337,60 @@ body[data-prince-theme] .bot-msg.bot{background:var(--os-surface-2)!important;co
 body[data-prince-theme] .bot-msg.user{background:var(--os-accent)!important;color:var(--os-bg)!important}
 body[data-prince-theme] .bot-chat-input input{background:var(--os-surface-2)!important;color:var(--os-text)!important;border-color:var(--os-line)!important}
 body[data-page] .spotlight{display:none!important}
+
+/* Prince.OS — calm visual refinement: preserve layout/functions, reduce visual noise */
+:root{
+  --os-radius-soft:14px;
+  --os-shadow-soft:0 10px 30px rgba(0,0,0,.08);
+}
+body{
+  text-rendering:optimizeLegibility;
+}
+.os-system-rail,
+.pro-system-rail{
+  box-shadow:none;
+}
+.pro-system-rail{
+  background:color-mix(in srgb,var(--os-surface) 94%,transparent);
+  border-color:color-mix(in srgb,var(--os-line) 78%,transparent);
+}
+.pro-entity-line{
+  opacity:.72;
+}
+.os-3d-object,
+.skill-proof-panel,
+.skill-constellation,
+.system-3d-lab{
+  box-shadow:var(--os-shadow-soft);
+}
+.os-3d-object{
+  border-radius:var(--os-radius-soft);
+}
+.skill-proof-node,
+.system-flow-card,
+.system-3d-node{
+  box-shadow:none;
+  filter:none;
+}
+.skill-proof-node:hover,
+.system-flow-card:hover,
+.system-3d-node:hover{
+  transform:translateY(-2px);
+}
+.os-3d-object-head h2,
+.skill-proof-panel h3{
+  letter-spacing:-.015em;
+}
+.os-3d-object-head p,
+.skill-proof-panel p,
+.system-flow-card p{
+  opacity:.82;
+}
+.page-short-loader{
+  box-shadow:none;
+}
+@media(prefers-reduced-motion:reduce){
+  .skill-proof-node:hover,
+  .system-flow-card:hover,
+  .system-3d-node:hover{transform:none}
+}

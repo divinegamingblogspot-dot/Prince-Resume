@@ -5,19 +5,46 @@ const q=(s,r=document)=>r.querySelector(s);
 const qa=(s,r=document)=>[...r.querySelectorAll(s)];
 
 function dna(){
- const root=q('.os-dna');if(!root)return;root.innerHTML='';
- const n=96,h=286,cx=80,amp=47,turns=2.35,step=h/(n-1),strands=[[],[]];
- for(let i=0;i<n;i++){const y=8+i*step,a=i/(n-1)*Math.PI*2*turns-Math.PI/2;
-   strands[0].push([cx+Math.cos(a)*amp,y,Math.sin(a)*amp]);
-   strands[1].push([cx+Math.cos(a+Math.PI)*amp,y,Math.sin(a+Math.PI)*amp]);
+ const host=q('.os-dna');if(!host)return;
+ host.innerHTML='';
+ const canvas=document.createElement('canvas');canvas.className='os-dna-canvas';canvas.setAttribute('aria-label','Interactive 3D DNA double helix');host.appendChild(canvas);
+ const ctx=canvas.getContext('2d',{alpha:true});
+ const state={ry:0,rx:-0.08,vx:.004,vy:0,down:false,sx:0,sy:0,last:0};
+ const points=[];
+ const N=260,H=286,AMP=55,TURNS=2.35;
+ for(let i=0;i<N;i++){const t=i/(N-1),a=t*Math.PI*2*TURNS-Math.PI/2,y=(t-.5)*H;
+   points.push({a,y,x:Math.cos(a)*AMP,z:Math.sin(a)*AMP});
+   points.push({a:a+Math.PI,y,x:Math.cos(a+Math.PI)*AMP,z:Math.sin(a+Math.PI)*AMP});
  }
- const tube=(a,b,cls)=>{
-   const dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],len=Math.hypot(dx,dy,dz),mid=[(a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2],horiz=Math.hypot(dx,dz);
-   const el=document.createElement('i');el.className=cls;el.style.left=mid[0]+'px';el.style.top=mid[1]+'px';el.style.width=(len+2)+'px';
-   el.style.transform='translate3d(0,0,'+mid[2]+'px) rotateY('+(-Math.atan2(dz,dx)*180/Math.PI)+'deg) rotateZ('+Math.atan2(dy,horiz)*180/Math.PI+'deg)';return el;
+ const resize=()=>{const r=host.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(r.width*d));canvas.height=Math.max(1,Math.round(r.height*d));canvas.style.width=r.width+'px';canvas.style.height=r.height+'px';ctx.setTransform(d,0,0,d,0,0)};
+ new ResizeObserver(resize).observe(host);resize();
+ const project=(p)=>{
+   let x=p.x,y=p.y,z=p.z;
+   const cy=Math.cos(state.ry),sy=Math.sin(state.ry);let X=x*cy-z*sy,Z=x*sy+z*cy;
+   const cx=Math.cos(state.rx),sx=Math.sin(state.rx);let Y=y*cx-Z*sx;Z=y*sx+Z*cx;
+   const scale=1/(1+Z/700),r=host.clientWidth/2;
+   return {x:r+X*scale,y:host.clientHeight/2+Y*scale,z:Z,scale};
  };
- strands.forEach((pts,s)=>{for(let i=0;i<n-1;i++)root.appendChild(tube(pts[i],pts[i+1],'os-dna-tube '+(s?'red':'blue')))});
- for(let i=3;i<n-3;i+=5){const r=tube(strands[0][i],strands[1][i],'os-dna-rung');r.dataset.pair=['A—T','T—A','C—G','G—C'][i%4];root.appendChild(r)}
+ const tubeGradient=(p1,p2,red)=>{const g=ctx.createLinearGradient(p1.x,p1.y,p2.x,p2.y);if(red){g.addColorStop(0,'#4d0508');g.addColorStop(.28,'#b80d15');g.addColorStop(.52,'#ff3440');g.addColorStop(.72,'#d3151e');g.addColorStop(1,'#52060a')}else{g.addColorStop(0,'#021b50');g.addColorStop(.28,'#0647c7');g.addColorStop(.52,'#1680ff');g.addColorStop(.72,'#0754d6');g.addColorStop(1,'#031d58')}return g};
+ const draw=()=>{
+   const w=host.clientWidth,h=host.clientHeight;ctx.clearRect(0,0,w,h);
+   const glow=ctx.createRadialGradient(w/2,h/2,20,w/2,h/2,170);glow.addColorStop(0,'rgba(80,140,255,.12)');glow.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+   const A=[],B=[];for(let i=0;i<N;i++){A.push(project(points[i*2]));B.push(project(points[i*2+1]));}
+   const segments=[];
+   for(let i=0;i<N-1;i++){segments.push({a:A[i],b:A[i+1],red:false});segments.push({a:B[i],b:B[i+1],red:true});}
+   for(let i=0;i<N-1;i+=8)segments.push({a:A[i],b:B[i],red:null});
+   segments.sort((u,v)=>((u.a.z+u.b.z)/2)-((v.a.z+v.b.z)/2));
+   segments.forEach(s=>{
+     const p=s.a,q=s.b;
+     if(s.red===null){ctx.save();ctx.lineCap='round';ctx.lineWidth=6;const g=ctx.createLinearGradient(p.x,p.y,q.x,q.y);g.addColorStop(0,'rgba(225,235,245,.75)');g.addColorStop(.5,'rgba(255,255,255,.95)');g.addColorStop(1,'rgba(130,145,165,.65)');ctx.strokeStyle=g;ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();ctx.restore();return}
+     const alpha=Math.max(.38,Math.min(1,.58+((p.z+q.z)/2+AMP)/AMP*.22));ctx.save();ctx.globalAlpha=alpha;ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=20;ctx.strokeStyle=tubeGradient(p,q,s.red);ctx.shadowColor=s.red?'rgba(130,0,8,.42)':'rgba(0,60,170,.42)';ctx.shadowBlur=9;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
+     ctx.globalAlpha=Math.min(1,alpha*.55);ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.5)';ctx.shadowBlur=0;ctx.beginPath();ctx.moveTo(p.x,p.y-2);ctx.lineTo(q.x,q.y-2);ctx.stroke();ctx.restore();
+   });
+ };
+ const tick=()=>{if(!state.down&&!reduce){state.ry+=.0038+state.vx;state.vx*=.985;state.rx+=state.vy;state.vy*=.93;state.rx=Math.max(-.24,Math.min(.24,state.rx))}draw();requestAnimationFrame(tick)};requestAnimationFrame(tick);
+ const down=e=>{state.down=true;state.sx=e.clientX;state.sy=e.clientY;state.last=performance.now();state.vx=0;state.vy=0;host.setPointerCapture?.(e.pointerId)};
+ const move=e=>{if(!state.down)return;const now=performance.now(),dt=Math.max(8,now-state.last),dx=e.clientX-state.sx,dy=e.clientY-state.sy;state.vx=dx/dt*.0035;state.vy=-dy/dt*.0008;state.ry+=dx*.010;state.rx=Math.max(-.24,Math.min(.24,state.rx-dy*.0018));state.sx=e.clientX;state.sy=e.clientY;state.last=now};
+ host.addEventListener('pointerdown',down);host.addEventListener('pointermove',move);host.addEventListener('pointerup',()=>state.down=false);host.addEventListener('pointercancel',()=>state.down=false);
 }
 function dragDna(){
  const root=q('.os-dna'),stage=root?.parentElement;if(!root||!stage)return;
@@ -49,7 +76,7 @@ function rubik(){
  const controls=document.createElement('div');controls.className='os-rubik-controls';
  const status=document.createElement('span');status.className='os-rubik-move-status';status.textContent='TAP A ROW / COLUMN';controls.appendChild(status);
  const setView=()=>cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
- const render=()=>{cube.innerHTML='';cubies.forEach((c,i)=>cube.appendChild(cubieMarkup(c,i)));setView();highlight()};
+ const render=()=>{cube.innerHTML='';cubies.forEach(c=>cube.appendChild(cubieMarkup(c,c.p.join(','))));setView();highlight()};
  const axisIndex={x:0,y:1,z:2};
  const selectionFor=(face,c)=>{
    const p=c.p, maps={
@@ -82,12 +109,12 @@ function rubik(){
  addButton('RESET','Return to solved cube',()=>{if(busy)return;cubies=buildCubies();selected=null;render();status.textContent='SOLVED'});
  stage.parentElement.appendChild(controls);
  const stickerStart=e=>{if(busy)return;const sticker=e.target.closest('.os-rubik-sticker'),cubieEl=sticker?.closest('.os-rubik-cubie');if(!sticker||!cubieEl)return;
-   const id=cubieEl.dataset.id,idx=cubies.findIndex(c=>c.p.join(',')===id),c=cubies[idx];selected=selectionFor(sticker.dataset.face,c);selected.id=id;highlight();gesture={x:e.clientX,y:e.clientY,started:false,face:sticker.dataset.face,c};
+   const id=cubieEl.dataset.id,idx=cubies.findIndex(c=>c.p.join(',')===id),c=cubies[idx];if(!c)return;selected=selectionFor(sticker.dataset.face,c);selected.id=id;highlight();gesture={x:e.clientX,y:e.clientY,started:false,face:sticker.dataset.face,c};
    wrap.setPointerCapture?.(e.pointerId);e.stopPropagation();
  };
  wrap.addEventListener('pointerdown',e=>{if(e.target.closest('.os-rubik-sticker')){stickerStart(e);return}gesture={x:e.clientX,y:e.clientY,started:false};wrap.setPointerCapture?.(e.pointerId)});
  wrap.addEventListener('pointermove',e=>{if(!gesture||busy)return;const dx=e.clientX-gesture.x,dy=e.clientY-gesture.y;if(!gesture.started&&Math.hypot(dx,dy)>9){gesture.started=true;
-   if(gesture.c){const sel=selected,vertical=Math.abs(dy)>Math.abs(dx),axis=vertical?sel.colAxis:sel.rowAxis,side=vertical?sel.colSide:sel.rowSide,dir=vertical?(dy<0?1:-1):(dx>0?1:-1);animateLayer(axis,side,dir,axis.toUpperCase()+' SLICE');}
+   if(gesture.c){const sel=selected,vertical=Math.abs(dy)>Math.abs(dx),axis=vertical?sel.colAxis:sel.rowAxis,side=vertical?sel.colSide:sel.rowSide,dir=vertical?(dy<0?1:-1):(dx>0?1:-1);animateLayer(axis,side,dir,(vertical?'COLUMN':'ROW')+' ROTATED');}
    else{rx-=dy*.5;ry+=dx*.5;rx=Math.max(-75,Math.min(75,rx));setView()}
  }else if(gesture.started&&!gesture.c){rx-=dy*.5;ry+=dx*.5;rx=Math.max(-75,Math.min(75,rx));setView();gesture.x=e.clientX;gesture.y=e.clientY}});
  const finishGesture=()=>{gesture=null};wrap.addEventListener('pointerup',finishGesture);wrap.addEventListener('pointercancel',finishGesture);

@@ -1,15 +1,101 @@
 /* Prince.OS 3D object suite — physical-feeling interactions. */
 (()=>{if(window.__prince3DObjects)return;window.__prince3DObjects=true;
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
-function dna(){const root=q('.os-dna');if(!root)return;root.innerHTML='';const n=42,h=260,cx=75,amp=45,turns=2.15;for(let strand=0;strand<2;strand++){const pts=[];for(let i=0;i<n;i++){const y=10+i*(h/(n-1)),ang=i/(n-1)*Math.PI*2*turns+strand*Math.PI;pts.push([cx+Math.cos(ang)*amp,y,Math.sin(ang)*amp])}for(let i=0;i<n-1;i++){const p=pts[i],q2=pts[i+1],dx=q2[0]-p[0],dy=q2[1]-p[1],dz=q2[2]-p[2],len=Math.hypot(dx,dy,dz),midX=(p[0]+q2[0])/2,midY=(p[1]+q2[1])/2,midZ=(p[2]+q2[2])/2,horiz=Math.hypot(dx,dz);const tube=document.createElement('i');tube.className='os-dna-tube';tube.dataset.strand=strand?'red':'blue';tube.style.left=midX+'px';tube.style.top=midY+'px';tube.style.width=len+'px';tube.style.transform='translateZ('+midZ+'px) rotateY('+Math.atan2(dz,dx)*180/Math.PI+'deg) rotateZ('+Math.atan2(dy,horiz)*180/Math.PI+'deg)';root.appendChild(tube)}if(strand===0){for(let i=0;i<n-1;i+=2){const p=pts[i],q2=[];const ang=i/(n-1)*Math.PI*2*turns+Math.PI;const nextAng=(i+1)/(n-1)*Math.PI*2*turns+Math.PI;q2.push(cx+Math.cos(ang)*amp,(10+i*(h/(n-1))),Math.sin(ang)*amp);const dx=q2[0]-p[0],dy=q2[1]-p[1],dz=q2[2]-p[2],len=Math.hypot(dx,dy,dz),rung=document.createElement('i');rung.className='os-dna-rung';rung.style.left=(p[0]+q2[0])/2+'px';rung.style.top=(p[1]+q2[1])/2+'px';rung.style.width=len+'px';rung.style.transform='translateZ('+((p[2]+q2[2])/2)+'px) rotateY('+Math.atan2(dz,dx)*180/Math.PI+'deg) rotateZ('+Math.atan2(dy,Math.hypot(dx,dz))*180/Math.PI+'deg)';root.appendChild(rung)}}}}
-function dragDna(){const root=q('.os-dna'),stage=root?.parentElement?.parentElement;if(!root||!stage)return;let down=false,sx=0,sy=0,ry=0,rx=0,vy=0,vx=0,last=performance.now();const apply=()=>root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';if(!reduce){let raf;const tick=()=>{if(!down){ry+=vx;vx*=.965;rx+=vy;vy*=.93;apply()}raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;last=performance.now();root.style.animationPlayState='paused';stage.setPointerCapture?.(e.pointerId)});stage.addEventListener('pointermove',e=>{if(!down)return;const now=performance.now(),dt=Math.max(8,now-last);vx=(e.clientX-sx)/dt*.45;vy=-(e.clientY-sy)/dt*.18;ry+=(e.clientX-sx)*.45;rx-= (e.clientY-sy)*.18;sx=e.clientX;sy=e.clientY;last=now;apply()});const up=()=>{down=false};stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up)}}
+const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
+
+function dna(){
+ const root=q('.os-dna'); if(!root)return; root.innerHTML='';
+ const n=64,h=260,cx=75,amp=43,turns=2.25,step=h/(n-1);
+ const strands=[[],[]];
+ for(let i=0;i<n;i++){
+   const y=10+i*step, a=i/(n-1)*Math.PI*2*turns-Math.PI/2;
+   strands[0].push([cx+Math.cos(a)*amp,y,Math.sin(a)*amp]);
+   strands[1].push([cx+Math.cos(a+Math.PI)*amp,y,Math.sin(a+Math.PI)*amp]);
+ }
+ const tube=(p1,p2,cls)=>{
+   const dx=p2[0]-p1[0],dy=p2[1]-p1[1],dz=p2[2]-p1[2];
+   const len=Math.hypot(dx,dy,dz),midX=(p1[0]+p2[0])/2,midY=(p1[1]+p2[1])/2,midZ=(p1[2]+p2[2])/2;
+   const horiz=Math.hypot(dx,dz);
+   const el=document.createElement('i'); el.className=cls;
+   el.style.left=midX+'px'; el.style.top=midY+'px'; el.style.width=len+'px';
+   el.style.transform='translate3d(0,0,'+midZ+'px) rotateY('+(-Math.atan2(dz,dx)*180/Math.PI)+'deg) rotateZ('+Math.atan2(dy,horiz)*180/Math.PI+'deg)';
+   return el;
+ };
+ strands.forEach((pts,s)=>{for(let i=0;i<n-1;i++)root.appendChild(tube(pts[i],pts[i+1],'os-dna-tube '+(s?'red':'blue')));});
+ for(let i=1;i<n-1;i+=3){
+   const a=strands[0][i],b=strands[1][i],r=tube(a,b,'os-dna-rung');
+   r.dataset.pair=['A—T','T—A','C—G','G—C'][i%4]; root.appendChild(r);
+ }
+ const cap=(p,s)=>{const el=document.createElement('i');el.className='os-dna-cap '+(s?'red':'blue');el.style.left=p[0]+'px';el.style.top=p[1]+'px';el.style.transform='translateZ('+p[2]+'px)';root.appendChild(el)};
+ cap(strands[0][0],0);cap(strands[1][0],1);cap(strands[0][n-1],0);cap(strands[1][n-1],1);
+}
+function dragDna(){
+ const root=q('.os-dna'),stage=root?.parentElement;if(!root||!stage)return;
+ let down=false,sx=0,sy=0,ry=0,rx=0,vx=.006,vy=0,last=0;
+ const apply=()=>root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+ const tick=(t)=>{if(!down&&!reduce){ry+=.036+vx;vx*=.985;rx+=vy;vy*=.93;rx=Math.max(-13,Math.min(13,rx));apply()}requestAnimationFrame(tick)};
+ requestAnimationFrame(tick);
+ stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;last=performance.now();vx=0;vy=0;stage.setPointerCapture?.(e.pointerId)});
+ stage.addEventListener('pointermove',e=>{if(!down)return;const now=performance.now(),dt=Math.max(8,now-last),dx=e.clientX-sx,dy=e.clientY-sy;vx=dx/dt*.22;vy=-dy/dt*.055;ry+=dx*.5;rx=Math.max(-13,Math.min(13,rx-dy*.055));sx=e.clientX;sy=e.clientY;last=now;apply()});
+ const up=()=>{down=false};stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+}
+
 const FACE_NAMES=['U','R','F','D','L','B'],COLORS={U:'#f7f7f7',R:'#d93a35',F:'#35a95a',D:'#f1d84b',L:'#f28c28',B:'#2f78d0'};
-function rotateFace(a,base,clock){const old=a.slice(base,base+9),out=old.slice();for(let r=0;r<3;r++)for(let c=0;c<3;c++)out[(clock?c:2-c)*3+(clock?2-r:r)]=old[r*3+c];for(let i=0;i<9;i++)a[base+i]=out[i]}
-function strip(a,idxs,rev){return idxs.map((i)=>a[i]).slice(rev?-9:0,rev?undefined:9)}
-function move(state,face,clock=true){const a=state.slice(),b=face==='U'?0:face==='R'?9:face==='F'?18:face==='D'?27:face==='L'?36:45;rotateFace(a,b,clock);
-const S={U:[[18,19,20],[36,37,38],[45,46,47],[9,10,11]],D:[[24,25,26],[15,16,17],[51,52,53],[42,43,44]],R:[[2,5,8],[20,23,26],[29,32,35],[45,48,51]],L:[[0,3,6],[47,50,53],[27,30,33],[18,21,24]],F:[[6,7,8],[9,12,15],[27,28,29],[38,41,44]],B:[[0,1,2],[11,14,17],[33,34,35],[36,39,42]]}[face];if(!S)return a;const vals=S.map(g=>g.map(i=>a[i]));for(let g=0;g<4;g++){const from=clock?(g+3)%4:(g+1)%4;for(let k=0;k<3;k++)a[S[g][k]]=vals[from][k]}return a}
-function rubik(){const wrap=q('.os-rubik-wrap'),cube=q('.os-rubik');if(!wrap||!cube)return;let state=[];FACE_NAMES.forEach((_,f)=>{for(let i=0;i<9;i++)state.push(f)});const render=()=>{FACE_NAMES.forEach((name,f)=>{const face=q('.os-rubik-face.'+({U:'top',R:'right',F:'front',D:'bottom',L:'left',B:'back'}[name]),wrap);qa('span',face).forEach((s,i)=>{s.style.background=COLORS[FACE_NAMES[state[f*9+i]]];s.setAttribute('aria-label',name+' sticker '+(i+1))})})};const controls=document.createElement('div');controls.className='os-rubik-controls';FACE_NAMES.forEach(n=>{const b=document.createElement('button');b.type='button';b.textContent=n;b.title='Turn '+n+' face clockwise';b.addEventListener('click',()=>{state=move(state,n,true);render();});controls.appendChild(b);});const rev=document.createElement('button');rev.type='button';rev.textContent='↺';rev.title='Turn counter-clockwise';rev.addEventListener('click',()=>{const n=controls.dataset.last||'F';state=move(state,n,false);render()});controls.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>controls.dataset.last=b.textContent));controls.appendChild(rev);wrap.parentElement.appendChild(controls);render();let down=false,sx=0,sy=0,rx=-25,ry=-35;wrap.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;wrap.setPointerCapture?.(e.pointerId)});wrap.addEventListener('pointermove',e=>{if(!down)return;ry+=(e.clientX-sx)*.5;rx-=(e.clientY-sy)*.5;sx=e.clientX;sy=e.clientY;cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'});const up=()=>down=false;wrap.addEventListener('pointerup',up);wrap.addEventListener('pointercancel',up)}
+const DIRS={U:[0,1,0],D:[0,-1,0],R:[1,0,0],L:[-1,0,0],F:[0,0,1],B:[0,0,-1]};
+const colorForNormal=n=>{for(const k of FACE_NAMES){const d=DIRS[k];if(d[0]===n[0]&&d[1]===n[1]&&d[2]===n[2])return COLORS[k]}return '#111'};
+const faceFromNormal=n=>FACE_NAMES.find(k=>DIRS[k][0]===n[0]&&DIRS[k][1]===n[1]&&DIRS[k][2]===n[2]);
+function rotVec(v,axis,dir){let[x,y,z]=v;if(axis==='x')return dir>0?[x,-z,y]:[x,z,-y];if(axis==='y')return dir>0?[z,y,-x]:[-z,y,x];return dir>0?[-y,x,z]:[y,-x,z]}
+function buildCubies(){
+ const out=[];for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
+  const stickers=[];for(const f of FACE_NAMES){const d=DIRS[f];if(x*d[0]+y*d[1]+z*d[2]===1)stickers.push({n:[...d],c:f})}
+  if(stickers.length)out.push({p:[x,y,z],stickers});
+ }return out;
+}
+function rotateLayer(cubies,face,clock){
+ const axis={U:'y',D:'y',R:'x',L:'x',F:'z',B:'z'}[face],side={U:1,D:-1,R:1,L:-1,F:1,B:-1}[face];
+ const dir=clock?side:-side;
+ cubies.forEach(c=>{if(c.p[{x:0,y:1,z:2}[axis]]===side){c.p=rotVec(c.p,axis,dir);c.stickers.forEach(s=>s.n=rotVec(s.n,axis,dir))}});
+}
+function cubieMarkup(c){
+ const el=document.createElement('div');el.className='os-rubik-cubie';el.style.transform='translate3d('+(c.p[0]*51)+'px,'+(-c.p[1]*51)+'px,'+(c.p[2]*51)+'px)';
+ const faces=[['front',[0,0,1]],['back',[0,0,-1]],['right',[1,0,0]],['left',[-1,0,0]],['top',[0,1,0]],['bottom',[0,-1,0]]];
+ faces.forEach(([name,n])=>{const s=c.stickers.find(v=>v.n[0]===n[0]&&v.n[1]===n[1]&&v.n[2]===n[2]);if(!s)return;const f=document.createElement('i');f.className='os-rubik-sticker '+name;f.style.background=COLORS[s.c];el.appendChild(f)});return el;
+}
+function rubik(){
+ const wrap=q('.os-rubik-wrap'),old=q('.os-rubik');if(!wrap||!old)return;
+ const stage=wrap.parentElement;
+ let cubies=buildCubies(),rx=-25,ry=-35,down=false,sx=0,sy=0,busy=false;
+ old.remove();const cube=document.createElement('div');cube.className='os-rubik';wrap.appendChild(cube);
+ const render=()=>{cube.innerHTML='';cubies.forEach(c=>cube.appendChild(cubieMarkup(c)))};
+ render();
+ const controls=document.createElement('div');controls.className='os-rubik-controls';
+ const moveLabel=document.createElement('span');moveLabel.className='os-rubik-move-status';moveLabel.textContent='READY';
+ const addButton=(label,title,fn)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.title=title;b.addEventListener('click',fn);controls.appendChild(b);return b};
+ const doMove=(face,clock=true)=>{
+   if(busy)return;busy=true;controls.dataset.last=face;
+   const axis={U:'y',D:'y',R:'x',L:'x',F:'z',B:'z'}[face],side={U:1,D:-1,R:1,L:-1,F:1,B:-1}[face];
+   const dir=clock?side:-side;
+   const layer=document.createElement('div');layer.className='os-rubik-turn-layer';
+   [...cube.children].forEach((el,i)=>{const c=cubies[i];if(c.p[{x:0,y:1,z:2}[axis]]===side){layer.appendChild(el)}});
+   cube.appendChild(layer);
+   const deg=clock?90:-90;layer.style.transform='rotate'+axis.toUpperCase()+'('+deg+'deg)';
+   const finish=()=>{rotateLayer(cubies,face,clock);layer.remove();render();busy=false;moveLabel.textContent=face+(clock?'':'′')};
+   if(reduce)finish();else layer.addEventListener('transitionend',finish,{once:true});
+   if(reduce){} else setTimeout(()=>{if(busy)finish()},430);
+ };
+ FACE_NAMES.forEach(f=>addButton(f,'Turn '+f+' face clockwise',()=>doMove(f,true)));
+ addButton("R'",'Reverse the last face',()=>doMove(controls.dataset.last||'F',false));
+ addButton('SCRAMBLE','Scramble with legal cube turns',async()=>{
+   if(busy)return;const seq=[];let last='';for(let i=0;i<18;i++){let f;do{f=FACE_NAMES[Math.floor(Math.random()*6)]}while(f===last);last=f;seq.push([f,Math.random()>.5])}for(const [f,c] of seq){doMove(f,c);await new Promise(r=>setTimeout(r,reduce?20:455))}moveLabel.textContent='SCRAMBLED';
+ });
+ addButton('RESET','Return to solved state',()=>{if(busy)return;cubies=buildCubies();render();moveLabel.textContent='SOLVED'});
+ controls.appendChild(moveLabel);stage.parentElement.appendChild(controls);
+ const setView=()=>cube.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+ setView();
+ wrap.addEventListener('pointerdown',e=>{if(e.target.closest('.os-rubik-sticker'))return;down=true;sx=e.clientX;sy=e.clientY;wrap.setPointerCapture?.(e.pointerId)});
+ wrap.addEventListener('pointermove',e=>{if(!down||busy)return;ry+=(e.clientX-sx)*.5;rx-=(e.clientY-sy)*.5;rx=Math.max(-75,Math.min(75,rx));sx=e.clientX;sy=e.clientY;setView()});
+ const up=()=>down=false;wrap.addEventListener('pointerup',up);wrap.addEventListener('pointercancel',up);
+}
 function tiltPlanet(){const s=q('.os-planet-system');if(!s||reduce)return;let raf=0;s.parentElement.addEventListener('pointermove',e=>{const r=s.parentElement.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>s.style.transform='rotateX('+(-y*7)+'deg) rotateY('+(x*9)+'deg)')},{passive:true});s.parentElement.addEventListener('pointerleave',()=>s.style.transform='',{passive:true})}
 function dragGyro(){const root=q('.os-gyro'),stage=q('[data-gyro-stage]');if(!root||!stage)return;let down=false,sx=0,sy=0,rx=0,ry=0;stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;stage.setPointerCapture?.(e.pointerId)});stage.addEventListener('pointermove',e=>{if(!down)return;ry+=(e.clientX-sx)*.35;rx-=(e.clientY-sy)*.35;sx=e.clientX;sy=e.clientY;root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'});stage.addEventListener('pointerup',()=>down=false);stage.addEventListener('pointercancel',()=>down=false)}
 function init(){dna();dragDna();tiltPlanet();dragGyro();rubik()}

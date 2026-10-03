@@ -89,7 +89,7 @@ function cubieMarkup(c,id){
 function rubik(){
  const wrap=q('.os-rubik-wrap'),old=q('.os-rubik');if(!wrap||!old)return;
  let cubies=buildCubies(),rx=-25,ry=-35,busy=false,selected=null,gesture=null;
- old.remove();const cube=document.createElement('div');cube.className='os-rubik';wrap.appendChild(cube);
+ const cube=document.createElement('div');cube.className='os-rubik';wrap.appendChild(cube);
  const stage=wrap.parentElement;
  const info=stage.parentElement.querySelector('[data-rubik-info] p');
  const controls=document.createElement('div');controls.className='os-rubik-controls';
@@ -137,7 +137,8 @@ function rubik(){
    else{rx-=dy*.5;ry+=dx*.5;rx=Math.max(-75,Math.min(75,rx));setView()}
  }else if(gesture.started&&!gesture.c){rx-=dy*.5;ry+=dx*.5;rx=Math.max(-75,Math.min(75,rx));setView();gesture.x=e.clientX;gesture.y=e.clientY}});
  const finishGesture=()=>{gesture=null};wrap.addEventListener('pointerup',finishGesture);wrap.addEventListener('pointercancel',finishGesture);
- render();
+ try{render()}catch(err){cube.remove();throw err}
+ old.remove();
 }
 function tiltPlanet(){const s=q('.os-planet-system');if(!s||reduce)return;let raf=0;s.parentElement.addEventListener('pointermove',e=>{const r=s.parentElement.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>s.style.transform='rotateX('+(-y*7)+'deg) rotateY('+(x*9)+'deg)')},{passive:true});s.parentElement.addEventListener('pointerleave',()=>s.style.transform='',{passive:true})}
 function dragGyro(){const root=q('.os-gyro'),stage=q('[data-gyro-stage]');if(!root||!stage)return;let down=false,sx=0,sy=0,rx=0,ry=0;stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;stage.setPointerCapture?.(e.pointerId)});stage.addEventListener('pointermove',e=>{if(!down)return;ry+=(e.clientX-sx)*.35;rx-=(e.clientY-sy)*.35;sx=e.clientX;sy=e.clientY;root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)'});stage.addEventListener('pointerup',()=>down=false);stage.addEventListener('pointercancel',()=>down=false)}

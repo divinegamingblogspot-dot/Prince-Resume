@@ -480,12 +480,13 @@ const relatedByPage={
   now:['career.html','systems.html','work.html','nova.html'],
   projects:['work.html','systems.html','career.html','nova.html']
 };
-if(main&&relatedByPage[page]&&!qs('.pro-connected-panel')){
+const upgradeMain=qs('main');
+if(upgradeMain&&relatedByPage[page]&&!qs('.pro-connected-panel')){
   const sec=document.createElement('section');sec.className='pro-blog-related pro-connected-panel';
   sec.innerHTML='<h2>Continue through the system</h2><div class="pro-blog-related-grid"></div>';
   const g=qs('.pro-blog-related-grid',sec);
   relatedByPage[page].forEach(href=>{const a=document.createElement('article');const name=href.replace('.html','').replace(/-/g,' ');a.innerHTML='<a href="'+href+'">'+name+'</a><small>Connected Prince.OS route ↗</small>';g.appendChild(a)});
-  main.appendChild(sec);
+  upgradeMain.appendChild(sec);
 }
 
 /* Theme controls are deliberately outside the cinematic intro DOM. */

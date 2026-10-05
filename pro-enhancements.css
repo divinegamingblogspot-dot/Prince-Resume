@@ -413,3 +413,26 @@ body[data-page] .spotlight{display:none!important}
 @media(prefers-reduced-motion:reduce){
   .page-bot:not(.nova-open) .bot-character{animation:none!important}
 }
+
+
+/* ============================================================
+   PERFORMANCE PASS — keep the interface smooth under scroll.
+   Only pauses decorative animations when their section is offscreen.
+   Interactive controls remain available when visible.
+   ============================================================ */
+.pro-offscreen .system-3d-stack,
+.pro-offscreen .system-3d-link:after,
+.pro-offscreen .short-loader-core,
+.pro-offscreen .short-loader-ring,
+.pro-offscreen .short-loader-dot{
+  animation-play-state:paused!important;
+}
+.pro-upgrade-card{
+  contain:layout style paint;
+}
+.pro-upgrade-card img{
+  content-visibility:auto;
+}
+@media(prefers-reduced-motion:reduce){
+  .pro-upgrade-card *{animation:none!important}
+}

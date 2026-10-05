@@ -337,3 +337,79 @@ body[data-prince-theme] .bot-msg.bot{background:var(--os-surface-2)!important;co
 body[data-prince-theme] .bot-msg.user{background:var(--os-accent)!important;color:var(--os-bg)!important}
 body[data-prince-theme] .bot-chat-input input{background:var(--os-surface-2)!important;color:var(--os-text)!important;border-color:var(--os-line)!important}
 body[data-page] .spotlight{display:none!important}
+
+
+/* ============================================================
+   CALM VISUAL PASS — reduce neon/glow/decorative effects
+   Scoped to the additive/pro visual layer; homepage intro hooks
+   and functional interactions remain untouched.
+   ============================================================ */
+.pro-scrollbar i,
+.pro-article-progress{
+  box-shadow:none!important;
+}
+.pro-section-index i{
+  box-shadow:none!important;
+  transition:height .2s ease,background-color .2s ease!important;
+}
+.pro-now-card,
+.pro-contact-card,
+.pro-command-panel,
+.pro-404-panel,
+.pro-blog-toolbar,
+.pro-article-tools,
+.pro-blog-related article{
+  box-shadow:0 8px 24px rgba(0,0,0,.06)!important;
+}
+.pro-now-card:before{
+  display:none!important;
+}
+.pro-contact-card{
+  transition:transform .18s ease,border-color .18s ease!important;
+}
+.pro-contact-card:hover{
+  transform:translateY(-2px)!important;
+}
+.pro-3d{
+  transition:transform .18s ease!important;
+}
+.pro-3d:hover{
+  box-shadow:none!important;
+}
+.pro-command-backdrop{
+  background:rgba(2,4,8,.54)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.pro-upgrade-magnetic{
+  transition:transform .16s ease!important;
+}
+.pro-command-item:hover,
+.pro-command-item[aria-selected=true]{
+  background:color-mix(in srgb,var(--os-line) 55%,transparent)!important;
+}
+.pro-theme-swatch:hover,
+.pro-theme-swatch.active,
+.pro-article-tools button:hover,
+.pro-article-tools a:hover{
+  border-color:var(--os-line)!important;
+  color:var(--os-text)!important;
+}
+.pro-system-rail b,
+.pro-now-item small,
+.pro-now-stamp,
+.pro-contact-card small,
+.pro-command-item i,
+.pro-article-toc b{
+  color:var(--os-muted)!important;
+}
+.page-bot .bot-orb{
+  filter:none!important;
+}
+@keyframes proNovaBreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+.page-bot:not(.nova-open) .bot-character{
+  animation:proNovaBreath 6s ease-in-out infinite!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .page-bot:not(.nova-open) .bot-character{animation:none!important}
+}

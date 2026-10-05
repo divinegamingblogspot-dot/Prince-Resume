@@ -344,7 +344,7 @@ function setTheme(name){
 window.PrinceOSTheme={set:setTheme,themes:themes};
 
 /* ---------- 9 / micro interactions ---------- */
-if(fine&&!reduce){
+const enableMagnet=false;\nif(enableMagnet&&fine&&!reduce){
   qsa('.btn,.inner-cta,.portfolio-cta a,.portfolio-map a,.hero-meta-link').forEach(el=>{
     if(el.dataset.proMagnet)return;el.dataset.proMagnet='1';el.classList.add('pro-upgrade-magnetic');
     let raf=0,x=0,y=0;

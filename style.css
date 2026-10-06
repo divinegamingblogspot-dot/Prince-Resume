@@ -1472,3 +1472,53 @@ header nav a.home-header-link:hover{transform:none;background:none;box-shadow:no
   #loader .loader-name-morph .morph-dot,
   #loader .loader-status i{animation:none!important}
 }
+
+
+/* ===== LOKI-INSPIRED PRINCE MORPH INTRO — RESTORED / PERFORMANCE SAFE ===== */
+#loader{
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--theme-accent,#b7ff52) 8%,transparent),transparent 25%),
+    radial-gradient(circle at 18% 70%,color-mix(in srgb,var(--theme-accent,#b7ff52) 5%,transparent),transparent 28%),
+    var(--theme-bg,#08090d)!important;
+}
+#loader:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(color-mix(in srgb,var(--theme-accent,#b7ff52) 5%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--theme-accent,#b7ff52) 4%,transparent) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);opacity:.24;
+}
+.loader-inner{width:min(900px,88vw)!important;position:relative;z-index:2}
+.loader-name-morph{
+  display:flex;align-items:center;justify-content:center;gap:clamp(7px,1.05vw,18px);width:100%;
+  min-height:clamp(90px,15vw,180px);margin:18px 0 22px;
+  font-size:clamp(76px,12vw,154px)!important;line-height:.78!important;letter-spacing:-.028em!important;
+  color:var(--theme-text,#f4f4f2);perspective:900px;
+  text-shadow:0 0 16px color-mix(in srgb,var(--theme-text,#f4f4f2) 12%,transparent),0 0 55px color-mix(in srgb,var(--theme-accent,#b7ff52) 7%,transparent);
+}
+.loader-name-morph .morph-letter{
+  display:inline-block;min-width:.52em;text-align:center;transform-origin:50% 58%;
+  will-change:transform,opacity;font-weight:800;
+  animation:morphLetterLoki 6.2s cubic-bezier(.65,0,.35,1) infinite;
+}
+.loader-name-morph .morph-p{animation-delay:-.02s}.loader-name-morph .morph-r{animation-delay:-.62s}.loader-name-morph .morph-i{animation-delay:-1.18s}.loader-name-morph .morph-n{animation-delay:-1.74s}.loader-name-morph .morph-c{animation-delay:-2.30s}.loader-name-morph .morph-e{animation-delay:-2.86s}
+.loader-name-morph .morph-dot{color:var(--theme-accent,#b7ff52);font-family:"Space Grotesk",sans-serif;font-weight:800;text-shadow:0 0 14px color-mix(in srgb,var(--theme-accent,#b7ff52) 70%,transparent);animation:dotPulseLoki 1.15s ease-in-out infinite}
+@keyframes morphLetterLoki{
+  0%,100%{font-family:"Space Grotesk",sans-serif;font-weight:800;transform:translateY(0) scaleX(1) skewX(0) rotate(0);opacity:1}
+  12%{font-family:Georgia,serif;font-weight:900;transform:translateY(1px) scaleX(.82) skewX(-8deg) rotate(-1deg);opacity:.86}
+  25%{font-family:"Times New Roman",serif;font-weight:700;transform:translateY(2px) scaleX(1.12) rotate(-2deg);opacity:.98}
+  39%{font-family:"Arial Black",Impact,sans-serif;font-weight:900;transform:translateY(1px) scaleX(1.02) skewX(1deg) rotate(0);opacity:1}
+  52%{font-family:"Courier New",monospace;font-weight:900;transform:translateY(-1px) scaleX(1.04) scaleY(.88);opacity:.88}
+  66%{font-family:"Brush Script MT","Segoe Script",cursive;font-weight:700;transform:translateY(2px) scaleX(.92) rotate(3deg);opacity:.92}
+  80%{font-family:Impact,"Arial Black",sans-serif;font-weight:900;transform:translateY(-1px) scaleX(1.1) skewX(-4deg);opacity:1}
+  92%{font-family:Georgia,serif;font-weight:900;transform:translateY(-1px) scaleX(.86) scaleY(1.08) rotate(-2deg);opacity:.92}
+}
+@keyframes dotPulseLoki{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.35);opacity:1}}
+#loader .loader-status{justify-content:center;text-align:center}
+#loader .loader-status i{background:var(--theme-accent,#b7ff52)!important;box-shadow:0 0 12px var(--theme-accent,#b7ff52)!important}
+#loader .loader-bar{margin:22px auto 12px!important;max-width:620px!important;height:2px!important}
+#loader .loader-bar i{background:linear-gradient(90deg,var(--theme-accent,#b7ff52),#20e6d5,#6388ff,#b86cff,#ff3f68,var(--theme-accent,#b7ff52))!important;background-size:220% 100%;animation:loadLoki 4.8s linear forwards!important;box-shadow:0 0 14px color-mix(in srgb,var(--theme-accent,#b7ff52) 35%,transparent)}
+#loader .loader-scan{position:absolute!important;left:-10%;right:-10%;top:16%;height:1px;background:linear-gradient(90deg,transparent,var(--theme-accent,#b7ff52),#20e6d5,transparent);opacity:.65;animation:loaderScanLoki 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes loaderScanLoki{0%{transform:translateY(0);opacity:0}12%{opacity:.75}50%{opacity:.28}88%{opacity:.75}100%{transform:translateY(62vh);opacity:0}}
+@keyframes loadLoki{to{width:100%;background-position:100% 0}}
+@media(max-width:700px){.loader-inner{width:min(96vw,620px)!important}.loader-name-morph{font-size:clamp(52px,16vw,92px)!important;gap:clamp(4px,1.4vw,9px);min-height:82px;margin:10px 0 18px}.loader-name-morph .morph-letter{min-width:.48em}}
+@media(prefers-reduced-motion:reduce){.loader-name-morph .morph-letter{animation:none!important;font-family:"Space Grotesk",sans-serif!important;transform:none!important}.loader-name-morph .morph-dot,.loader-scan,#loader .loader-bar i{animation:none!important}}

@@ -489,3 +489,54 @@ body:before{
 @media(prefers-reduced-motion:reduce){
   .spotlight{display:none!important}
 }
+
+
+/* ============================================================
+   EXISTING TEXT FLOW FIX — use the available content width
+   Scoped to the pages whose expanded existing copy was visually
+   stopping early on the left. No content, routes or interactions change.
+   ============================================================ */
+@media(min-width:901px){
+  body[data-page="blog"] .portfolio-command p,
+  body[data-page="career"] .portfolio-command p,
+  body[data-page="systems"] .portfolio-command p,
+  body[data-page="skills"] .portfolio-command p,
+  body[data-page="profile"] .portfolio-command p,
+  body[data-page="contact"] .portfolio-command p{
+    max-width:none!important;
+    width:100%;
+  }
+  body[data-page="career"] .inner-card p,
+  body[data-page="systems"] .inner-card p,
+  body[data-page="skills"] .inner-card p,
+  body[data-page="profile"] .inner-card p,
+  body[data-page="contact"] .inner-card p,
+  body[data-page="skills"] .skill-detail p,
+  body[data-page="systems"] .system-card p,
+  body[data-page="career"] .portfolio-proof p,
+  body[data-page="profile"] .portfolio-proof p{
+    max-width:none!important;
+    width:100%;
+  }
+  body[data-page="blog"] .blog-card p{
+    max-width:none!important;
+    width:100%;
+  }
+}
+@media(max-width:900px){
+  body[data-page="blog"] .portfolio-command p,
+  body[data-page="career"] .portfolio-command p,
+  body[data-page="systems"] .portfolio-command p,
+  body[data-page="skills"] .portfolio-command p,
+  body[data-page="profile"] .portfolio-command p,
+  body[data-page="contact"] .portfolio-command p,
+  body[data-page="blog"] .blog-card p,
+  body[data-page="career"] .inner-card p,
+  body[data-page="systems"] .inner-card p,
+  body[data-page="skills"] .inner-card p,
+  body[data-page="profile"] .inner-card p,
+  body[data-page="contact"] .inner-card p{
+    max-width:none!important;
+    width:100%;
+  }
+}

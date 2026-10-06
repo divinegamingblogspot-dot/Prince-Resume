@@ -470,3 +470,22 @@ img[loading="lazy"]{content-visibility:auto}
 @media (prefers-reduced-motion: reduce){
   .seo-rich-expansion,.seo-longform{scroll-margin-top:24px}
 }
+
+/* ============================================================
+   PERFORMANCE / SEO PRESENTATION HARDENING
+   Decorative only: no controls, routes or content are removed.
+   ============================================================ */
+body:before{
+  opacity:.018!important;
+  background-image:none!important;
+}
+.spotlight{
+  opacity:.45;
+}
+@media(max-width:900px){
+  body:before{display:none!important}
+  .spotlight{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .spotlight{display:none!important}
+}

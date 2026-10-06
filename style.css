@@ -1400,3 +1400,75 @@ header nav a.home-header-link:hover{transform:none;background:none;box-shadow:no
     bottom:10vh!important;
   }
 }
+
+/* ============================================================
+   THEMED INTRO + PERFORMANCE SAFETY
+   Uses the selected Prince.OS theme and removes paint-heavy
+   cinematic effects without changing intro content/function.
+   ============================================================ */
+:root{
+  --intro-bg:var(--theme-bg,#08090d);
+  --intro-surface:var(--theme-surface,#0e1016);
+  --intro-accent:var(--theme-accent,#b7ff52);
+  --intro-text:var(--theme-text,#f4f4f2);
+  --intro-muted:var(--theme-muted,#8e9099);
+  --intro-line:var(--theme-line,#292b33);
+}
+#loader{
+  background:var(--intro-bg)!important;
+  color:var(--intro-text)!important;
+}
+#loader .loader-grid{
+  opacity:.10;
+  background-image:linear-gradient(color-mix(in srgb,var(--intro-text) 7%,transparent) 1px,transparent 1px),
+    linear-gradient(90deg,color-mix(in srgb,var(--intro-text) 7%,transparent) 1px,transparent 1px);
+  animation:none!important;
+}
+#loader .loader-orbit{border-color:color-mix(in srgb,var(--intro-accent) 12%,transparent)!important;animation:none!important}
+#loader .loader-orbit-b{border-color:color-mix(in srgb,var(--intro-accent) 8%,transparent)!important}
+#loader .loader-top,#loader .loader-meta{color:var(--intro-muted)!important}
+#loader .loader-top span:last-child{color:var(--intro-text)!important}
+#loader .loader-name-morph{
+  color:var(--intro-text)!important;
+  text-shadow:none!important;
+  animation:none!important;
+}
+#loader .loader-name-morph .morph-letter{
+  animation:loaderCalmLetter 2.8s ease-in-out infinite!important;
+  will-change:transform,opacity;
+  filter:none!important;
+}
+#loader .loader-name-morph .morph-dot{
+  color:var(--intro-accent)!important;
+  text-shadow:none!important;
+  animation:loaderCalmDot 1.8s ease-in-out infinite!important;
+}
+#loader .loader-status{color:var(--intro-muted)!important}
+#loader .loader-status i{
+  background:var(--intro-accent)!important;
+  box-shadow:none!important;
+  animation:loaderCalmDot 1.8s ease-in-out infinite!important;
+}
+#loader .loader-bar{background:var(--intro-line)!important}
+#loader .loader-bar i{
+  background:var(--intro-accent)!important;
+  box-shadow:none!important;
+}
+#loader .loader-scan{
+  background:linear-gradient(90deg,transparent,var(--intro-accent),transparent)!important;
+  opacity:.35;
+  animation:none!important;
+}
+@keyframes loaderCalmLetter{
+  0%,100%{transform:translateY(0);opacity:1}
+  50%{transform:translateY(-2px);opacity:.92}
+}
+@keyframes loaderCalmDot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.12)}
+}
+@media(prefers-reduced-motion:reduce){
+  #loader .loader-name-morph .morph-letter,
+  #loader .loader-name-morph .morph-dot,
+  #loader .loader-status i{animation:none!important}
+}

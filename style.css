@@ -1522,3 +1522,5 @@ header nav a.home-header-link:hover{transform:none;background:none;box-shadow:no
 @keyframes loadLoki{to{width:100%;background-position:100% 0}}
 @media(max-width:700px){.loader-inner{width:min(96vw,620px)!important}.loader-name-morph{font-size:clamp(52px,16vw,92px)!important;gap:clamp(4px,1.4vw,9px);min-height:82px;margin:10px 0 18px}.loader-name-morph .morph-letter{min-width:.48em}}
 @media(prefers-reduced-motion:reduce){.loader-name-morph .morph-letter{animation:none!important;font-family:"Space Grotesk",sans-serif!important;transform:none!important}.loader-name-morph .morph-dot,.loader-scan,#loader .loader-bar i{animation:none!important}}
+
+/* Pages deployment refresh: Loki intro restored and verified in main. */

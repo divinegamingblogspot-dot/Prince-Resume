@@ -337,3 +337,112 @@ body[data-prince-theme] .bot-msg.bot{background:var(--os-surface-2)!important;co
 body[data-prince-theme] .bot-msg.user{background:var(--os-accent)!important;color:var(--os-bg)!important}
 body[data-prince-theme] .bot-chat-input input{background:var(--os-surface-2)!important;color:var(--os-text)!important;border-color:var(--os-line)!important}
 body[data-page] .spotlight{display:none!important}
+
+
+/* ============================================================
+   CALM PROFESSIONAL VISUAL PASS — presentation only
+   Keeps existing components, routes and interactions intact.
+   ============================================================ */
+:root{
+  --pro-radius:14px;
+  --pro-shadow:0 10px 28px rgba(0,0,0,.07);
+  --pro-shadow-soft:0 5px 18px rgba(0,0,0,.045);
+}
+body{
+  --pro-accent:var(--theme-accent,#7b806f);
+}
+.pro-system-rail{
+  padding-top:8px;
+  padding-bottom:8px;
+  letter-spacing:.09em;
+}
+.pro-system-rail b{color:var(--pro-muted)}
+.pro-chip{
+  background:transparent;
+  border-color:color-mix(in srgb,var(--pro-line) 78%,transparent);
+}
+.pro-scrollbar i{
+  box-shadow:none;
+  opacity:.72;
+}
+.pro-section-index i.active{
+  background:var(--pro-muted);
+}
+.pro-page-enter{
+  animation-duration:.36s;
+}
+.pro-now-card,
+.pro-contact-card,
+.pro-404-panel,
+.pro-command-panel,
+.pro-blog-toolbar,
+.pro-article-tools,
+.pro-blog-related article{
+  box-shadow:var(--pro-shadow-soft);
+}
+.pro-now-card:before{display:none}
+.pro-contact-card{transition:transform .2s ease,border-color .2s ease}
+.pro-contact-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--pro-line);
+}
+.pro-3d{transition:none;box-shadow:none!important}
+.short-loader-core{
+  box-shadow:none;
+  animation:none;
+}
+.short-loader-ring{
+  animation-duration:1.4s;
+  opacity:.6;
+}
+.short-loader-dot{box-shadow:none}
+.pro-command-backdrop{
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  background:rgba(2,4,8,.72);
+}
+.pro-command-panel{box-shadow:0 18px 50px rgba(0,0,0,.18)}
+.pro-command-item:hover,
+.pro-command-item[aria-selected=true]{
+  background:color-mix(in srgb,var(--os-surface-2) 72%,transparent);
+}
+.pro-theme-swatch:hover,
+.pro-theme-swatch.active{
+  border-color:var(--os-line);
+  color:var(--os-text);
+}
+.pro-article-progress{box-shadow:none;opacity:.75}
+.pro-article-tools button:hover,
+.pro-article-tools a:hover,
+.pro-404-actions a:hover{
+  border-color:var(--os-line);
+  color:var(--os-text);
+}
+.pro-footer-status i{box-shadow:none;opacity:.7}
+.pro-footer-links a:hover{color:var(--os-text)}
+.page-bot .bot-orb{filter:none}
+.page-bot:not(.nova-open) .bot-character{
+  animation:none;
+}
+.nova-suggest-plus button:hover,
+.nova-voice:hover{
+  border-color:var(--os-line)!important;
+  color:var(--os-muted)!important;
+}
+/* Reduce persistent visual energy from decorative 3D/particle systems without disabling them. */
+.os-3d-object,
+.skill-proof-panel,
+.skill-constellation,
+.system-3d-lab{
+  box-shadow:var(--pro-shadow-soft)!important;
+}
+.os-3d-object:hover,
+.skill-proof-panel:hover,
+.skill-constellation:hover,
+.system-3d-lab:hover{
+  box-shadow:var(--pro-shadow-soft)!important;
+  transform:none!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .pro-page-enter{animation:none!important}
+}

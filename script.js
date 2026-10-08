@@ -603,7 +603,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     document.addEventListener('pointerdown',startAudio,{once:true,passive:true});
     document.addEventListener('keydown',startAudio,{once:true});
     const homeIntro=/\/(?:index\.html)?$/i.test(location.pathname);
-    const duration=homeIntro?5000:700;
+    const duration=homeIntro?4000:700;
     if(!homeIntro)loader.classList.add('short-page-loader');
     const stages=homeIntro?['INITIALIZING SYSTEM','LOADING PORTFOLIO','MAPPING EXPERIENCE','PREPARING SYSTEMS','READY TO EXPLORE']:['INITIALIZING PAGE','LOADING CONTENT','READY'];
     const start=performance.now();

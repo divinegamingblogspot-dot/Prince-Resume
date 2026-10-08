@@ -1,6 +1,6 @@
 /* PRINCE.OS PRO LAYER — additive only. */
 :root{--pro-radius:18px;--pro-max:1280px;--pro-shadow:0 22px 70px rgba(0,0,0,.16);--pro-ease:cubic-bezier(.22,1,.36,1)}
-body{--pro-accent:var(--theme-accent,#b7ff52);--pro-bg:var(--theme-bg,#08090d);--pro-surface:var(--theme-surface,#0e1016);--pro-text:var(--theme-text,#f4f4f2);--pro-muted:var(--theme-muted,#8e9099);--pro-line:var(--theme-line,#292b33)}
+body{--pro-accent:var(--theme-accent,var(--theme-accent));--pro-bg:var(--theme-bg,#08090d);--pro-surface:var(--theme-surface,#0e1016);--pro-text:var(--theme-text,#f4f4f2);--pro-muted:var(--theme-muted,#8e9099);--pro-line:var(--theme-line,#292b33)}
 html{scroll-behavior:smooth}.pro-ready{background:var(--pro-bg);color:var(--pro-text)}
 .pro-system-rail{max-width:var(--pro-max);margin:0 auto;padding:10px 24px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.2 Inter,sans-serif;letter-spacing:.14em;color:var(--pro-muted)}
 .pro-system-rail b{color:var(--pro-accent);font-weight:800}.pro-chip{border:1px solid var(--pro-line);border-radius:999px;padding:7px 10px;background:color-mix(in srgb,var(--pro-surface) 82%,transparent)}
@@ -63,15 +63,15 @@ html{scroll-behavior:smooth}.pro-ready{background:var(--pro-bg);color:var(--pro-
   position:absolute;
   inset:9px;
   border:1px solid transparent;
-  border-top-color:#b7ff52;
+  border-top-color:var(--theme-accent);
   border-right-color:rgba(183,255,82,.25);
   border-radius:50%;
   animation:shortLoaderSpin .72s linear infinite;
 }
 .short-loader-dot{
   width:5px;height:5px;border-radius:50%;
-  background:#b7ff52;
-  box-shadow:0 0 14px #b7ff52;
+  background:var(--theme-accent);
+  box-shadow:0 0 14px var(--theme-accent);
   animation:shortLoaderDot .72s ease-in-out infinite;
 }
 .short-loader-core b{
@@ -112,7 +112,7 @@ body{overscroll-behavior-x:none;-webkit-font-smoothing:antialiased;text-renderin
    Additive layer — preserves existing homepage intro and hooks.
    ============================================================ */
 :root{
-  --os-accent:var(--theme-accent,#b7ff52);
+  --os-accent:var(--theme-accent,var(--theme-accent));
   --os-bg:var(--theme-bg,#08090d);
   --os-surface:var(--theme-surface,#0e1016);
   --os-surface-2:var(--theme-surface-2,#12151c);
@@ -169,7 +169,7 @@ button,a,input,textarea,select{accent-color:var(--os-accent)}
 .pro-theme-swatch{border:1px solid var(--os-line);background:var(--os-surface-2);color:var(--os-text);border-radius:8px;padding:8px 10px;font:700 9px Inter,sans-serif}
 .pro-theme-swatch:hover,.pro-theme-swatch.active{border-color:var(--os-accent);color:var(--os-accent)}
 /* Theme system — only the shared visual layer is overridden; homepage intro structure/timing remains unchanged. */
-body[data-prince-theme="midnight"]{--theme-bg:#08090d;--theme-surface:#0e1016;--theme-surface-2:#141821;--theme-text:#f4f6f8;--theme-muted:#8e95a0;--theme-line:#292e38;--theme-accent:#b7ff52}
+body[data-prince-theme="midnight"]{--theme-bg:#08090d;--theme-surface:#0e1016;--theme-surface-2:#141821;--theme-text:#f4f6f8;--theme-muted:#8e95a0;--theme-line:#292e38;--theme-accent:var(--theme-accent)}
 body[data-prince-theme="graphite"]{--theme-bg:#111315;--theme-surface:#191c20;--theme-surface-2:#20242a;--theme-text:#f1f1ee;--theme-muted:#a2a5aa;--theme-line:#343941;--theme-accent:#d7ff63}
 body[data-prince-theme="pearl"]{--theme-bg:#f5f5f1;--theme-surface:#ffffff;--theme-surface-2:#ecece6;--theme-text:#151719;--theme-muted:#646a72;--theme-line:#d6d8d2;--theme-accent:#56751c}
 body[data-prince-theme="cream"]{--theme-bg:#f5efe4;--theme-surface:#fffaf1;--theme-surface-2:#eee4d4;--theme-text:#201c17;--theme-muted:#746b61;--theme-line:#d9cdbc;--theme-accent:#8b5a2b}

@@ -1,5 +1,5 @@
 /* PRINCE.OS PORTFOLIO SYSTEM — shared visual layer */
-:root{--p-accent:#b7ff52;--p-purple:#a855f7;--p-blue:#4da3ff;--p-bg:#07090d;--p-panel:#0c1016;--p-line:#202630;--p-muted:#8b929e}
+:root{--p-accent:var(--theme-accent);--p-purple:#a855f7;--p-blue:#4da3ff;--p-bg:#07090d;--p-panel:#0c1016;--p-line:#202630;--p-muted:#8b929e}
 .portfolio-system{width:min(1180px,90vw);margin:0 auto;padding:16px 0 0}
 .portfolio-breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 28px;color:#68707c;font:700 9px/1.3 "Space Grotesk",sans-serif;letter-spacing:.14em;text-transform:uppercase}
 .portfolio-breadcrumb a{color:#9ca3af;text-decoration:none}.portfolio-breadcrumb a:hover{color:var(--p-accent)}.portfolio-breadcrumb b{color:#3f4651}
@@ -31,7 +31,7 @@
 
 /* ===== 2026 PORTFOLIO STRUCTURE / THEME-REACTIVE INTRO ===== */
 :root{
-  --p-intro-accent:var(--theme-accent,#b7ff52);
+  --p-intro-accent:var(--theme-accent,var(--theme-accent));
   --p-intro-bg:var(--theme-bg,#07090d);
   --p-intro-surface:var(--theme-surface,#0c1016);
   --p-intro-text:var(--theme-text,#f4f6f8);

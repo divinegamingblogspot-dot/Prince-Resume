@@ -27,8 +27,8 @@ const releaseShortLoader=(el,delay=620)=>{
 };
 if(!homeRoute){
   const legacy=document.getElementById('loader');
-  if(legacy){ legacy.classList.add('short-page-loader'); legacy.style.display='none'; legacy.setAttribute('aria-hidden','true'); }
-  const pageLoader=makeShortLoader(); pageLoader.dataset.singleTransition='true';
+  if(legacy){ legacy.classList.add('short-page-loader'); legacy.style.display='none'; legacy.setAttribute('aria-hidden','true'); legacy.dataset.superseded='true'; }
+  const pageLoader=makeShortLoader(); pageLoader.dataset.singleTransition='true'; pageLoader.setAttribute('aria-hidden','false');
   releaseShortLoader(pageLoader,420);
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href]');

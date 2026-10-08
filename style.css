@@ -1400,3 +1400,56 @@ header nav a.home-header-link:hover{transform:none;background:none;box-shadow:no
     bottom:10vh!important;
   }
 }
+
+/* ===== THEME CONSISTENCY BRIDGE =====
+   Legacy components previously carried fixed neon-green accents. Keep their
+   original visual roles, but route them through the active theme variables. */
+:root{
+  --theme-accent:#b7ff52;
+  --theme-bg:#08090d;
+  --theme-surface:#101219;
+  --theme-text:#f4f4f2;
+  --theme-muted:#8e9099;
+  --theme-line:#292b33;
+  --theme-button-text:#08090d;
+  --theme-accent-rgb:183,255,82;
+}
+body{
+  background:var(--theme-bg);
+  color:var(--theme-text);
+}
+body,
+body *{
+  --accent:var(--theme-accent);
+}
+body a,
+body button,
+body .logo span,
+body .inner-logo span,
+body .pro-chip,
+body .pro-section-index,
+body .portfolio-command-kicker,
+body .inner-kicker,
+body .inner-label,
+body .home-section-kicker,
+body .loader-status i,
+body .loader-top span:last-child,
+body .loader-bar i,
+body .status-line i,
+body .portfolio-signal b,
+body .hero-kicker i,
+body .hero-copy em,
+body h1 em,
+body h2 em,
+body h3 em{
+  --theme-current-accent:var(--theme-accent);
+}
+body a:hover{color:var(--theme-accent)}
+body .btn.primary{background:var(--theme-accent);color:var(--theme-button-text)}
+body .btn.primary:hover{background:var(--theme-accent);filter:brightness(1.06)}
+body .loader-status i{background:var(--theme-accent)!important}
+body .loader-bar i{background:var(--theme-accent)!important;box-shadow:0 0 22px rgba(var(--theme-accent-rgb),.28)}
+body .loader-scan{border-color:rgba(var(--theme-accent-rgb),.16)!important}
+body .loader-grid{opacity:.55}
+body .home-final-glow{background:radial-gradient(circle,rgba(var(--theme-accent-rgb),.12),transparent 68%)}
+@media(prefers-reduced-motion:reduce){body *{scroll-behavior:auto!important}}

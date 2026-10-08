@@ -59,7 +59,8 @@ const KNOW={
   {name:'Multybyte Purchase System',detail:'E-commerce purchasing and operations automation around SKU data, supplier workflows, inventory, image synchronization and Google Sheets + Apps Script.'},
   {name:'Nova',detail:'A portfolio-native AI interface that explains Prince, his work and the website while maintaining a distinct Nova identity.'},
   {name:'EyeNav / Doc',detail:'An Android accessibility experiment evolving from eye-navigation toward voice-first, hands-free interaction.'},
-  {name:'Prince.OS',detail:'The portfolio itself: responsive UI, themes, navigation, SEO, recruiter views and an interactive AI layer.'},\n  {name:'AURELIA',detail:'A responsive women’s accessories e-commerce storefront with 12 product categories, a large catalogue, search/autocomplete, filters, wishlist, quick view, recommendations, gift finder, look builder, product galleries, delivery PIN checking, customer/account flows, demo checkout, local persistence, mobile navigation and multiple themes. Live at https://divinegamingblogspot-dot.github.io/website/.'}
+  {name:'Prince.OS',detail:'The portfolio itself: responsive UI, themes, navigation, SEO, recruiter views and an interactive AI layer.'},
+  {name:'AURELIA',detail:'A responsive women’s accessories e-commerce storefront with 12 product categories, a large catalogue, search/autocomplete, filters, wishlist, quick view, recommendations, gift finder, look builder, product galleries, delivery PIN checking, customer/account flows, demo checkout, local persistence, mobile navigation and multiple themes. Live at https://divinegamingblogspot-dot.github.io/website/.'}
  ],
  blog:[
   {name:'Automation Starts With the Workflow',slug:'automation-starts-with-the-workflow',topic:'Automation · Systems',summary:'Why reliable business automation begins by mapping people, inputs, decisions, failure states and outputs before writing code.'},

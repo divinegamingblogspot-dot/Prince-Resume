@@ -27,8 +27,8 @@ const releaseShortLoader=(el,delay=620)=>{
 };
 if(!homeRoute){
   const legacy=document.getElementById('loader');
-  if(legacy)legacy.classList.add('short-page-loader');
-  const pageLoader=makeShortLoader();
+  if(legacy){ legacy.classList.add('short-page-loader'); legacy.style.display='none'; legacy.setAttribute('aria-hidden','true'); }
+  const pageLoader=makeShortLoader(); pageLoader.dataset.singleTransition='true';
   releaseShortLoader(pageLoader,420);
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href]');
@@ -491,4 +491,13 @@ if(upgradeMain&&relatedByPage[page]&&!qs('.pro-connected-panel')){
 
 /* Theme controls are deliberately outside the cinematic intro DOM. */
 setTheme(body.dataset.princeTheme||'midnight');
+})();
+
+/* ===== PERFORMANCE GUARD =====
+   Keep non-critical visual upgrades off the critical rendering path. */
+(()=>{
+  const loadIdle=()=>{
+    document.querySelectorAll('img:not([loading])').forEach((img,i)=>{if(i>0)img.loading='lazy';img.decoding='async'});
+  };
+  if('requestIdleCallback' in window) requestIdleCallback(loadIdle,{timeout:1200}); else setTimeout(loadIdle,700);
 })();

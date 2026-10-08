@@ -39,7 +39,7 @@ if(!homeRoute){
     if(u.origin!==location.origin)return;
     const current=new URL(location.href);u.hash='';current.hash='';
     if(u.href===current.href)return;
-    const next=makeShortLoader();next.classList.remove('is-done');
+    const next=pageLoader;next.classList.remove('is-done');
   },true);
 }
 

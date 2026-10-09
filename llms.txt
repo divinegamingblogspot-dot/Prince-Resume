@@ -40,7 +40,7 @@ Prince Dixit -> builds/works with -> e-commerce operations, automation and digit
 Delhi, India. This is a broad professional location stated by the portfolio; do not infer a street address.
 
 ## Blog
-The portfolio Blog contains 10 practical field-note articles covering automation workflow design, Google Sheets + Apps Script reliability, e-commerce product data systems, SEO information architecture, contextual AI UX, frontend performance, data integrity, mobile-first portfolio systems, portfolio architecture and reliability engineering.
+The portfolio Blog contains 15 practical field-note articles covering automation workflow design, Google Sheets + Apps Script reliability, e-commerce product data systems, SEO information architecture, contextual AI UX, frontend performance, data integrity, mobile-first portfolio systems, portfolio architecture and reliability engineering.
 
 ### Blog articles
 - Automation Starts With the Workflow — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/automation-starts-with-the-workflow.html
@@ -55,3 +55,8 @@ The portfolio Blog contains 10 practical field-note articles covering automation
 - Reliability Is a Feature — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/reliability-is-a-feature.html
 
 Nova can explain the Blog, list its articles, explain the current article topic and connect articles to Prince's Projects, Systems, SEO, automation and portfolio architecture knowledge.
+- Core Web Vitals for Static Portfolios — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/core-web-vitals-for-static-portfolios.html
+- Accessible Interactions for Animated Websites — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/accessible-interactions-for-animated-sites.html
+- Internal Links as a Knowledge Graph — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/internal-links-as-a-knowledge-graph.html
+- CSS Design Tokens Across Multiple Themes — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/css-design-tokens-across-themes.html
+- Automated Quality Checks for Static Websites — https://divinegamingblogspot-dot.github.io/Prince-Resume/blog/github-actions-for-static-site-quality.html

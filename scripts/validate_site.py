@@ -64,7 +64,6 @@ for file in HTML_FILES:
     if len(scan.description) < 50: WARNINGS.append(f"{rel}: missing/short meta description")
     if scan.h1 == 0: WARNINGS.append(f"{rel}: no H1 found")
     for href, tag in scan.links:
-        global TOTAL_LINKS
         TOTAL_LINKS += 1
         if href.startswith("#"):
             anchor = href[1:]

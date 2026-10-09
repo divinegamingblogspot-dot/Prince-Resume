@@ -501,3 +501,111 @@ setTheme(body.dataset.princeTheme||'midnight');
   };
   if('requestIdleCallback' in window) requestIdleCallback(loadIdle,{timeout:1200}); else setTimeout(loadIdle,700);
 })();
+
+
+/* ===== PORTFOLIO QUALITY PASS 2026-10-09 — additive, fail-soft ===== */
+(()=> {
+  if(window.__princeQualityPass)return; window.__princeQualityPass=true;
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+  const root='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
+  const page=(location.pathname.split('/').pop()||'index.html').replace(/\.html$/,'')||'index';
+  const safe=(s)=>String(s||'').replace(/\s+/g,' ').trim();
+  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  /* Universal theme bridge: synchronize old and OS token names without replacing theme logic. */
+  const syncTheme=()=>{
+    const cs=getComputedStyle(document.documentElement);
+    const pairs={'--os-bg':'--theme-bg','--os-surface':'--theme-surface','--os-text':'--theme-text','--os-muted':'--theme-muted','--os-line':'--theme-line','--os-accent':'--theme-accent'};
+    Object.entries(pairs).forEach(([to,from])=>{const v=cs.getPropertyValue(from).trim();if(v)document.documentElement.style.setProperty(to,v)});
+    document.body.dataset.princeTheme=document.documentElement.dataset.princeTheme||document.body.dataset.princeTheme||'midnight';
+  };
+  syncTheme();
+  new MutationObserver(syncTheme).observe(document.documentElement,{attributes:true,attributeFilter:['style','data-prince-theme']});
+
+  /* Focus mode: user-controlled, persisted, keyboard-accessible, no content hidden. */
+  if(!$('#proFocusToggle')){
+    const b=document.createElement('button');b.id='proFocusToggle';b.type='button';b.className='pro-focus-toggle';
+    b.textContent='Focus mode';b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Toggle reduced visual distractions');
+    const saved=(()=>{try{return localStorage.getItem('prince-focus-mode')==='on'}catch(_){return false}})();
+    const apply=on=>{document.body.classList.toggle('pro-focus-mode',on);b.setAttribute('aria-pressed',String(on));b.textContent=on?'Exit focus mode':'Focus mode';try{localStorage.setItem('prince-focus-mode',on?'on':'off')}catch(_){}};
+    b.addEventListener('click',()=>apply(!document.body.classList.contains('pro-focus-mode')));
+    (document.querySelector('.inner-top')||document.querySelector('header')||document.body).appendChild(b);apply(saved);
+  }
+
+  /* Accessibility: visible keyboard focus, landmarks, accessible names, and safe motion defaults. */
+  if(!$('main#main-content')&&$('main'))$('main').id='main-content';
+  $$('a,button,input,select,textarea,[tabindex]').forEach(el=>{
+    if(el.matches('a')&&!safe(el.innerText)&&!el.getAttribute('aria-label')&&!el.querySelector('img[alt]'))el.setAttribute('aria-label','Open '+(el.getAttribute('href')||'link').split('/').pop().replace(/[-_.]/g,' '));
+    if(el.matches('button')&&!safe(el.innerText)&&!el.getAttribute('aria-label')&&el.title)el.setAttribute('aria-label',el.title);
+  });
+  $$('img').forEach(img=>{if(!img.hasAttribute('alt'))img.setAttribute('alt','');if(!img.closest('a,button')&&!img.hasAttribute('loading')&&!img.closest('header,.article-hero'))img.loading='lazy';img.decoding='async'});
+  $$('a[href^="#"]').forEach(a=>{const id=a.getAttribute('href').slice(1);if(id&&!$('#'+CSS.escape(id)))a.setAttribute('aria-disabled','true')});
+  document.addEventListener('keydown',e=>{if(e.key==='Tab')document.body.classList.add('keyboard-user')},{once:true});
+
+  /* Person + website + page graph structured data, merged with authored schema rather than overwriting it. */
+  const canonical=$('link[rel="canonical"]')?.href||new URL(location.pathname,root).href;
+  const jsonNodes=$$('script[type="application/ld+json"]').map(n=>{try{return JSON.parse(n.textContent)}catch(_){return null}}).filter(Boolean);
+  const hasPerson=jsonNodes.some(n=>n['@type']==='Person'||(Array.isArray(n['@graph'])&&n['@graph'].some(x=>x['@type']==='Person')));
+  if(!hasPerson){
+    const graph={'@context':'https://schema.org','@graph':[
+      {'@type':'Person','@id':root+'#prince','name':'Prince Dixit','url':root,'email':'mailto:demonicspirit888@gmail.com','sameAs':['https://github.com/divinegamingblogspot-dot']},
+      {'@type':'WebSite','@id':root+'#website','url':root,'name':'Prince Dixit Portfolio','publisher':{'@id':root+'#prince'},'inLanguage':'en-IN'},
+      {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':safe($('h1')?.innerText||document.title),'isPartOf':{'@id':root+'#website'},'about':{'@id':root+'#prince'},'inLanguage':'en-IN'}
+    ]};
+    const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(graph);document.head.appendChild(s);
+  }
+
+  /* Skill map: turn existing skill labels into cross-linked, keyboard-operable project connections. */
+  const skillLinks={
+    'seo':['blog.html','work.html','systems.html'],'marketing':['career.html','work.html','blog.html'],
+    'automation':['systems.html','blog.html','work.html'],'google sheets':['systems.html','blog.html'],
+    'e-commerce':['work.html','systems.html'],'ecommerce':['work.html','systems.html'],
+    'javascript':['work.html','systems.html'],'ai':['nova.html','systems.html','blog.html'],
+    'design':['work.html','skills.html'],'operations':['career.html','systems.html']
+  };
+  $$('main .skill,main [data-skill],main .skill-card').forEach(el=>{
+    if(el.dataset.skillLinksAdded)return;
+    const label=safe(el.innerText).toLowerCase();const key=Object.keys(skillLinks).find(k=>label.includes(k));
+    if(!key)return;el.dataset.skillLinksAdded='true';el.classList.add('pro-skill-linked');
+    const box=document.createElement('div');box.className='pro-skill-connections';box.setAttribute('aria-label','Related portfolio pages');
+    skillLinks[key].forEach(href=>{const a=document.createElement('a');a.href=href;a.textContent=href.replace('.html','').replace(/-/g,' ');box.appendChild(a)});
+    el.appendChild(box);
+  });
+
+  /* Nova contextual prompt chips. Existing answer engine and identity remain untouched. */
+  const chat=$('#botChat'),form=$('#botForm'),input=$('#botInput');
+  if(chat&&form&&input&&!$('.pro-nova-prompts',chat)){
+    const prompts=document.createElement('div');prompts.className='pro-nova-prompts';prompts.setAttribute('aria-label','Suggested questions for Nova');
+    const suggestions=page==='blog'||location.pathname.includes('/blog/')?['Explain this article','How does this connect to Prince’s projects?','Show related articles']:
+      page==='work'||page==='projects'?['Explain AURELIA','Explain Multybyte automation','Which skills connect to these projects?']:
+      page==='skills'?['Show projects using these skills','What should I highlight to recruiters?','Explain Prince’s strongest systems']:
+      ['Summarize Prince for a recruiter','Show the strongest projects','Explain Prince.OS'];
+    suggestions.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>{input.value=q;form.requestSubmit()});prompts.appendChild(b)});
+    const body=$('#botMessages',chat);if(body)chat.insertBefore(prompts,body);
+  }
+
+  /* More useful article discovery: cluster existing articles by topic without changing their URLs. */
+  if(page==='blog'&&!$('.pro-topic-clusters')){
+    const cards=$$('.blog-card, .blog-grid article, main article');
+    if(cards.length>=5){
+      const section=document.createElement('section');section.className='pro-topic-clusters';section.innerHTML='<h2>Explore by topic</h2><div class="pro-topic-cluster-grid"></div>';
+      const grid=$('.pro-topic-cluster-grid',section),groups=[
+        ['Automation & reliability',['automation','workflow','reliability','data']],
+        ['SEO & discoverability',['seo','portfolio','information architecture']],
+        ['E-commerce & product systems',['ecommerce','product','mobile']],
+        ['AI & performance',['ai','performance','contextual']]
+      ];
+      groups.forEach(([name,terms])=>{const item=document.createElement('article');item.innerHTML='<h3>'+name+'</h3>';let count=0;cards.forEach(card=>{const txt=safe(card.innerText).toLowerCase();if(terms.some(t=>txt.includes(t))&&count<4){const a=document.createElement('a');a.href=card.querySelector('a[href]')?.getAttribute('href')||'#';a.textContent=safe(card.querySelector('h2,h3,strong')?.innerText||card.innerText).slice(0,90);item.appendChild(a);count++}});if(count)grid.appendChild(item)});
+      const main=$('main');if(main)main.appendChild(section);
+    }
+  }
+
+  /* Respect the browser's motion preference and stop decorative loops off-screen. */
+  if('IntersectionObserver'in window){
+    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.target.matches('canvas, .skill-constellation, .rubiks-cube, .pro-3d'))entry.target.classList.toggle('pro-offscreen',!entry.isIntersecting);
+    }),{rootMargin:'80px'});
+    $$('.skill-constellation, .rubiks-cube, .pro-3d, canvas').forEach(el=>io.observe(el));
+  }
+  if(reduce)document.documentElement.classList.add('pro-reduced-motion');
+})();

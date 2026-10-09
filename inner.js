@@ -72,7 +72,12 @@ const KNOW={
   {name:'Protecting Data in Automated Workflows',slug:'protecting-data-in-automated-workflows',topic:'Data · Reliability',summary:'Practical principles for preventing automation from overwriting fields or creating silent inconsistencies.'},
   {name:'Why Mobile-First Matters for Interactive Portfolios',slug:'mobile-first-portfolio-systems',topic:'Mobile · UX',summary:'Navigation, motion, content hierarchy and assistant interactions designed for phones as well as desktop.'},
   {name:'Building a Portfolio as a System, Not a Single Page',slug:'building-a-portfolio-as-a-system',topic:'Portfolio · Product',summary:'Why a professional portfolio benefits from connected pages, consistent navigation and structured content.'},
-  {name:'Reliability Is a Feature',slug:'reliability-is-a-feature',topic:'Reliability · Engineering',summary:'Why retries, validation, fallbacks, backups and graceful degradation belong in everyday digital work.'}
+  {name:'Reliability Is a Feature',slug:'reliability-is-a-feature',topic:'Reliability · Engineering',summary:'Why retries, validation, fallbacks, backups and graceful degradation belong in everyday digital work.'},
+  {name:'Core Web Vitals for Static Portfolios',slug:'core-web-vitals-for-static-portfolios',topic:'Performance · Web Vitals',summary:'A practical approach to loading, responsiveness and visual stability using LCP, INP and CLS.'},
+  {name:'Accessible Interactions for Animated Websites',slug:'accessible-interactions-for-animated-sites',topic:'Accessibility · Interaction',summary:'Keyboard access, visible focus, contrast and reduced-motion patterns for interactive interfaces.'},
+  {name:'Internal Links as a Knowledge Graph',slug:'internal-links-as-a-knowledge-graph',topic:'SEO · Information Architecture',summary:'How related pages, projects, skills and articles can create a useful, understandable content graph.'},
+  {name:'CSS Design Tokens Across Multiple Themes',slug:'css-design-tokens-across-themes',topic:'Frontend · Design Systems',summary:'A maintainable approach to semantic color tokens and consistent component states across themes.'},
+  {name:'Automated Quality Checks for Static Websites',slug:'github-actions-for-static-site-quality',topic:'Engineering · CI',summary:'Use deployment checks to catch broken local links, missing metadata and JavaScript syntax errors.'}
  ],
  insights:[
   {name:'Automation Reliability',detail:'Designing spreadsheet and workflow automation with validation, retries, caching, locks and recovery paths.'},
@@ -152,7 +157,7 @@ function princeAnswer(i,l){
  return null;
 }
 function systemAnswer(i,l){
- if(i.blog){const list=KNOW.blog.map((x,n)=>(n+1)+'. '+x.name+' — '+x.summary).join(' ');return l==='hi'?'Blog me 10 practical articles hain: '+list:'The Blog contains 10 practical articles: '+list;}
+ if(i.blog){const list=KNOW.blog.map((x,n)=>(n+1)+'. '+x.name+' — '+x.summary).join(' ');return l==='hi'?'Blog me 15 practical articles hain: '+list:'The Blog contains 15 practical articles: '+list;}
  if(i.multybyte)return l==='hi'?KNOW.systems[0].detail+' Isme SKU/product workflows, purchasing, vendor coordination, inventory aur warehouse-side execution bhi connected hain.':' '+KNOW.systems[0].detail+' It connects SKU/product workflows, purchasing, vendor coordination, inventory and warehouse-side execution.';
  if(i.insights)return l==='hi'?'Insights me automation reliability, e-commerce systems, search visibility aur AI portfolio UX jaise topics cover hote hain.': 'The Insights section covers automation reliability, e-commerce systems, search visibility and AI portfolio UX.';
  if(i.projects)return l==='hi'?'Prince ke main portfolio builds hain: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' '):'Prince’s main portfolio builds are: '+KNOW.projects.map(x=>x.name+' — '+x.detail).join(' ');

@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 import sys
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 HTML_FILES = sorted(ROOT.rglob("*.html"))
@@ -74,6 +75,12 @@ for file in HTML_FILES:
         target = resolve_local(file, href)
         if target is not None and not target.exists():
             BROKEN.append(f"{rel}: missing local {tag} target {href}")
+
+try:
+    ET.parse(ROOT / "sitemap.xml")
+    print("PASS: sitemap.xml is valid XML.")
+except Exception as e:
+    BROKEN.append(f"sitemap.xml: invalid XML ({e})")
 
 print(f"Portfolio QA: {len(HTML_FILES)} HTML pages scanned; {TOTAL_LINKS} local/external references inspected.")
 print(f"SEO/content warnings: {len(WARNINGS)}")

@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: node --check pro-enhancements.js
       - name: Validate local links and SEO metadata
         run: python3 scripts/validate_site.py
       - name: Configure Pages

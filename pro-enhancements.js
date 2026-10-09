@@ -516,8 +516,8 @@ setTheme(body.dataset.princeTheme||'midnight');
   const syncTheme=()=>{
     const cs=getComputedStyle(document.documentElement);
     const pairs={'--os-bg':'--theme-bg','--os-surface':'--theme-surface','--os-text':'--theme-text','--os-muted':'--theme-muted','--os-line':'--theme-line','--os-accent':'--theme-accent'};
-    Object.entries(pairs).forEach(([to,from])=>{const v=cs.getPropertyValue(from).trim();if(v)document.documentElement.style.setProperty(to,v)});
-    document.body.dataset.princeTheme=document.documentElement.dataset.princeTheme||document.body.dataset.princeTheme||'midnight';
+    Object.entries(pairs).forEach(([to,from])=>{const v=cs.getPropertyValue(from).trim();if(v&&cs.getPropertyValue(to).trim()!==v)document.documentElement.style.setProperty(to,v)});
+    const activeTheme=document.documentElement.dataset.princeTheme||document.body.dataset.princeTheme||'midnight';if(document.body.dataset.princeTheme!==activeTheme)document.body.dataset.princeTheme=activeTheme;
   };
   syncTheme();
   new MutationObserver(syncTheme).observe(document.documentElement,{attributes:true,attributeFilter:['style','data-prince-theme']});

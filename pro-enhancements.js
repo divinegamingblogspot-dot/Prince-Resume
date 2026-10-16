@@ -37,6 +37,19 @@ const siteRoot='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
 })();
 
 
+/* Mark ordinary same-origin navigations so the homepage's cinematic intro does not replay over the page-switch animation. */
+(()=>{document.addEventListener('click',e=>{
+  if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  const a=e.target.closest('a[href]');
+  if(!a||a.target==='_blank'||a.hasAttribute('download'))return;
+  try{
+    const u=new URL(a.href,location.href);
+    if(u.origin!==location.origin)return;
+    if(u.pathname===location.pathname&&u.search===location.search&&u.hash)return;
+    sessionStorage.setItem('prince:internal-navigation','1');
+  }catch(err){}
+},true)})();
+
 /* Loader lifecycle is owned only by script.js; this layer never starts a second loader. */
 /* ===== SEO HARDENING — additive, canonical and content-aware =====
    Existing authored metadata wins when valid; missing/incorrect technical

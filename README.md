@@ -26,6 +26,11 @@ Earlier experience:
 - Unique Threads Sarees — Orders & Inventory Manager — May–October 2024; order fulfillment, inventory monitoring, stock availability and accurate/on-time dispatch.
 
 
+## Portfolio + studio
+- **Prince Digital Systems Studio** — independent, Prince-led service positioning for practical websites, technical SEO, e-commerce experiences and workflow automation.
+- **Project enquiry** — client-reviewed email brief; no server-side collection or CRM submission is implied.
+- **Case studies** — AURELIA storefront, Multybyte operations automation, Prince.OS, image synchronisation, product-data workflow and AI/software prototyping. Each describes scope and constraints without inventing business-impact metrics.
+
 ## Expanded systems portfolio
 - **Multybyte China Purchase / Image Automation** — Google Sheets + Apps Script workflow for SKU/product data, vendor purchasing, URL extraction, image discovery, retries, caching, locks and backup sync.
 - **Operational spreadsheet systems** — product, SKU, inventory, purchasing and vendor data workflows.

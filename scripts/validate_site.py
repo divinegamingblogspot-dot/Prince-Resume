@@ -44,10 +44,12 @@ def resolve_local(source, raw):
     if p.scheme or p.netloc or raw.startswith("//"): return None
     path = unquote(p.path)
     if not path: return source
-    if path.startswith("/Prince-Resume/"): path = path[len("/Prince-Resume/"):]
-    elif path.startswith("/"): path = path.lstrip("/")
-    else: path = str((source.parent / path).relative_to(ROOT)) if not (source.parent / path).is_absolute() else path
-    target = (ROOT / path).resolve()
+    if path.startswith("/Prince-Resume/"):
+        target = (ROOT / path[len("/Prince-Resume/"):]).resolve()
+    elif path.startswith("/"):
+        target = (ROOT / path.lstrip("/")).resolve()
+    else:
+        target = (source.parent / path).resolve()
     try: target.relative_to(ROOT.resolve())
     except ValueError: return None
     if target.is_dir(): target = target / "index.html"

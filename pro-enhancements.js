@@ -427,10 +427,10 @@ function buildPalette(){
   head.append(searchInput,k);
   const list=document.createElement('div');list.className='pro-command-list';
   const commands=[
-    ['⌂','Home','Open the portfolio home','index.html'],['W','Work','Projects + Insights','work.html'],
+    ['⌂','Home','Open the portfolio home','index.html'],['W','Work','Projects + Insights','work.html'],['S','Studio','Websites, SEO and workflow automation','studio.html'],
     ['C','Career','Experience + current direction','career.html'],['B','Blog','Read portfolio articles','blog.html'],
     ['P','Profile','Recruiter + Resume','profile.html'],['N','Nova','Open the portfolio assistant','nova.html'],
-    ['✉','Contact','Reach Prince directly','contact.html'],['R','Resume','Open the resume','resume.html']
+    ['S','Studio','Websites, SEO and workflow automation','studio.html'],['↗','Start a project','Share a project brief','start-a-project.html'],['✉','Contact','Reach Prince directly','contact.html'],['R','Resume','Open the resume','resume.html']
   ];
   commands.forEach(([icon,title,desc,href])=>{const a=document.createElement('a');a.className='pro-command-item';a.href=href;a.innerHTML='<i>'+icon+'</i><span><b>'+title+'</b><small>'+desc+'</small></span><small>↗</small>';list.appendChild(a)});
   const themeRow=document.createElement('div');themeRow.className='pro-command-themes';
@@ -460,7 +460,7 @@ document.addEventListener('keydown',e=>{
 qsa('footer').forEach(footer=>{
   if(qs('.pro-footer-upgrade',footer))return;
   const wrap=document.createElement('div');wrap.className='pro-footer-upgrade';
-  wrap.innerHTML='<nav class="pro-footer-links" aria-label="Footer navigation"><a href="work.html">WORK</a><a href="career.html">CAREER</a><a href="profile.html">PROFILE</a><a href="blog.html">BLOG</a><a href="nova.html">NOVA</a><a href="contact.html">CONTACT</a></nav><span class="pro-footer-status"><i></i> PRINCE.OS / ONLINE · CTRL+K</span>';
+  wrap.innerHTML='<nav class="pro-footer-links" aria-label="Footer navigation"><a href="work.html">WORK</a><a href="studio.html">STUDIO</a><a href="start-a-project.html">START A PROJECT</a><a href="career.html">CAREER</a><a href="profile.html">PROFILE</a><a href="blog.html">BLOG</a><a href="nova.html">NOVA</a><a href="contact.html">CONTACT</a></nav><span class="pro-footer-status"><i></i> PRINCE.OS / ONLINE · CTRL+K</span>';
   footer.appendChild(wrap);
 });
 
@@ -472,11 +472,11 @@ qsa('img').forEach(img=>{
 
 /* ---------- 20 / connected portfolio graph ---------- */
 const relatedByPage={
-  work:['career.html','systems.html','blog.html','nova.html'],
+  work:['studio.html','career.html','systems.html','blog.html'],
   career:['work.html','profile.html','systems.html','contact.html'],
   profile:['career.html','work.html','resume.html','contact.html'],
   blog:['work.html','systems.html','nova.html'],
-  contact:['profile.html','work.html','nova.html'],
+  contact:['studio.html','start-a-project.html','profile.html','work.html'],
   now:['career.html','systems.html','work.html','nova.html'],
   projects:['work.html','systems.html','career.html','nova.html']
 };

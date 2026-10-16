@@ -581,7 +581,7 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     const navEntry=performance.getEntriesByType('navigation')[0];
     let cameFromInternalLink=false;
     try { cameFromInternalLink=sessionStorage.getItem('prince:internal-navigation')==='1'; sessionStorage.removeItem('prince:internal-navigation'); } catch(e) {}
-    const homeIntro=/\\/(?:index\\.html)?$/i.test(location.pathname)&&!cameFromInternalLink&&navEntry?.type!=='back_forward';
+    const homeIntro=/\/(?:index\.html)?$/i.test(location.pathname)&&!cameFromInternalLink&&navEntry?.type!=='back_forward';
     if(!homeIntro){
       /* Inner pages use the cross-document transition, never a second full-screen loader. */
       loader.classList.add('short-page-loader');

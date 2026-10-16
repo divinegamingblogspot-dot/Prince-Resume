@@ -10,8 +10,9 @@ on:
     types: [deploy-pages]
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  # Use a repository-specific group; the generic `pages` group can collide with GitHub's Pages workflow.
+  group: prince-os-deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:

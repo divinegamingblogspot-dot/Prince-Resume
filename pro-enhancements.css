@@ -363,3 +363,11 @@ body.keyboard-user :focus{outline:2px solid var(--os-accent,var(--theme-accent))
 @media(max-width:800px){.pro-topic-cluster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pro-focus-toggle{font-size:10px}}
 @media(max-width:480px){.pro-topic-cluster-grid{grid-template-columns:1fr}.pro-skill-connections a{padding:7px 10px}.pro-nova-prompts{max-height:125px;overflow:auto}}
 @media(prefers-reduced-motion:reduce){.pro-topic-cluster-grid *, .pro-skill-connections *{animation:none!important;transition:none!important}}
+
+
+/* Motion budget: avoid background-grid animation on inner pages and honour user preference. */
+body[data-page]::after{animation:none!important;opacity:.045}
+@media(prefers-reduced-motion:reduce){
+  body::before,body::after,.hero::before,.hero::after{animation:none!important}
+  .motion-energy,.spotlight{display:none!important}
+}

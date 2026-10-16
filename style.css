@@ -1453,3 +1453,9 @@ body .loader-scan{border-color:rgba(var(--theme-accent-rgb),.16)!important}
 body .loader-grid{opacity:.55}
 body .home-final-glow{background:radial-gradient(circle,rgba(var(--theme-accent-rgb),.12),transparent 68%)}
 @media(prefers-reduced-motion:reduce){body *{scroll-behavior:auto!important}}
+
+
+/* Inner pages use the compact loader only; native navigation avoids competing overlays. */
+#pageTransition{display:none!important}
+body.page-exit{opacity:1!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){body::after{animation:none!important}}

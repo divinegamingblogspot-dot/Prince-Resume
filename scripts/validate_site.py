@@ -22,7 +22,7 @@ class Scanner(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.path, self.title, self.in_title = path, "", False
         self.description, self.canonical, self.h1, self.noindex = "", "", 0, False
-        self.ids, self.links = set(), []
+        self.ids, self.links, self.scripts = set(), [], []
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if a.get("id"): self.ids.add(a["id"])
@@ -33,6 +33,7 @@ class Scanner(HTMLParser):
         if tag == "meta" and a.get("name", "").lower() == "robots" and "noindex" in a.get("content", "").lower():
             self.noindex = True
         if tag in ("a", "link") and a.get("href"): self.links.append((a["href"], tag))
+        if tag == "script" and a.get("src"): self.scripts.append(a["src"])
         if tag in ("img", "script") and a.get("src"): self.links.append((a["src"], tag))
         if tag == "link" and a.get("rel", "").lower() == "canonical":
             self.canonical = a.get("href", "").strip()
@@ -82,6 +83,10 @@ for file in HTML_FILES:
             expected = BASE + ("" if rel == "index.html" else rel)
             if scan.canonical.rstrip("/") != expected.rstrip("/"):
                 WARNINGS.append(f"{rel}: canonical path differs from this file ({scan.canonical})")
+    seen_scripts = set()
+    for src in scan.scripts:
+        if src in seen_scripts: BROKEN.append(f"{rel}: duplicate script include {src}")
+        seen_scripts.add(src)
     for href, tag in scan.links:
         TOTAL_LINKS += 1
         if href.startswith("#"):

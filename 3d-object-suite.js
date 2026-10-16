@@ -41,7 +41,11 @@ function dna(){
      ctx.globalAlpha=Math.min(1,alpha*.55);ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.5)';ctx.shadowBlur=0;ctx.beginPath();ctx.moveTo(p.x,p.y-2);ctx.lineTo(q.x,q.y-2);ctx.stroke();ctx.restore();
    });
  };
- const tick=()=>{if(!state.down&&!reduce){state.ry+=.0038+state.vx;state.vx*=.985;state.rx+=state.vy;state.vy*=.93;state.rx=Math.max(-.24,Math.min(.24,state.rx))}draw();requestAnimationFrame(tick)};requestAnimationFrame(tick);
+ let visible=true,raf=0;
+ const tick=()=>{raf=0;if(!visible)return;if(!state.down&&!reduce){state.ry+=.0038+state.vx;state.vx*=.985;state.rx+=state.vy;state.vy*=.93;state.rx=Math.max(-.24,Math.min(.24,state.rx))}draw();if(!reduce&&visible)raf=requestAnimationFrame(tick)};
+ const observer=new IntersectionObserver(entries=>{visible=entries.some(e=>e.isIntersecting);if(visible){if(reduce)draw();else if(!raf)raf=requestAnimationFrame(tick)}else if(raf){cancelAnimationFrame(raf);raf=0}},{threshold:.01});
+ observer.observe(host);
+ if(reduce)draw();else raf=requestAnimationFrame(tick);
  const down=e=>{state.down=true;state.sx=e.clientX;state.sy=e.clientY;state.last=performance.now();state.vx=0;state.vy=0;host.setPointerCapture?.(e.pointerId)};
  const move=e=>{if(!state.down)return;const now=performance.now(),dt=Math.max(8,now-state.last),dx=e.clientX-state.sx,dy=e.clientY-state.sy;state.vx=dx/dt*.0035;state.vy=-dy/dt*.0008;state.ry+=dx*.010;state.rx=Math.max(-.24,Math.min(.24,state.rx-dy*.0018));state.sx=e.clientX;state.sy=e.clientY;state.last=now};
  host.addEventListener('pointerdown',down);host.addEventListener('pointermove',move);host.addEventListener('pointerup',()=>state.down=false);host.addEventListener('pointercancel',()=>state.down=false);
@@ -50,7 +54,11 @@ function dragDna(){
  const root=q('.os-dna'),stage=root?.parentElement;if(!root||!stage)return;
  let down=false,sx=0,sy=0,ry=0,rx=0,vx=.004,vy=0,last=0;
  const apply=()=>root.style.transform='rotateX('+rx+'deg) rotateY('+ry+'rad)';
- const tick=()=>{if(!down&&!reduce){ry+=.004+vx;vx*=.985;rx+=vy;vy*=.93;rx=Math.max(-.22,Math.min(.22,rx));apply()}requestAnimationFrame(tick)};requestAnimationFrame(tick);
+ let visible=true,raf=0;
+ const tick=()=>{raf=0;if(!visible)return;if(!down&&!reduce){ry+=.004+vx;vx*=.985;rx+=vy;vy*=.93;rx=Math.max(-.22,Math.min(.22,rx));apply()}if(!reduce&&visible)raf=requestAnimationFrame(tick)};
+ const observer=new IntersectionObserver(entries=>{visible=entries.some(e=>e.isIntersecting);if(visible&&!reduce&&!raf)raf=requestAnimationFrame(tick);else if(!visible&&raf){cancelAnimationFrame(raf);raf=0}},{threshold:.01});
+ observer.observe(stage);
+ if(reduce)apply();else raf=requestAnimationFrame(tick);
  stage.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;last=performance.now();vx=0;vy=0;stage.setPointerCapture?.(e.pointerId)});
  stage.addEventListener('pointermove',e=>{if(!down)return;const now=performance.now(),dt=Math.max(8,now-last),dx=e.clientX-sx,dy=e.clientY-sy;vx=dx/dt*.004;vy=-dy/dt*.0009;ry+=dx*.012;rx=Math.max(-.22,Math.min(.22,rx-dy*.002));sx=e.clientX;sy=e.clientY;last=now;apply()});
  const up=()=>down=false;stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);

@@ -3,46 +3,27 @@
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready');
 
-/* ===== SHORT PAGE LOADER + NAVIGATION TRANSITION =====
-   Home keeps the full 5s cinematic intro. Every other route gets a compact,
-   non-blocking loader so navigation feels intentional without delaying content. */
+/* ===== SINGLE PAGE LOADER POLICY =====
+   The homepage keeps its one cinematic intro. Other pages reuse their existing
+   #loader briefly; pages without one render immediately. Never stack overlays. */
 const siteRoot='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
 const homeRoute=/\/Prince-Resume\/?(?:index\.html)?$/i.test(location.pathname);
-const shortLoaderHTML='<div class="short-loader-core"><span class="short-loader-ring"></span><span class="short-loader-dot"></span><b>PRINCE.OS</b><small>LOADING PAGE</small></div>';
-const makeShortLoader=()=>{
-  let el=document.getElementById('pageShortLoader');
-  if(el)return el;
-  el=document.createElement('div');
-  el.id='pageShortLoader';
-  el.className='page-short-loader';
-  el.setAttribute('role','status');
-  el.setAttribute('aria-label','Loading page');
-  el.innerHTML=shortLoaderHTML;
-  document.body.insertBefore(el,document.body.firstChild);
-  return el;
-};
-const releaseShortLoader=(el,delay=620)=>{
-  if(!el)return;
-  setTimeout(()=>{el.classList.add('is-done');setTimeout(()=>el.remove(),220)},delay);
-};
 if(!homeRoute){
-  const legacy=document.getElementById('loader');
-  if(legacy){ legacy.classList.add('short-page-loader'); legacy.style.display='none'; legacy.setAttribute('aria-hidden','true'); legacy.dataset.superseded='true'; }
-  const pageLoader=makeShortLoader(); pageLoader.dataset.singleTransition='true'; pageLoader.setAttribute('aria-hidden','false');
-  releaseShortLoader(pageLoader,420);
-  document.addEventListener('click',e=>{
-    const a=e.target.closest('a[href]');
-    if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.target==='_blank'||a.hasAttribute('download'))return;
-    const raw=a.getAttribute('href')||'';
-    if(!raw||raw.startsWith('#')||/^(mailto:|tel:|javascript:)/i.test(raw))return;
-    let u;try{u=new URL(raw,location.href)}catch(_){return}
-    if(u.origin!==location.origin)return;
-    const current=new URL(location.href);u.hash='';current.hash='';
-    if(u.href===current.href)return;
-    const next=pageLoader;next.classList.remove('is-done');
-  },true);
+  const legacyLoader=document.getElementById('loader');
+  if(legacyLoader){
+    legacyLoader.classList.add('short-page-loader');
+    legacyLoader.setAttribute('aria-label','Loading page');
+    const release=()=>{
+      legacyLoader.style.opacity='0';
+      legacyLoader.style.visibility='hidden';
+      legacyLoader.style.pointerEvents='none';
+      legacyLoader.style.display='none';
+      legacyLoader.setAttribute('aria-hidden','true');
+    };
+    window.setTimeout(release,480);
+    window.addEventListener('pageshow',release,{once:true});
+  }
 }
-
 /* ===== SEO HARDENING — additive, canonical and content-aware =====
    Existing authored metadata wins when valid; missing/incorrect technical
    metadata is repaired so every indexable route exposes a consistent signal. */
@@ -129,7 +110,7 @@ new MutationObserver(removeUnexpectedSkipControl).observe(document.documentEleme
 const introLoader=document.getElementById('loader');
 if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,5350),{once:true});setTimeout(releaseIntro,6500);}
 const nav=document.querySelector('.inner-nav')||document.querySelector('header nav');
-if(nav&&!document.querySelector('.pro-system-rail')){const rail=document.createElement('div');rail.className='pro-system-rail';rail.innerHTML='<b>PRINCE.OS</b><span class="pro-chip">SYSTEMS</span><span class="pro-chip">DIGITAL</span><span class="pro-chip">AUTOMATION</span><span class="pro-chip">AI</span><span class="pro-chip">SEO</span>';const h=nav.closest('header');if(h)h.insertAdjacentElement('afterend',rail)}
+/* Keep the header single-row: identity and service chips belong in page content, not a second header rail. */
 /* Unified navigation: keep legacy URLs alive while presenting combined sections. */
 if(nav){const links=[...nav.querySelectorAll('a')];const navBase=location.pathname.includes('/blog/')?'../':'';const set=(match,label,href)=>{const a=links.find(x=>match.test((x.textContent||'').trim()));if(a){a.textContent=label;a.href=navBase+href;a.classList.toggle('active',location.pathname.endsWith('/'+href))}};set(/^Projects$/,'Work','work.html');set(/^Insights$/,'Work','work.html');set(/^Experience$/,'Career','career.html');set(/^Now$/,'Career','career.html');set(/^Recruiter$/,'Profile','profile.html');set(/^Resume$/,'Profile','profile.html');links.forEach((a,i)=>{if((a.textContent||'')==='Work'||(a.textContent||'')==='Career'||(a.textContent||'')==='Profile'){const dup=links.find((x,j)=>j>i&&(x.textContent||'')===a.textContent);if(dup)dup.remove()}});if(![...nav.querySelectorAll('a')].some(a=>a.getAttribute('href')==='blog.html')){const b=document.createElement('a');b.href=navBase+'blog.html';b.textContent='Blog';b.classList.toggle('active',location.pathname.endsWith('/blog.html')||location.pathname.includes('/blog/'));const work=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')==='work.html');if(work)work.insertAdjacentElement('afterend',b);else nav.appendChild(b)}if(![...nav.querySelectorAll('a')].some(a=>a.getAttribute('href')==='studio.html')){const studio=document.createElement('a');studio.href=navBase+'studio.html';studio.textContent='Studio';studio.classList.toggle('active',location.pathname.endsWith('/studio.html')||location.pathname.endsWith('/start-a-project.html'));const workLink=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')==='work.html');if(workLink)workLink.insertAdjacentElement('afterend',studio);else nav.appendChild(studio)}}
 /* 13: route transition is entrance-only so existing click handlers remain untouched. */

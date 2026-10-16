@@ -480,8 +480,6 @@ document.querySelectorAll('.hero-meta-link').forEach(link=>{
     addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(update)},{passive:true}); update();
   }
 
-  /* 10. Premium page-change/load behavior: keep existing transition, add a tiny motion cue. */
-  addEventListener('pageshow',()=>{document.body.classList.add('ui-ready');setTimeout(()=>document.body.classList.remove('ui-ready'),900)});
 })();
 
 /* ===== NOVA GENERIC KNOWLEDGE + REASONING LAYER ===== */

@@ -21,7 +21,7 @@ class Scanner(HTMLParser):
     def __init__(self, path):
         super().__init__(convert_charrefs=True)
         self.path, self.title, self.in_title = path, "", False
-        self.description, self.canonical, self.h1 = "", "", 0
+        self.description, self.canonical, self.h1, self.noindex = "", "", 0, False
         self.ids, self.links = set(), []
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -30,6 +30,8 @@ class Scanner(HTMLParser):
         if tag == "h1": self.h1 += 1
         if tag == "meta" and a.get("name", "").lower() == "description":
             self.description = a.get("content", "").strip()
+        if tag == "meta" and a.get("name", "").lower() == "robots" and "noindex" in a.get("content", "").lower():
+            self.noindex = True
         if tag in ("a", "link") and a.get("href"): self.links.append((a["href"], tag))
         if tag in ("img", "script") and a.get("src"): self.links.append((a["src"], tag))
         if tag == "link" and a.get("rel", "").lower() == "canonical":
@@ -71,14 +73,15 @@ for file in HTML_FILES:
     if len(scan.description) < 50: WARNINGS.append(f"{rel}: missing/short meta description")
     else: descriptions.setdefault(scan.description, []).append(rel)
     if scan.h1 == 0: WARNINGS.append(f"{rel}: no H1 found")
-    if not scan.canonical:
-        WARNINGS.append(f"{rel}: missing canonical")
-    elif not scan.canonical.startswith(BASE):
-        WARNINGS.append(f"{rel}: canonical is outside the portfolio URL")
-    else:
-        expected = BASE + ("" if rel == "index.html" else rel)
-        if scan.canonical.rstrip("/") != expected.rstrip("/"):
-            WARNINGS.append(f"{rel}: canonical path differs from this file ({scan.canonical})")
+    if not scan.noindex:
+        if not scan.canonical:
+            WARNINGS.append(f"{rel}: missing canonical")
+        elif not scan.canonical.startswith(BASE):
+            WARNINGS.append(f"{rel}: canonical is outside the portfolio URL")
+        else:
+            expected = BASE + ("" if rel == "index.html" else rel)
+            if scan.canonical.rstrip("/") != expected.rstrip("/"):
+                WARNINGS.append(f"{rel}: canonical path differs from this file ({scan.canonical})")
     for href, tag in scan.links:
         TOTAL_LINKS += 1
         if href.startswith("#"):

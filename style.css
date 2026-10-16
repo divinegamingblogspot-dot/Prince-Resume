@@ -1459,3 +1459,13 @@ body .home-final-glow{background:radial-gradient(circle,rgba(var(--theme-accent-
 #pageTransition{display:none!important}
 body.page-exit{opacity:1!important;transform:none!important}
 @media(prefers-reduced-motion:reduce){body::after{animation:none!important}}
+
+/* One cross-document page transition for the entire portfolio. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: princePageOut .18s cubic-bezier(.4,0,1,1) both; }
+::view-transition-new(root) { animation: princePageIn .30s cubic-bezier(.16,1,.3,1) both; }
+@keyframes princePageOut { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(-7px) scale(.995); } }
+@keyframes princePageIn { from { opacity:0; transform:translateY(9px) scale(.995); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation:none!important; }
+}

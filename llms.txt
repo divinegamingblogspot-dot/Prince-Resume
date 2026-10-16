@@ -15,9 +15,20 @@
 - Resume: https://divinegamingblogspot-dot.github.io/Prince-Resume/resume.html
 - Nova: https://divinegamingblogspot-dot.github.io/Prince-Resume/nova.html
 - Contact: https://divinegamingblogspot-dot.github.io/Prince-Resume/contact.html
+- Studio: https://divinegamingblogspot-dot.github.io/Prince-Resume/studio.html
+- Start a project: https://divinegamingblogspot-dot.github.io/Prince-Resume/start-a-project.html
+- Case study — Multybyte operations automation: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-multybyte.html
+- Case study — AURELIA storefront: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-aurelia.html
+- Case study — Prince.OS portfolio system: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-prince-os.html
+- Case study — product image sync: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-image-sync.html
+- Case study — product data workflow: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-product-data.html
+- Case study — AI/software prototyping: https://divinegamingblogspot-dot.github.io/Prince-Resume/work/case-ai-prototype.html
 
 ## Person
 Prince Dixit is a Delhi, India-based professional whose portfolio combines e-commerce operations, digital marketing, SEO, website/app troubleshooting, business automation and practical software experiments.
+
+## Studio positioning
+Prince Digital Systems is an independent studio led by Prince Dixit, not a claimed multi-person agency. Services focus on practical websites and landing pages, technical SEO and discoverability, e-commerce experiences, and workflow automation. Project enquiries use a client-reviewed email brief; the static form does not transmit data to a server.
 
 ## Core capabilities
 E-commerce operations; product and SKU workflows; inventory and order operations; supplier and purchasing workflows; Google Sheets; Google Apps Script; JavaScript; HTML/CSS; SEO and on-page optimization; digital marketing; Meta Ads; business automation; AI-assisted interfaces.

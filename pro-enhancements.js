@@ -3,27 +3,7 @@
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready');
 
-/* ===== SINGLE PAGE LOADER POLICY =====
-   The homepage keeps its one cinematic intro. Other pages reuse their existing
-   #loader briefly; pages without one render immediately. Never stack overlays. */
-const siteRoot='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
-const homeRoute=/\/Prince-Resume\/?(?:index\.html)?$/i.test(location.pathname);
-if(!homeRoute){
-  const legacyLoader=document.getElementById('loader');
-  if(legacyLoader){
-    legacyLoader.classList.add('short-page-loader');
-    legacyLoader.setAttribute('aria-label','Loading page');
-    const release=()=>{
-      legacyLoader.style.opacity='0';
-      legacyLoader.style.visibility='hidden';
-      legacyLoader.style.pointerEvents='none';
-      legacyLoader.style.display='none';
-      legacyLoader.setAttribute('aria-hidden','true');
-    };
-    window.setTimeout(release,480);
-    window.addEventListener('pageshow',release,{once:true});
-  }
-}
+/* Loader lifecycle is owned only by script.js; this layer never starts a second loader. */
 /* ===== SEO HARDENING — additive, canonical and content-aware =====
    Existing authored metadata wins when valid; missing/incorrect technical
    metadata is repaired so every indexable route exposes a consistent signal. */
@@ -103,13 +83,8 @@ if(!homeRoute){
   }
 })();
 /* Preserve authored skip links; do not run a document-wide MutationObserver for UI cleanup. */
-/* Loader safety: content must always win. Keep cinematic intro, but never allow a stuck overlay. */
-const introLoader=document.getElementById('loader');
-if(introLoader){const releaseIntro=()=>{introLoader.style.opacity='0';introLoader.style.visibility='hidden';introLoader.style.pointerEvents='none';introLoader.setAttribute('aria-hidden','true');};document.addEventListener('DOMContentLoaded',()=>setTimeout(releaseIntro,5350),{once:true});setTimeout(releaseIntro,6500);}
-const nav=document.querySelector('.inner-nav')||document.querySelector('header nav');
-/* Keep the header single-row: identity and service chips belong in page content, not a second header rail. */
-/* Unified navigation: keep legacy URLs alive while presenting combined sections. */
-if(nav){const links=[...nav.querySelectorAll('a')];const navBase=location.pathname.includes('/blog/')?'../':'';const set=(match,label,href)=>{const a=links.find(x=>match.test((x.textContent||'').trim()));if(a){a.textContent=label;a.href=navBase+href;a.classList.toggle('active',location.pathname.endsWith('/'+href))}};set(/^Projects$/,'Work','work.html');set(/^Insights$/,'Work','work.html');set(/^Experience$/,'Career','career.html');set(/^Now$/,'Career','career.html');set(/^Recruiter$/,'Profile','profile.html');set(/^Resume$/,'Profile','profile.html');links.forEach((a,i)=>{if((a.textContent||'')==='Work'||(a.textContent||'')==='Career'||(a.textContent||'')==='Profile'){const dup=links.find((x,j)=>j>i&&(x.textContent||'')===a.textContent);if(dup)dup.remove()}});if(![...nav.querySelectorAll('a')].some(a=>a.getAttribute('href')==='blog.html')){const b=document.createElement('a');b.href=navBase+'blog.html';b.textContent='Blog';b.classList.toggle('active',location.pathname.endsWith('/blog.html')||location.pathname.includes('/blog/'));const work=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')==='work.html');if(work)work.insertAdjacentElement('afterend',b);else nav.appendChild(b)}if(![...nav.querySelectorAll('a')].some(a=>a.getAttribute('href')==='studio.html')){const studio=document.createElement('a');studio.href=navBase+'studio.html';studio.textContent='Studio';studio.classList.toggle('active',location.pathname.endsWith('/studio.html')||location.pathname.endsWith('/start-a-project.html'));const workLink=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')==='work.html');if(workLink)workLink.insertAdjacentElement('afterend',studio);else nav.appendChild(studio)}}
+/* The shared script.js loader is the sole loader controller. */
+/* Header markup and navigation are canonicalized above; no per-page nav mutation. */
 /* 13: route transition is entrance-only so existing click handlers remain untouched. */
 const bar=document.createElement('div');bar.className='pro-scrollbar';bar.innerHTML='<i></i>';document.body.appendChild(bar);const fill=bar.firstElementChild;
 const sections=[...document.querySelectorAll('main section')].filter(s=>s.offsetHeight>40),index=document.createElement('div');index.className='pro-section-index';sections.slice(0,12).forEach(()=>index.appendChild(document.createElement('i')));if(sections.length>1)document.body.appendChild(index);const dots=[...index.children];
@@ -408,7 +383,7 @@ function buildPalette(){
     ['⌂','Home','Open the portfolio home','index.html'],['W','Work','Projects + Insights','work.html'],['S','Studio','Websites, SEO and workflow automation','studio.html'],
     ['C','Career','Experience + current direction','career.html'],['B','Blog','Read portfolio articles','blog.html'],
     ['P','Profile','Recruiter + Resume','profile.html'],['N','Nova','Open the portfolio assistant','nova.html'],
-    ['S','Studio','Websites, SEO and workflow automation','studio.html'],['↗','Start a project','Share a project brief','start-a-project.html'],['✉','Contact','Reach Prince directly','contact.html'],['R','Resume','Open the resume','resume.html']
+    ['↗','Start a project','Share a project brief','start-a-project.html'],['✉','Contact','Reach Prince directly','contact.html'],['R','Resume','Open the resume','resume.html']
   ];
   commands.forEach(([icon,title,desc,href])=>{const a=document.createElement('a');a.className='pro-command-item';a.href=href;a.innerHTML='<i>'+icon+'</i><span><b>'+title+'</b><small>'+desc+'</small></span><small>↗</small>';list.appendChild(a)});
   const themeRow=document.createElement('div');themeRow.className='pro-command-themes';
@@ -507,7 +482,7 @@ setTheme(body.dataset.princeTheme||'midnight');
     const saved=(()=>{try{return localStorage.getItem('prince-focus-mode')==='on'}catch(_){return false}})();
     const apply=on=>{document.body.classList.toggle('pro-focus-mode',on);b.setAttribute('aria-pressed',String(on));b.textContent=on?'Exit focus mode':'Focus mode';try{localStorage.setItem('prince-focus-mode',on?'on':'off')}catch(_){}};
     b.addEventListener('click',()=>apply(!document.body.classList.contains('pro-focus-mode')));
-    (document.querySelector('.inner-top')||document.querySelector('header')||document.body).appendChild(b);apply(saved);
+    document.body.appendChild(b);apply(saved);
   }
 
   /* Accessibility: visible keyboard focus, landmarks, accessible names, and safe motion defaults. */

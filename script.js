@@ -1,13 +1,20 @@
-const spotlight=document.createElement('div');spotlight.className='spotlight';document.body.appendChild(spotlight);
-let spotlightRaf=0,spotX=innerWidth*.5,spotY=innerHeight*.5;
-if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){window.addEventListener('pointermove',e=>{spotX=e.clientX;spotY=e.clientY;if(!spotlightRaf)spotlightRaf=requestAnimationFrame(()=>{spotlight.style.setProperty('--mx',spotX+'px');spotlight.style.setProperty('--my',spotY+'px');spotlightRaf=0})},{passive:true});}
+let spotlight=null,spotlightRaf=0,spotX=innerWidth*.5,spotY=innerHeight*.5;
+/* The spotlight is a homepage-only effect; don't attach pointer listeners on inner routes. */
+if(!document.body.dataset.page){
+  spotlight=document.createElement('div');spotlight.className='spotlight';document.body.appendChild(spotlight);
+  if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    window.addEventListener('pointermove',e=>{spotX=e.clientX;spotY=e.clientY;if(!spotlightRaf)spotlightRaf=requestAnimationFrame(()=>{spotlight.style.setProperty('--mx',spotX+'px');spotlight.style.setProperty('--my',spotY+'px');spotlightRaf=0})},{passive:true});
+  }
+}
 /* Loader timing is controlled by the FINAL PORTFOLIO SYSTEM block below. */
 
 const menu=document.querySelector('.menu'),nav=document.querySelector('nav');if(menu&&nav){menu.setAttribute('aria-expanded','false');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close menu':'Open menu')});document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open menu')}));}
 const c=document.querySelector('.cursor'),d=document.querySelector('.cursor-dot');
 let cursorRaf=0,cx=0,cy=0;
-window.addEventListener('pointermove',e=>{if(!c||!d)return;cx=e.clientX;cy=e.clientY;if(!cursorRaf)cursorRaf=requestAnimationFrame(()=>{c.style.left=cx+'px';c.style.top=cy+'px';d.style.left=cx+'px';d.style.top=cy+'px';cursorRaf=0})},{passive:true});
-document.querySelectorAll('a,.project,.skill').forEach(el=>{el.addEventListener('mouseenter',()=>c&&(c.style.transform='translate(-50%,-50%) scale(1.6)'));el.addEventListener('mouseleave',()=>c&&(c.style.transform='translate(-50%,-50%) scale(1)'))});
+if(c&&d){
+  window.addEventListener('pointermove',e=>{cx=e.clientX;cy=e.clientY;if(!cursorRaf)cursorRaf=requestAnimationFrame(()=>{c.style.left=cx+'px';c.style.top=cy+'px';d.style.left=cx+'px';d.style.top=cy+'px';cursorRaf=0})},{passive:true});
+  document.querySelectorAll('a,.project,.skill').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(1.6)'});el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)'})});
+}
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}}));const rb=document.getElementById('recruiterBtn'),rp=document.getElementById('recruiterPanel');rb?.addEventListener('click',()=>{rp.classList.add('open');document.body.style.overflow='hidden'});document.getElementById('closeRecruiter')?.addEventListener('click',()=>{rp.classList.remove('open');document.body.style.overflow=''});document.addEventListener('keydown',e=>{if(e.key==='Escape'){rp?.classList.remove('open');document.body.style.overflow=''}});const input=document.getElementById('terminalInput'),tb=document.getElementById('terminalBody');const cmds={help:'commands: help · whoami · skills · projects · contact · clear',whoami:'Prince Dixit — Operations × Digital × Automation',skills:'e-commerce · automation · SEO · Apps Script · JavaScript · AI workflows',projects:'multybyte-automation · eyenav-doc · me-n-u',contact:'demonicspirit888@gmail.com'};tb?.addEventListener('keydown',e=>{if(e.key!=='Enter'||!e.target.matches('input'))return;const current=e.target;const q=current.value.trim().toLowerCase();if(q==='clear'){tb.innerHTML='<div class="terminal-prompt">$ <input id="terminalInput" aria-label="Terminal command" placeholder="try: help"></div>';tb.querySelector('input')?.focus();return}const p=document.createElement('p');p.textContent=cmds[q]||'command not found — try: help';tb.insertBefore(p,tb.lastElementChild);current.value='';tb.lastElementChild?.querySelector('input')?.focus()});
 /* Add relevant artwork to each work experience without changing the content structure. */
 document.querySelectorAll('#experience .job').forEach((job,index)=>{

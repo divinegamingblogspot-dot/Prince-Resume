@@ -3,6 +3,40 @@
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.body.classList.add('pro-ready');
 
+const siteRoot='https://divinegamingblogspot-dot.github.io/Prince-Resume/';
+
+/* Canonical shared header: one structure, one navigation and one mobile toggle on every route. */
+(()=>{
+  const header=document.querySelector('body > header');
+  if(!header)return;
+  const path=location.pathname;
+  const relative='../'.repeat(Math.max(0,path.replace(/^\/Prince-Resume\/?/,'').split('/').filter(Boolean).length-1));
+  const route=name=>relative+name;
+  const clean=path.replace(/^\/Prince-Resume\/?/,'').replace(/^\/+|\/+$/g,'');
+  const parts=clean.split('/').filter(Boolean);
+  const file=(parts[parts.length-1]||'index.html').replace(/\.html$/i,'');
+  let active=file;
+  if(!parts.length||file==='index')active='home';
+  else if(['projects','insights'].includes(file)||parts[0]==='work')active='work';
+  else if(['experience','now'].includes(file)||parts[0]==='experience')active='career';
+  else if(['recruiter','resume'].includes(file))active='profile';
+  else if(file==='start-a-project'||parts[0]==='landing-pages')active='studio';
+  else if(parts[0]==='blog')active='blog';
+  else if(parts[0]==='systems')active='systems';
+  const items=[['home','Home','index.html'],['about','About','about.html'],['work','Work','work.html'],['studio','Studio','studio.html'],['career','Career','career.html'],['systems','Systems','systems.html'],['blog','Blog','blog.html'],['profile','Profile','profile.html'],['contact','Contact','contact.html']];
+  const logo=document.createElement('a');
+  logo.className='inner-logo';logo.href=route('index.html');logo.setAttribute('aria-label','Prince Dixit home');logo.innerHTML='PD<span>.</span>';
+  const menu=document.createElement('button');
+  menu.className='inner-menu';menu.type='button';menu.setAttribute('aria-label','Open navigation');menu.setAttribute('aria-expanded','false');menu.innerHTML='<span></span><span></span><span></span>';
+  const nav=document.createElement('nav');nav.className='inner-nav';nav.setAttribute('aria-label','Main navigation');
+  nav.innerHTML=items.map(([key,label,href])=>'<a href="'+route(href)+'"'+(key===active?' class="active" aria-current="page"':'')+'>'+label+'</a>').join('');
+  header.className='inner-top';header.replaceChildren(logo,menu,nav);
+  menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+  nav.addEventListener('click',e=>{if(!e.target.closest('a'))return;nav.classList.remove('open');menu.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation')});
+  document.addEventListener('click',e=>{if(header.contains(e.target))return;nav.classList.remove('open');menu.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation')});
+})();
+
+
 /* Loader lifecycle is owned only by script.js; this layer never starts a second loader. */
 /* ===== SEO HARDENING — additive, canonical and content-aware =====
    Existing authored metadata wins when valid; missing/incorrect technical
